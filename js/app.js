@@ -1,3 +1,4 @@
+/*
 import * as THREE from 'three';
 import { GLTFLoader } from '../libs/three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from '../libs/three/examples/jsm/loaders/DRACOLoader.js';
@@ -9,6 +10,19 @@ import { OutlinePass } from '../libs/three/examples/jsm/postprocessing/OutlinePa
 import { ShaderPass } from '../libs/three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from '../libs/three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { SMAAPass } from '../libs/three/examples/jsm/postprocessing/SMAAPass.js';
+*/
+
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/DRACOLoader.js';
+import { EffectComposer } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/RenderPass.js';
+import { OutlinePass } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/OutlinePass.js';
+import { ShaderPass } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/ShaderPass.js';
+import { GammaCorrectionShader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/shaders/GammaCorrectionShader.js';
+import { SMAAPass } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/SMAAPass.js';
+import { RGBELoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/RGBELoader.js';
+import { LoadingBar } from '../libs/LoadingBar.js';
 
 const COLOR_BG = 0xaaaaaa;
 
