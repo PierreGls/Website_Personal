@@ -43,6 +43,9 @@ const PARTICLES_ROTATION_SPEED = 0.001;
 const PARTICLES_POSITION_AMPLITUDE = 0.01;
 let additionalRotY = 0;
 
+//MUSIC
+const BACKGROUND_VOLUME = 0.05; // Volume (0 à 1)
+
 //PROJECT
 let scrollProjectAmount = 0;
 const INITIAL_OFFSET_Y_PROJECTS = 1.5; 
@@ -212,12 +215,14 @@ class App{
         //Particles
         this.createBokehParticles();
 
+        //Sound
+        this.setupBackgroundMusic();
+
         // Charge les paramètres depuis l'URL
         //It would be bettter to use async to call it once everything is loaded
         setTimeout(() => {
             this.loadFromURL();
-        }, 500);
-        
+        }, 700);
     }
 
     /*************************************
@@ -425,6 +430,32 @@ class App{
         console.log('✅ Toggle filtres activé');
     }
 
+    setupBackgroundMusic(){
+        this.bgMusic = document.getElementById('background-music');
+        this.bgMusic.volume = BACKGROUND_VOLUME;
+        
+        this.bgMusic.play()
+            .then(() => {
+                console.log('🎵 Musique lancée');
+            })
+            .catch(err => {
+                console.warn('⚠️ Autoplay bloqué:', err);
+            });
+            
+        
+        console.log('✅ Background music setup');
+    }
+
+    /*************************************
+     ************** SOUNDS
+    **************************************/
+    playSFXFlash(){
+        this.sfx = document.getElementById('flashSFX');
+        this.sfx.volume = BACKGROUND_VOLUME;
+        this.sfx.currentTime = 0;
+        this.sfx.play();
+    }
+
     /*************************************
      ************** Particles
     **************************************/
@@ -601,7 +632,6 @@ class App{
                 if(!hasMatchingTag) visible = false;
             }
             
-            // Cache ou montre le cube
             projectParent.visible = visible;
             
             if(visible){
@@ -656,13 +686,17 @@ class App{
         if(currentState === 0){
             this.scrollSceneAmount += e.deltaY * SCROLL_SPEED;
             this.scrollSceneAmount = Math.max(0, Math.min(1, this.scrollSceneAmount));
-            this.targetScenesX = this.scrollSceneAmount * (SCENES_MAX_X - SCENES_MIN_X) + SCENES_MIN_X;  // minX to maxX
+            this.setScenesTargetX();
         }
         else if(currentState === 1){
             scrollProjectAmount += e.deltaY * SCROLL_SPEED;
             scrollProjectAmount = Math.max(scrollProjectAmount, 0); //min value = 0
             scrollProjectAmount = Math.min(scrollProjectAmount, SCROLL_PROJECT_MAX_MULTIPLIER * (projectsVisible.size - 1)); //max value = scrollMultiplier * nbr de projets
         }
+    }
+
+    setScenesTargetX(){
+        this.targetScenesX = this.scrollSceneAmount * (SCENES_MAX_X - SCENES_MIN_X) + SCENES_MIN_X;  // minX to maxX
     }
 
     /*************************************
@@ -934,12 +968,18 @@ class App{
         `;
         
         document.body.appendChild(modal);
+
+        this.bgMusic.volume = 0.0;
         
         // Fermeture
         modal.querySelector('.close').onclick = () => {
             document.body.removeChild(modal);
             isModalProjectVisible = false;
             this.currentProjectID = -1;
+
+            //Sound
+            this.bgMusic.volume = BACKGROUND_VOLUME;
+
 
             //URL
             this.updateURL();
@@ -1071,6 +1111,7 @@ class App{
             scrollProjectAmount = 0;
             this.fadeOutFilters();
             this.switchMenus(TAG_CSS_PROJECTS, TAG_CSS_SCENES);
+            this.resetFilters();
         }
         else{
             this.targetScenesZ = 10;
@@ -1092,6 +1133,8 @@ class App{
         setTimeout(() => {
             flashOverlay.classList.remove('flash');
         }, 1100); // Durée de l'animation
+
+        this.playSFXFlash();
         
         console.log('⚡ Flash!');
     }
@@ -1160,7 +1203,6 @@ class App{
             this.applyFilters(false);
         }
         
-        
         // Charge le projet si spécifié
         const projectId = params.get('project');
         if(projectId){
@@ -1174,7 +1216,6 @@ class App{
 
         if(projectId || search || tags){
             this.onChangeState(1, true);
-            //this.sceneContainer.position.z = OFFSET_Z_PROJECTS_STATE_INVISIBLE;
         }
         
         //To test
