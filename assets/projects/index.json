@@ -1,0 +1,580 @@
+{
+  "projects": [
+    {
+      "id": "VR_1",
+      "name": "Journey Through Time",
+      "description": "Journey Through Time invites you to embark on an extraordinary mixed reality adventure where history comes alive in your own space. Using the power of Meta Quest 3, your real-world environment blends seamlessly with stunning virtual worlds, immersing you in pivotal moments from our planet's past.",
+      "tags": ["MR", "Unity", "Games","VR"],
+      "links": {
+        "demo": "https://www.meta.com/it-it/experiences/journey-through-time/8893681454081682/."
+        }
+    },
+    {
+      "id": "VR_2",
+      "name": "Frosty Rush",
+      "description": "☀️ In this sun-scorched, pastel-colored universe, you’re a humble ice cream courier🍦trying to meet the absurdly high standards of feline gods 😸. Your goal? Get the goods to their paws before the heat gets to them 🫠 🐾.",
+      "tags": ["VR", "HorizonWorlds", "Games"],
+      "links": {
+        "demo": "https://horizon.meta.com/world/509720518825457/?locale=en_US"
+        }
+    },
+    {
+      "id": "VR_3",
+      "name": "Stone Mason",
+      "description": "",
+      "tags": ["MR", "Unreal","VR"],
+      "links": {
+        }
+    },
+    {
+      "id": "VR_4",
+      "name": "YSL",
+      "description": "",
+      "tags": ["MR", "Unity","VR"],
+      "links": {
+        }
+    },
+    {
+      "id": "VR_5",
+      "name": "VRAI Simulations",
+      "description": "",
+      "tags": ["VR", "Unity"],
+      "links": {
+        }
+    },
+
+    {
+      "id": "OT_1",
+      "name": "CodeDelta",
+      "description": "Code Delta is a false name for a TV show that could appear in France in the future years. The technologies used for this project : the Mediapipe and Zed camera for the tracking, OBS for the link to the professional control room and OSC for the local communication between the different computers",
+      "tags": ["Unity"],
+      "links": {
+        }
+    },
+
+
+
+    {
+      "id": "AR_1",
+      "name": "Amazon LOTR",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_2",
+      "name": "Guinness",
+      "description": "The project has just been awarded the Best AR or VR Implementation at the prestigious DIGITAL MEDIA AWARDS IRELAND.",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_3",
+      "name": "JO2024",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_4",
+      "name": "JO2024 Refugee Team",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_5",
+      "name": "Telekom EuroCup2024",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_000",
+      "name": "Snap Games Lensathon",
+      "description": "Award winning top 10 out 1000 submissions",
+      "tags": ["AR", "Snapchat", "Games"],
+      "links": {
+        "demo": "https://devpost.com/software/dontblink-filter"
+        }
+    },
+
+    {
+      "id": "AR_6",
+      "name": "Chivas",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_7",
+      "name": "Cadbury",
+      "description": "",
+      "tags": ["AR", "Tiktok"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_8",
+      "name": "Listerine",
+      "description": "",
+      "tags": ["AR", "Tiktok"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_9",
+      "name": "Adidas WorldCup",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_10",
+      "name": "Amazon The Boys",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_11",
+      "name": "Amazon The Summer I Turned Pretty",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_12",
+      "name": "Breitling",
+      "description": "Audemars Piguet",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_13",
+      "name": "Cartier Panthère",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_14",
+      "name": "Cartier Icon Refresh",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_15",
+      "name": "Cloudsurfer",
+      "description": "",
+      "tags": ["AR", "Snapchat", "Games"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_16",
+      "name": "Deezer",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_17",
+      "name": "Dior Riviera",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_18",
+      "name": "Disney Marvels",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_19",
+      "name": "Givenchy",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_20",
+      "name": "Givenchy Tk360",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_21",
+      "name": "Guerlain",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_22",
+      "name": "HBO",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_23",
+      "name": "Hornitos",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_24",
+      "name": "Hulu Cruel Summer",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_25",
+      "name": "Kenzo",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_26",
+      "name": "Longchamps",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_27",
+      "name": "Luxottica",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_28",
+      "name": "Maybelline",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_29",
+      "name": "Moncler",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_30",
+      "name": "Nars",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_31",
+      "name": "NewYear2023",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_32",
+      "name": "Nike",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_33",
+      "name": "Nyx Epic Smoke Liner",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_34",
+      "name": "Nyx Falalaland",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_35",
+      "name": "Nyx Jumbo",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_36",
+      "name": "Nyx Pride",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_37",
+      "name": "Nyx Smooth",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_38",
+      "name": "OnRunning Cloud Monster",
+      "description": "",
+      "tags": ["AR", "Snapchat", "Games"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_39",
+      "name": "Orange World Cup Rugby",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_40",
+      "name": "Oreo",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_41",
+      "name": "Paco Rabanne Invictus",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_42",
+      "name": "Paco Rabanne Makeup",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_43",
+      "name": "Pampers",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_44",
+      "name": "Powerade",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_45",
+      "name": "Prada",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_46",
+      "name": "Pride 2023",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_47",
+      "name": "Pride 2024",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_49",
+      "name": "Redbull",
+      "description": "",
+      "tags": ["AR", "Tiktok"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_50",
+      "name": "RSAC",
+      "description": "",
+      "tags": ["AR", "Snapchat", "Games"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_51",
+      "name": "Samsung Diamond",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_52",
+      "name": "Samsung FlipBook",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_53",
+      "name": "Samsung Rainbow",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_54",
+      "name": "Samsung WatchSleep",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_55",
+      "name": "Sony Borderlands",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_57",
+      "name": "SVGE",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_58",
+      "name": "Telekom EuroCup2024",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_59",
+      "name": "The Archies",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_60",
+      "name": "Valentino",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_61",
+      "name": "Vogue Kenneth",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_62",
+      "name": "Vogue Stella",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_63",
+      "name": "YSL Libre",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    },
+    {
+      "id": "AR_64",
+      "name": "Zalando",
+      "description": "",
+      "tags": ["AR", "Snapchat"],
+      "links": {
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+  ]
+}

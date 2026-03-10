@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!--favicon -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="apple-touch-icon" sizes="180x180" href="../../images/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon/favicon-16x16.png">
+        <link rel="manifest" href="../../site.webmanifest">
+        <meta name="theme-color" content="#ffffff">
+
+        <title>Pierre Galus - Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+        <script type="importmap">
+            {
+              "imports": {
+                "three": "../../libs/three/build/three.module.js"
+              }
+            }
+        </script>
+        <script type="module">
+            import { App } from './app.js';
+
+            document.addEventListener("DOMContentLoaded", function(){
+                const app = new App();
+                window.app = app;
+            });
+        </script>
+
+
+
+        <canvas id="webgl"></canvas>
+
+        <!-- Flash -->
+        <div id="flash-overlay"></div>
+    
+        <!-- Menu UI -->
+        <div class="menu" id="menu-scenes">
+            <button data-id="1">Home</button>
+            <button data-id="2">Projects</button>
+            <button data-id="3">Resume</button>
+            <button data-id="4">Contact</button>
+        </div>
+
+        <div class="menu" id="menu-projects">
+            <button data-id="5">Back</button>
+        </div>
+
+        <!-- Barre de filtres -->
+        <div id="filter-bar">
+            <button id="toggle-filters" class="toggle-btn">▼</button>
+            
+            <div id="filter-content">
+                <!-- 👇 Groupe search + reset ensemble -->
+                <div id="search-group">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Rechercher par nom..."
+                    >
+                    <button id="reset-filters">Reset</button>
+                </div>
+                
+                <div id="tag-filters">
+                    <!-- Les tags seront générés dynamiquement -->
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- 👇 Texte du projet actif -->
+        <div id="current-project">
+            <h3 id="project-name">-</h3>
+        </div>
+
+        <footer id="copyright">
+            Copyright © 2026, Pierre Galus. All other copyrighted materials are property of their respective copyright holders.
+        </footer>
+	</body>
+</html>
