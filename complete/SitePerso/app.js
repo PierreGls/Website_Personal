@@ -363,7 +363,9 @@ class App{
         // Input de recherche
         const searchInput = document.getElementById('search-input');
         searchInput.addEventListener('input', (e) => {
-            this.activeFilters.searchText = e.target.value.toLowerCase();
+            const rawValue = e.target.value;
+            const sanitizedValue = this.sanitizeInput(rawValue);
+            this.activeFilters.searchText = sanitizedValue.toLowerCase();
             this.applyFilters(true);
         });
         
@@ -591,7 +593,7 @@ class App{
     }
 
     /*************************************
-     ************** MENU PROJECTS 
+     ************** MENU PROJECTS FILTERS
     **************************************/
     toggleTagFilter(tag, button){
         if(this.activeFilters.tags.has(tag)){
@@ -677,6 +679,15 @@ class App{
     getButtonFilterByTag(tagValue){
         const button = document.querySelector(`[data-tag="${tagValue}"]`);
         return button;
+    }
+
+    //Increase security against code injection
+    sanitizeInput(input){
+        // Retire les caractères dangereux
+        return input
+            .replace(/[<>\"']/g, '') // Retire < > " '
+            .trim()
+            .substring(0, 100); // Limite la longueur
     }
 
     /*************************************
