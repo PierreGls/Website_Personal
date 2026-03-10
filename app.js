@@ -1,14 +1,14 @@
 import * as THREE from 'three';
-import { GLTFLoader } from '../../libs/three/examples/jsm/loaders/GLTFLoader.js';
-import { DRACOLoader } from '../../libs/three/examples/jsm/loaders/DRACOLoader.js';
-import { RGBELoader } from '../../libs/three/examples/jsm/loaders/RGBELoader.js';
-import { LoadingBar } from '../../libs/LoadingBar.js';
-import { EffectComposer } from '../../libs/three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from '../../libs/three/examples/jsm/postprocessing/RenderPass.js';
-import { OutlinePass } from '../../libs/three/examples/jsm/postprocessing/OutlinePass.js';
-import { ShaderPass } from '../../libs/three/examples/jsm/postprocessing/ShaderPass.js';
-import { GammaCorrectionShader } from '../../libs/three/examples/jsm/shaders/GammaCorrectionShader.js';
-import { SMAAPass } from '../../libs/three/examples/jsm/postprocessing/SMAAPass.js';
+import { GLTFLoader } from '/libs/three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from '/libs/three/examples/jsm/loaders/DRACOLoader.js';
+import { RGBELoader } from '/libs/three/examples/jsm/loaders/RGBELoader.js';
+import { LoadingBar } from '/libs/LoadingBar.js';
+import { EffectComposer } from '/libs/three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from '/libs/three/examples/jsm/postprocessing/RenderPass.js';
+import { OutlinePass } from '/libs/three/examples/jsm/postprocessing/OutlinePass.js';
+import { ShaderPass } from '/libs/three/examples/jsm/postprocessing/ShaderPass.js';
+import { GammaCorrectionShader } from '/libs/three/examples/jsm/shaders/GammaCorrectionShader.js';
+import { SMAAPass } from '/libs/three/examples/jsm/postprocessing/SMAAPass.js';
 
 const COLOR_BG = 0xaaaaaa;
 
