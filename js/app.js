@@ -150,6 +150,7 @@ const SHADOW_RECEIVER_OBJS = [
 class App{
 	constructor(){
         currentState = 0; //TODO : set to 0
+
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
         
@@ -200,16 +201,26 @@ class App{
         this.targetScenesX = 0;
         this.targetScenesZ = 0;
         this.scrollSceneAmount = 0;
+        this.targetScroll = 0;
         this.targetCameraRotation = new THREE.Vector2();
-        window.addEventListener('wheel', this.handleScroll.bind(this));
-        //const controls = new OrbitControls( this.camera, this.renderer.domElement );
-	
+
+        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if(this.isMobile){
+            this.setupTouchControls();
+        } else {
+            this.setupMouseControls();
+        }
+
         //Click detection
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
         window.addEventListener('click', this.handleClickDetection.bind(this));
-        window.addEventListener('mousemove', this.handleMouseMove.bind(this));
-    
+        
+        if(this.isMobile){
+            this.handleTouchRotation();
+        } else {
+            this.handleMouseRotation();
+        }
         //UI
         this.setupUI();
 
@@ -462,6 +473,45 @@ class App{
         console.log('✅ Background music setup');
     }
 
+    setupMouseControls(){
+        window.addEventListener('wheel', this.handleScroll.bind(this));
+        console.log('✅ Controls setup for PC');
+    }
+    setupTouchControls(){
+        let touchStartY = 0;
+        let touchStartX = 0;
+        
+        // Touch start
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        
+        // Touch move
+        window.addEventListener('touchmove', (e) => {
+            const touchY = e.touches[0].clientY;
+            const touchX = e.touches[0].clientX;
+            
+            const deltaY = touchStartY - touchY;
+            const deltaX = touchStartX - touchX;
+            
+            
+            if(currentState === 0){
+                this.handleScrollByValue(deltaX);
+            }
+            else if(currentState === 1){
+                this.handleScrollByValue(-deltaY);
+            }
+
+            touchStartY = touchY;
+            touchStartX = touchX;
+            
+            //console.log('👆 Touch scroll:', this.targetScroll.toFixed(2));
+        }, { passive: true });
+
+        console.log('✅ Controls setup for Mobile');
+    }
+
     /*************************************
      ************** SOUNDS
     **************************************/
@@ -707,14 +757,19 @@ class App{
     /*************************************
      ************** SCROLL 
     **************************************/
+    //Desktop
     handleScroll (e){
+        this.handleScrollByValue(e.deltaY);
+    }
+
+    handleScrollByValue(scrollValue){
         if(currentState === 0){
-            this.scrollSceneAmount += e.deltaY * SCROLL_SPEED;
+            this.scrollSceneAmount += scrollValue * SCROLL_SPEED;
             this.scrollSceneAmount = Math.max(0, Math.min(1, this.scrollSceneAmount));
             this.setScenesTargetX();
         }
         else if(currentState === 1){
-            scrollProjectAmount += e.deltaY * SCROLL_SPEED;
+            scrollProjectAmount += scrollValue * SCROLL_SPEED;
             scrollProjectAmount = Math.max(scrollProjectAmount, 0); //min value = 0
             scrollProjectAmount = Math.min(scrollProjectAmount, SCROLL_PROJECT_MAX_MULTIPLIER * (projectsVisible.size - 1)); //max value = scrollMultiplier * nbr de projets
         }
@@ -1036,6 +1091,51 @@ class App{
     }
 
     /*************************************
+     ************** CAMERA MVT 
+    **************************************/
+
+     //Camera mvt to follow mouse
+    handleMouseRotation(){
+         window.addEventListener('mousemove', (event) => {
+            //store mouse position
+            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            //Do raycaster
+            this.raycaster.setFromCamera(this.mouse, this.camera);
+
+            //Manage cammera rotation
+            const maxRotation = CAMERA_ROT_AMPLITUDE * Math.PI / 180; //radians
+            this.targetCameraRotation.x = this.mouse.y * maxRotation; // Haut/Bas
+            this.targetCameraRotation.y = - this.mouse.x * maxRotation; // Gauche/Droite
+        });
+    }
+    handleTouchRotation(){
+        window.addEventListener('touchmove', (event) => {
+            if(currentState === 1){ 
+                this.targetCameraRotation.x = 0;
+                this.targetCameraRotation.y = 0;
+                return;
+            }
+
+            // Utilise la position du doigt
+            const touch = event.touches[0];
+            this.mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+            
+            const maxRotation = Math.PI / 18;
+            this.targetCameraRotation.x = this.mouse.y * maxRotation;
+            this.targetCameraRotation.y = this.mouse.x * maxRotation;
+        }, { passive: true });
+        
+        // Reset la rotation quand on relâche
+        window.addEventListener('touchend', () => {
+            this.targetCameraRotation.x = 0;
+            this.targetCameraRotation.y = 0;
+        });
+    }
+
+    /*************************************
      ************** CLICK 
     **************************************/
     //click detection
@@ -1109,21 +1209,6 @@ class App{
 
             this.showProjectModal(clickedObj.userData.project);
         } 
-    }
-
-    //Camera mvt to follow mouse
-    handleMouseMove(event){
-        //store mouse position
-        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-        //Do raycaster
-        this.raycaster.setFromCamera(this.mouse, this.camera);
-
-        //Manage cammera rotation
-        const maxRotation = CAMERA_ROT_AMPLITUDE * Math.PI / 180; //radians
-        this.targetCameraRotation.x = this.mouse.y * maxRotation; // Haut/Bas
-        this.targetCameraRotation.y = - this.mouse.x * maxRotation; // Gauche/Droite
     }
 
     onChangeState(newState, fromLoadURL){
@@ -1404,7 +1489,6 @@ class App{
     }
 
     updateSceneMovements(){
-        //this.camera.position.x += (this.targetScenesX - this.camera.position.x) * SCENES_SPEED;
         if(this.sceneContainer){
             let currentPos = this.sceneContainer.position;
             let targetPos = new THREE.Vector3(-this.targetScenesX ,0, this.targetScenesZ);
