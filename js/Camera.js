@@ -1,5 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-
+import { AppContext } from './AppContext.js';
 //CAMERA
 const CAMERA_POS_Y = 1.5;
 const CAMERA_POS_Z = 3.0;
@@ -11,17 +11,15 @@ export class Camera{
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
 		this.camera.position.set( 0, CAMERA_POS_Y, CAMERA_POS_Z );
 
-        //Camera mvts
-        this.targetCameraRotation = new THREE.Vector2();
+        
 
         //Click detection
-        this.raycaster = new THREE.Raycaster();
-        this.mouse = new THREE.Vector2();
         window.addEventListener('click', this.handleClickDetection.bind(this));
         
 
-        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        if(this.isMobile){
+        //Camera mvts
+        this.targetCameraRotation = new THREE.Vector2();
+        if(AppContext.isMobile){
             this.handleTouchRotation();
         } else {
             this.handleMouseRotation();
@@ -43,18 +41,19 @@ export class Camera{
     handleMouseRotation(){
          window.addEventListener('mousemove', (event) => {
             //store mouse position
-            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            AppContext.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            AppContext.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
             //Do raycaster
-            this.raycaster.setFromCamera(this.mouse, this.camera);
+            AppContext.raycaster.setFromCamera(AppContext.mouse, this.camera);
 
             //Manage cammera rotation
             const maxRotation = CAMERA_ROT_AMPLITUDE * Math.PI / 180; //radians
-            this.targetCameraRotation.x = this.mouse.y * maxRotation; // Haut/Bas
-            this.targetCameraRotation.y = - this.mouse.x * maxRotation; // Gauche/Droite
+            this.targetCameraRotation.x = AppContext.mouse.y * maxRotation; // Haut/Bas
+            this.targetCameraRotation.y = - AppContext.mouse.x * maxRotation; // Gauche/Droite
         });
     }
+
     handleTouchRotation(){
         window.addEventListener('touchmove', (event) => {
             if(currentState === 1){ 
@@ -65,12 +64,12 @@ export class Camera{
 
             // Utilise la position du doigt
             const touch = event.touches[0];
-            this.mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
-            this.mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+            AppContext.mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+            AppContext.mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
             
             const maxRotation = Math.PI / 18;
-            this.targetCameraRotation.x = this.mouse.y * maxRotation;
-            this.targetCameraRotation.y = this.mouse.x * maxRotation;
+            this.targetCameraRotation.x = AppContext.mouse.y * maxRotation;
+            this.targetCameraRotation.y = AppContext.mouse.x * maxRotation;
         }, { passive: true });
         
         // Reset la rotation quand on relâche
@@ -86,7 +85,7 @@ export class Camera{
     //click detection
     handleClickDetection(event){
         // Lance le rayon
-        this.raycaster.setFromCamera(this.mouse, this.camera);
+        AppContext.raycaster.setFromCamera(AppContext.mouse, this.camera);
     }
 
     /*************************************

@@ -7,6 +7,8 @@ import { GammaCorrectionShader } from 'https://cdn.jsdelivr.net/npm/three@0.160.
 import { SMAAPass } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/SMAAPass.js';
 import { RGBELoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/RGBELoader.js';
 
+import { AppContext } from './AppContext.js';
+
 export class Renderer{
 	constructor(scene, camera){
         this.scene = scene;
@@ -42,6 +44,8 @@ export class Renderer{
     **************************************/
     
     get instance() { return this.renderer; }
+
+    get outline() { return this.outlinePass; }
 
     /*************************************
      ************** INIT  
@@ -127,6 +131,7 @@ export class Renderer{
         this.outlinePass.renderToScreen = true;
 
         this.composer.addPass(this.outlinePass);
+        AppContext.outlinePass = this.outlinePass;
 
         //Gamma Correction
         const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);

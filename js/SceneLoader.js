@@ -1,22 +1,14 @@
-/*
-import * as THREE from 'three';
-import { GLTFLoader } from '../libs/three/examples/jsm/loaders/GLTFLoader.js';
-import { DRACOLoader } from '../libs/three/examples/jsm/loaders/DRACOLoader.js';
-import { RGBELoader } from '../libs/three/examples/jsm/loaders/RGBELoader.js';
-import { LoadingBar } from '../libs/LoadingBar.js';
-import { EffectComposer } from '../libs/three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from '../libs/three/examples/jsm/postprocessing/RenderPass.js';
-import { OutlinePass } from '../libs/three/examples/jsm/postprocessing/OutlinePass.js';
-import { ShaderPass } from '../libs/three/examples/jsm/postprocessing/ShaderPass.js';
-import { GammaCorrectionShader } from '../libs/three/examples/jsm/shaders/GammaCorrectionShader.js';
-import { SMAAPass } from '../libs/three/examples/jsm/postprocessing/SMAAPass.js';
-*/
-
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/DRACOLoader.js';
 import { LoadingBar } from '../libs/LoadingBar.js';
+import { AppContext } from './AppContext.js';
 
+//MVT SCENES
+const SCENES_MIN_X = -1;
+const SCENES_MAX_X = 18;
+const SCROLL_SPEED = 0.0005;
+const ANIMATION_SCENES_LERP_RATIO = 0.05;
 
 //PROJECT
 let scrollProjectAmount = 0;
@@ -33,32 +25,15 @@ const ANIMATION_PROJECT_X_POS_MULTIPLIER = 1.5;
 const ANIMATION_PROJECT_Z_ROT_MULTIPLIER = -0.5;
 const ANIMATION_PROJECT_LERP_RATIO = 0.08;
 
-let scenesMeshes = [];
-let projectsMeshes = [];
+//let scenesMeshes = [];
+//let projectsMeshes = [];
 let projectsMeshes_Childrens = [];
-let projectMap = new Map();
-let projectsVisible = new Map();
+//let projectMap = new Map();
+//let projectsVisible = new Map();
 let projectsData = [];
-
-let currentState = 0; 
-//0 = scenes
-//1 = projects
-let isModalProjectVisible = false;
-let isProjectInstancied = false;
 
 //Filters
 const allTags = new Set();
-
-//Used for outline
-//Chaque pair, l'outline s'applique sur le premier
-const INTERACTIVES_NAMES = [
-    'Click_AR_1', 'Click_AR_2',
-    'Click_VR_1', 'Click_VR_2',
-    'Click_MR_1', 'Click_MR_2',
-    'Click_Game_1', 'Click_Game_2',
-    'Cube016', 'Cube016_1',
-    'Click_Linkedin', 'Click_Linkedin001'
-];
 
 const SHADOW_CASTER_OBJS = [
     'Desk',
@@ -106,32 +81,34 @@ const SHADOW_RECEIVER_OBJS = [
 ];
 
 export class SceneLoader{
-	constructor(scene){
-        this.scene = scene;
+	constructor(scene, renderer){
+        this.scene    = scene;
+        this.renderer = renderer;
 
-		
-		
-        //this.loadingBar = new LoadingBar();
+        this.loadingBar = new LoadingBar();
 
         //Create container for scenes and projects
         this.sceneContainer = null;
         this.projectContainer = null;
         this.createContainers();
 
-        //Load multiple GLTF scenes
-        this.frameAR = null;
-        this.frameVR = null;
-        this.frameMR = null;
-        this.frameGame = null;
-        this.frameCV = null;
-        this.frameLinkedin = null;
-        this.loadGLTFs();
+        // Initialisation du loader
+        this.loader = new GLTFLoader().setPath('../../assets/');
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath('../../libs/three/examples/jsm/libs/draco/');
+        this.loader.setDRACOLoader(dracoLoader);
 
-        //Scene mvts
-        this.targetScenesX = 0;
-        this.targetScenesZ = 0;
-        this.scrollSceneAmount = 0;
-        this.targetScroll = 0;
+        //this.loadGLTFs();
+
+        
+        /* DOESNT WORK
+        this.load('scene1', 0, () => {
+            //console.log(this.renderer);
+            this.renderer.startLoop(this.renderer.renderer.render.bind(this));
+        });
+        */
+
+        console.log('✅ SceneLoader ready');
     }
 
     /*************************************
@@ -148,14 +125,126 @@ export class SceneLoader{
         this.projectContainer.position.set(0, 0, 0);
         this.projectContainer.name = 'ProjectContainer';
         this.scene.add(this.projectContainer);
+
+        AppContext.sceneContainer =  this.sceneContainer;
+        AppContext.projectContainer =  this.projectContainer;
         
         console.log('✅ Containers created');
     }
 
-        /*************************************
+    generateTagButtons(){
+        // Crée les boutons
+        const tagContainer = document.getElementById('tag-filters');
+        tagContainer.innerHTML = '';
+        
+        allTags.forEach(tag => {
+            const button = document.createElement('button');
+            button.className = 'tag-filter';
+            button.textContent = tag;
+            button.dataset.tag = tag;
+            
+            button.addEventListener('click', () => {
+                this.toggleTagFilter(tag, button);
+            });
+            
+            tagContainer.appendChild(button);
+        });
+        
+        console.log('✅ Tags générés:', allTags.size);
+    }
+
+    /*************************************
      ************** LOAD 
     **************************************/
-    
+
+    load(name, index, onLoaded) {
+        this.loader.load(
+            (name ? name : 'scene1_blank') + '.glb',
+            (gltf) => this._onLoaded(gltf, name, index, onLoaded),
+            (xhr)  => this._onProgress(xhr),
+            (err)  => this._onError(err)
+        );
+    }
+
+    /*************************************
+     ************** CALLBACKS
+    **************************************/
+
+    _onLoaded(gltf, name, index, onLoaded) {
+        const root = gltf.scene;
+
+        this.sceneObj = gltf.scene;
+        this.sceneObj.rotation.set(0, 0, 0);
+        this.sceneObj.position.set(6 * index,0,0);
+        //this.scene.add( gltf.scene );
+        this.sceneContainer.add(gltf.scene); //sceneContainer = parent
+        this.loadingBar.visible = false;
+
+        //Make material transparent
+        gltf.scene.traverse((child) => {
+            if (child.isMesh) {
+                //Need to have to fade in/out
+                child.material.transparent = true;
+
+                //To have the good ouline
+                switch(child.name){
+                    case AppContext.INTERACTIVES_NAMES[0]:
+                        AppContext.frameAR = child;
+                        break;
+                    case AppContext.INTERACTIVES_NAMES[2]:
+                        AppContext.frameVR = child;
+                        break;
+                    case AppContext.INTERACTIVES_NAMES[4]:
+                        AppContext.frameMR = child;
+                        break;
+                    case AppContext.INTERACTIVES_NAMES[6]:
+                        AppContext.frameGame = child;
+                        break;
+                    case AppContext.INTERACTIVES_NAMES[8]:
+                        AppContext.frameCV = child;
+                        break;
+                    case AppContext.INTERACTIVES_NAMES[10]:
+                        AppContext.frameLinkedin = child;
+                        break;
+                    default:
+                        break;
+                }
+
+                //Add Shadows casters on some objects
+                if(SHADOW_CASTER_OBJS.includes(child.name)){
+                    child.castShadow = true;
+                }
+
+                //Add Shadows receivers on some objects
+                if(SHADOW_RECEIVER_OBJS.includes(child.name)){
+                    child.receiveShadow = true;
+                }
+            }
+        });
+
+        //Add to array
+        AppContext.scenesMeshes.push(gltf.scene);
+        //console.log(`Scene ${name} loaded`);
+
+        console.log(`✅ Scene "${name}" loaded`);
+
+        // Callback appelé dans App (ex: démarrer le render loop)
+        if (onLoaded) onLoaded(gltf);
+    }
+
+    _onProgress(xhr) {
+        const progress = xhr.loaded / xhr.total;
+        //if (onProgress) onProgress(progress);
+    }
+
+    _onError(err) {
+        console.error('❌ SceneLoader error :', err.message);
+    }
+
+    /*************************************
+     ************** LOAD 
+    **************************************/
+
     // Load multiple GLTF scenes
     async loadGLTFs(){
         // Scenes
@@ -165,15 +254,10 @@ export class SceneLoader{
        this.loadGLTFScene('scene4', 3);
        
         //Projects
-        await this.loadProjects();
+        //await this.loadProjects();
     }
 
     loadGLTFScene(name, index){
-        const loader = new GLTFLoader( ).setPath('../../assets/');
-        const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath( '../../libs/three/examples/jsm/libs/draco/' );
-        loader.setDRACOLoader( dracoLoader );
-
 		// Load a glTF resource
 		loader.load(
 			// resource URL
@@ -196,23 +280,23 @@ export class SceneLoader{
 
                         //To have the good ouline
                         switch(child.name){
-                            case INTERACTIVES_NAMES[0]:
-                                this.frameAR = child;
+                            case AppContext.INTERACTIVES_NAMES[0]:
+                                AppContext.frameAR = child;
                                 break;
-                            case INTERACTIVES_NAMES[2]:
-                                this.frameVR = child;
+                            case AppContext.INTERACTIVES_NAMES[2]:
+                                AppContext.frameVR = child;
                                 break;
-                            case INTERACTIVES_NAMES[4]:
-                                this.frameMR = child;
+                            case AppContext.INTERACTIVES_NAMES[4]:
+                                AppContext.frameMR = child;
                                 break;
-                            case INTERACTIVES_NAMES[6]:
-                                this.frameGame = child;
+                            case AppContext.INTERACTIVES_NAMES[6]:
+                                AppContext.frameGame = child;
                                 break;
-                            case INTERACTIVES_NAMES[8]:
-                                this.frameCV = child;
+                            case AppContext.INTERACTIVES_NAMES[8]:
+                                AppContext.frameCV = child;
                                 break;
-                            case INTERACTIVES_NAMES[10]:
-                                this.frameLinkedin = child;
+                            case AppContext.INTERACTIVES_NAMES[10]:
+                                AppContext.frameLinkedin = child;
                                 break;
                             default:
                                 break;
@@ -231,7 +315,7 @@ export class SceneLoader{
                 });
 
                 //Add to array
-                scenesMeshes.push(gltf.scene);
+                AppContext.scenesMeshes.push(gltf.scene);
                 //console.log(`Scene ${name} loaded`);
 			},
 			// called while loading is progressing
@@ -289,11 +373,11 @@ export class SceneLoader{
         setTimeout(() => {
             //Sort the map
             const sortedMap = new Map(
-                [...projectMap.entries()].sort((a, b) => a[0] - b[0])
+                [...AppContext.projectMap.entries()].sort((a, b) => a[0] - b[0])
             );
-            projectMap = sortedMap;
+            AppContext.projectMap = sortedMap;
             isProjectInstancied = true;
-            this.applyFilters(false);
+            //this.applyFilters(false); //TODO
 
             // Génère les boutons de tags
             this.generateTagButtons();
@@ -303,11 +387,6 @@ export class SceneLoader{
     }
     
     loadProjectGLTF(project, index){
-        const loader = new GLTFLoader( ).setPath('../../assets/');
-        const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath( '../../libs/three/examples/jsm/libs/draco/' );
-        loader.setDRACOLoader( dracoLoader );
-
 
 		// Load a glTF resource
 		loader.load(
@@ -360,10 +439,10 @@ export class SceneLoader{
                 });
 
                 //Add to array
-                projectsMeshes.push(gltf.scene);
-                projectsMeshes_Childrens.push(placeholderObj);
-                projectsMeshes_Childrens.push(frameObj);
-                projectMap.set(index, gltf.scene);
+                AppContext.projectsMeshes.push(gltf.scene);
+                AppContext.projectsMeshes_Childrens.push(placeholderObj);
+                AppContext.projectsMeshes_Childrens.push(frameObj);
+                AppContext.projectMap.set(index, gltf.scene);
 			},
 			// called while loading is progressing
 			xhr => {
@@ -429,12 +508,12 @@ export class SceneLoader{
     }
 
     findClosestProject(){
-        if(projectsVisible.size === 0) return "";
+        if(AppContext.projectsVisible.size === 0) return "";
         
         let closestProjectName = "";
         let minDistance = Infinity;
         
-        projectsVisible.forEach((projectParent, key) => {
+        AppContext.projectsVisible.forEach((projectParent, key) => {
             const projectInfos = projectParent.children[0].children[0].userData.project;
             
             // Calcule la distance par rapport à INITIAL_OFFSET_Z_PROJECTS
@@ -450,442 +529,10 @@ export class SceneLoader{
     }
 
     /*************************************
-     ************** CLICK 
-    **************************************/
-    //click detection
-    handleClickDetection(event){
-        // Lance le rayon
-        this.raycaster.setFromCamera(this.mouse, this.camera);
-
-        if(currentState === 0){ //CLICK ON ROOMS
-            this.handleClickDetectionsScenes(event);
-        }
-        else if(currentState === 1){ //CLICK ON PROJECT
-            this.handleClickDetectionsProjects(event);
-        } 
-    }
-
-    handleClickDetectionsScenes(event){
-        const intersects = this.raycaster.intersectObjects(scenesMeshes);
-        if(intersects.length > 0){
-            const clickedObj = intersects[0].object;
-            //console.log('🎯 Object clicked:', clickedObj.name);
-            
-            switch(clickedObj.name){
-                case 'Cube016_1':
-                case 'Cube016':
-                    console.log('Ouverture du PDF');
-                    //Le '_blank' ouvre dans un nouvel onglet. Si tu veux ouvrir dans la même fenêtre, utilise '_self'.
-                    window.open('../../assets/PierreGalus_CV_XRDeveloper.pdf', '_blank');
-                    break;
-                case "Click_AR_1":
-                case "Click_AR_2":
-                    this.resetFilters();
-                    this.toggleTagFilter('AR', this.getButtonFilterByTag("AR"));
-                    this.onChangeState(1, false);
-                    console.log('Click_AR');
-                    break;
-                case "Click_VR_1":
-                case "Click_VR_2":
-                    this.resetFilters();
-                    this.toggleTagFilter('VR', this.getButtonFilterByTag("VR"));
-                    this.onChangeState(1, false);
-                    console.log('Click_VR');
-                    break;
-                case "Click_MR_1":
-                case "Click_MR_2":
-                    this.resetFilters();
-                    this.onChangeState(1, false);
-                    console.log('Click_MR');
-                    break;
-                case "Click_Game_1":
-                case "Click_Game_2":
-                    this.resetFilters();
-                    this.toggleTagFilter('Games', this.getButtonFilterByTag("Games"));
-                    this.onChangeState(1, false);
-                    console.log('Click_Game');
-                    break;
-                case INTERACTIVES_NAMES[10]: //Linkedin
-                case INTERACTIVES_NAMES[11]:
-                    console.log('Linkedin');
-                    window.open('https://www.linkedin.com/in/pierregalus/', '_blank');
-                    break;
-            }
-        } 
-    }
-
-    handleClickDetectionsProjects(event){
-        if(isModalProjectVisible){ return; }
-        const intersectsProjects = this.raycaster.intersectObjects(projectsMeshes);
-        if(intersectsProjects.length > 0){
-            const clickedObj = intersectsProjects[0].object;
-            console.log('🎯 Project clicked2:', clickedObj.userData.project);
-
-            this.showProjectModal(clickedObj.userData.project);
-        } 
-    }
-
-    onChangeState(newState, fromLoadURL){
-        console.log('Change state : ' + newState);
-        currentState = newState;
-
-        if(newState === 0){
-            this.targetScenesZ = 0;
-            offsetZProjects = OFFSET_Z_PROJECTS_STATE_INVISIBLE;
-            scrollProjectAmount = 0;
-            this.fadeOutFilters();
-            this.switchMenus(TAG_CSS_PROJECTS, TAG_CSS_SCENES);
-            this.resetFilters();
-        }
-        else{
-            this.targetScenesZ = 10;
-            offsetZProjects = OFFSET_Z_PROJECTS_STATE_VISIBLE;
-            this.fadeInFilters();
-            this.switchMenus(TAG_CSS_SCENES, TAG_CSS_PROJECTS);
-        }
-        this.triggerFlash();
-    }
-
-    // Fonction pour déclencher le flash
-    triggerFlash(){
-        const flashOverlay = document.getElementById('flash-overlay');
-        
-        // Ajoute la classe
-        flashOverlay.classList.add('flash');
-        
-        // Retire la classe après l'animation
-        setTimeout(() => {
-            flashOverlay.classList.remove('flash');
-        }, 1100); // Durée de l'animation
-
-        this.playSFXFlash();
-        
-        console.log('⚡ Flash!');
-    }
-
-    /*************************************
-     ************** URL 
-    **************************************/
-    updateURL(){
-        const params = new URLSearchParams();
-        
-        // Ajoute la recherche
-        if(this.activeFilters.searchText){
-            params.set('search', this.activeFilters.searchText);
-        }
-        
-        // Ajoute les tags
-        if(this.activeFilters.tags.size > 0){
-            params.set('tags', [...this.activeFilters.tags].join(','));
-        }
-        
-        // Ajoute le projet ouvert
-        if(isModalProjectVisible && this.currentProjectID != -1){
-            params.set('project', this.currentProjectID);
-        }
-        
-        // Construit la nouvelle URL
-        const newURL = params.toString() 
-            ? `${window.location.pathname}?${params.toString()}`
-            : window.location.pathname;
-        
-        // Met à jour l'URL sans recharger
-        window.history.pushState({}, '', newURL);
-        
-        console.log('🔗 URL mise à jour:', newURL);
-        //http://127.0.0.1:5501/complete/SitePerso/index.html?tags=MR&project=VR_1
-    }
-
-    loadFromURL(){
-        const params = new URLSearchParams(window.location.search);
-        
-        // Charge la recherche
-        const search = params.get('search');
-        if(search){
-            document.getElementById('search-input').value = search;
-            this.activeFilters.searchText = search.toLowerCase();
-        }
-        
-        // Charge les tags
-        const tags = params.get('tags');
-        if(tags){
-            const tagArray = tags.split(',');
-
-            console.log('📋 Tags depuis URL:', tagArray);
-
-            tagArray.forEach(tag => {
-                this.activeFilters.tags.add(tag);
-                
-                // Active visuellement le bouton
-                const button = this.getButtonFilterByTag(tag);
-                if(button) button.classList.add('active');
-            });
-        }
-        
-        // Applique les filtres
-        if(search || tags){
-            this.applyFilters(false);
-        }
-        
-        // Charge le projet si spécifié
-        const projectId = params.get('project');
-        if(projectId){
-            const project = projectsData.find(p => p.id === projectId);
-            if(project){
-                setTimeout(() => {
-                    this.showProjectModal(project);
-                }, 500); // Petit délai pour laisser charger
-            }
-        }
-
-        if(projectId || search || tags){
-            this.onChangeState(1, true);
-        }
-        
-        //To test
-        //http://127.0.0.1:5501/complete/SitePerso/index.html?tags=MR%2CVR&project=VR_1
-        console.log('📖 URL chargée');
-    }
-
-    /*************************************
      ************** UPDATE 
     **************************************/
-    
-    //Update
-	render( ) {   
-        const dt = this.clock.getDelta();
-
-        this.camera.update();
-        this.renderer.update();
-
-        //Fade scenes
-        this.manageRenderScenes();
-
-        //Hover scenes
-        this.manageHover();
-
-        //Mvt
-        this.updateMovements();
-
-        //Project name in state 1
-        this.updateCurrentProjectName();
-
-        //Particle systeme
-        this.updateMvtParticles();
+	update() {   
     }
 
-    //Manage fadeing of scenes based on camera position
-    manageRenderScenes(){
-        for(let i=0; i<scenesMeshes.length; i++){
-            const mesh = scenesMeshes[i];
-            const distanceToCamera = mesh.position.x - this.camera.position.x;
-            //const distanceToCamera = Math.abs(mesh.position.x - this.camera.position.x); //si on veut faire le fade des 2 côtés
-            
-            let opacity = 0;
-            if(distanceToCamera < FADE_START){
-                opacity = 1.0;
-            }
-            else if(distanceToCamera >= FADE_START && distanceToCamera < FADE_END){
-                opacity = 1.0 - (distanceToCamera - FADE_START) / (FADE_END - FADE_START);
-            }
-            else if(distanceToCamera >= FADE_END){
-                opacity = 0.0;
-            }
 
-            //TO REMOVE
-            opacity = 1;
-
-            mesh.traverse(child => {
-                if (child.isMesh) {
-                    child.material.opacity = opacity;
-                }
-            });
-
-            //position
-            mesh.position.y = (opacity - 1) * FADE_Y_OFFSET; // Move up when fading in
-
-        }
-    }
-
-    manageHover(){
-        if(currentState === 0){ //CLICK ON ROOMS
-            this.manageHoverScenes();
-        }
-        else if(currentState === 1){ //CLICK ON PROJECT
-            this.manageHoverProjects();
-        }
-    }
-
-    manageHoverScenes(){
-        const intersects = this.raycaster.intersectObjects(scenesMeshes);
-        
-        let foundInteractive = false;
-        this.outlinePass.selectedObjects = [];
-        if(intersects.length > 0){
-            const hoveredObject = intersects[0].object;
-            if(INTERACTIVES_NAMES.some(name => hoveredObject.name.includes(name))){
-                document.body.style.cursor = 'pointer';
-                foundInteractive = true;
-
-                switch(hoveredObject.name){
-                    case INTERACTIVES_NAMES[1]:
-                        this.outlinePass.selectedObjects = [this.frameAR];
-                        break;
-                    case INTERACTIVES_NAMES[3]:
-                        this.outlinePass.selectedObjects = [this.frameVR];
-                        break;
-                    case INTERACTIVES_NAMES[5]:
-                        this.outlinePass.selectedObjects = [this.frameMR];
-                        break;
-                    case INTERACTIVES_NAMES[7]:
-                        this.outlinePass.selectedObjects = [this.frameGame];
-                        break;
-                    case INTERACTIVES_NAMES[9]:
-                        this.outlinePass.selectedObjects = [this.frameCV];
-                        break;
-                    case INTERACTIVES_NAMES[11]:
-                        this.outlinePass.selectedObjects = [this.frameLinkedin];
-                        break;
-                    default:
-                        this.outlinePass.selectedObjects = [hoveredObject];
-                        break;
-                }
-                
-                //console.log('🖱️ Hover:', hoveredObject.name);
-            }
-        } 
-
-        if(!foundInteractive){
-            document.body.style.cursor = 'default';
-        }
-    }
-
-    manageHoverProjects(){
-        const intersects = this.raycaster.intersectObjects(projectsMeshes);
-        
-        let foundInteractive = false;
-        this.outlinePass.selectedObjects = [];
-        if(intersects.length > 0){
-            const hoveredObject = intersects[0].object;
-            document.body.style.cursor = 'pointer';
-            foundInteractive = true;
-            //this.outlinePass.selectedObjects = [hoveredObject]; //To add glow
-        } 
-
-        if(!foundInteractive){
-            document.body.style.cursor = 'default';
-        }
-    }
-
-    updateMovements(){
-        //MOVE ROOMS
-        this.updateSceneMovements();
-        //MOVE PROJECTS
-        this.updateProjectMovements();
-    }
-
-    updateSceneMovements(){
-        if(this.sceneContainer){
-            let currentPos = this.sceneContainer.position;
-            let targetPos = new THREE.Vector3(-this.targetScenesX ,0, this.targetScenesZ);
-            let lerpedPos = currentPos.lerp(targetPos, ANIMATION_SCENES_LERP_RATIO);
-        }
-    }
-
-    updateProjectMovements(){
-        if(!isProjectInstancied) {return;}
-        
-        projectsVisible.forEach((projectParent, key, map) => {
-        //projectMeshesSorted.forEach((mesh, index) => {
-            let defaultY = INITIAL_OFFSET_Y_PROJECTS + INTERVALLE_Y_PROJECTS * key;
-            let defaultZ = offsetZProjects + INTERVALLE_Z_PROJECTS * (- key);
-            
-            let newPosY = defaultY - INTERVALLE_Y_PROJECTS * scrollProjectAmount * SCROLL_PROJECT_MULTIPLIER;
-            let newPosZ = defaultZ + INTERVALLE_Z_PROJECTS * scrollProjectAmount * SCROLL_PROJECT_MULTIPLIER;
-            
-            let newPosX = 0;
-            let newRotZ = 0;
-            if(newPosZ > offsetZProjects){
-                newPosX = (offsetZProjects - newPosZ) * ANIMATION_PROJECT_X_POS_MULTIPLIER;
-                newRotZ = (offsetZProjects - newPosZ) * ANIMATION_PROJECT_Z_ROT_MULTIPLIER;
-                if(key%2===0){
-                    newPosX *= -1;
-                    newRotZ *= -1;
-                }
-            }
-
-            let currentPos = projectParent.position;
-            let currentRot = new THREE.Vector3(
-                projectParent.rotation.x,
-                projectParent.rotation.y, 
-                projectParent.rotation.z
-            );
-
-            let targetPos = new THREE.Vector3(newPosX ,newPosY, newPosZ);
-            let targetRot = new THREE.Vector3(0 ,0, newRotZ);
-
-            let lerpedPos = currentPos.lerp(targetPos, ANIMATION_PROJECT_LERP_RATIO);
-            let lerpedRot = currentRot.lerp(targetRot, ANIMATION_PROJECT_LERP_RATIO);
-
-            projectParent.position.set(
-                lerpedPos.x,
-                lerpedPos.y,
-                lerpedPos.z
-            );
-            
-            projectParent.rotation.set(
-                lerpedRot.x,
-                lerpedRot.y,
-                lerpedRot.z
-            );
-        });
-    }
-
-    updateCurrentProjectName(){
-        const projectNameElement = document.getElementById('project-name');
-        let closestProjectName = "";
-        if(currentState === 1){
-            closestProjectName = this.findClosestProject(); 
-        }
-        
-        if(closestProjectName !== ""){
-            // Update seulement si le nom a changé
-            if(this.currentProjectName !== closestProjectName){
-                this.currentProjectName = closestProjectName;
-                projectNameElement.textContent = closestProjectName;
-                projectNameElement.classList.add('visible');
-            }
-        } else {
-            // Aucun projet visible
-            if(this.currentProjectName !== ''){
-                this.currentProjectName = '';
-                projectNameElement.classList.remove('visible');
-            }
-        }
-    }
-
-    updateMvtParticles(){
-        if(this.particles){
-            additionalRotY += PARTICLES_ROTATION_SPEED;
-            this.particles.rotation.y = scrollProjectAmount * 0.5 + additionalRotY;
-            
-            // Mouvement flottant
-            const positions = this.particles.geometry.attributes.position.array;
-            for(let i = 0; i < positions.length; i += 3){
-                positions[i + 1] += Math.sin(Date.now() * 0.001 + i) * PARTICLES_POSITION_AMPLITUDE;
-            }
-            this.particles.geometry.attributes.position.needsUpdate = true;
-        }
-    }
-
-    debugSceneHierarchy(){
-        console.log('🌳 Hiérarchie:');
-        console.log('Scene principale');
-        console.log('└── SceneContainer', this.sceneContainer.position);
-        this.sceneContainer.children.forEach((child, i) => {
-            console.log('    └── Scène', i, child.position);
-        });
-    }
 }
-
-export { App };
