@@ -14,9 +14,8 @@ const ANIMATION_SCENES_LERP_RATIO = 0.05;
 let scrollProjectAmount = 0;
 const INITIAL_OFFSET_Y_PROJECTS = 1.5; 
 const INTERVALLE_Y_PROJECTS = 0.3;
-const OFFSET_Z_PROJECTS_STATE_VISIBLE = 0;
-const OFFSET_Z_PROJECTS_STATE_INVISIBLE = -10;
-let offsetZProjects = OFFSET_Z_PROJECTS_STATE_INVISIBLE;
+
+
 const INTERVALLE_Z_PROJECTS = 1;
 const SCROLL_PROJECT_MULTIPLIER = 10;
 const SCROLL_PROJECT_MAX_MULTIPLIER = 0.1;
@@ -25,11 +24,6 @@ const ANIMATION_PROJECT_X_POS_MULTIPLIER = 1.5;
 const ANIMATION_PROJECT_Z_ROT_MULTIPLIER = -0.5;
 const ANIMATION_PROJECT_LERP_RATIO = 0.08;
 
-//let scenesMeshes = [];
-//let projectsMeshes = [];
-let projectsMeshes_Childrens = [];
-//let projectMap = new Map();
-//let projectsVisible = new Map();
 let projectsData = [];
 
 //Filters
@@ -81,11 +75,10 @@ const SHADOW_RECEIVER_OBJS = [
 ];
 
 export class SceneLoader{
-	constructor(scene, renderer){
+	constructor(scene, filterUI){
         this.scene    = scene;
-        this.renderer = renderer;
 
-        this.loadingBar = new LoadingBar();
+        AppContext.loadingBar = new LoadingBar();
 
         //Create container for scenes and projects
         this.sceneContainer = null;
@@ -98,15 +91,10 @@ export class SceneLoader{
         dracoLoader.setDecoderPath('../../libs/three/examples/jsm/libs/draco/');
         this.loader.setDRACOLoader(dracoLoader);
 
-        //this.loadGLTFs();
+        // Un objet pour stocker la progression de chaque GLB
+        this._progress = {};
 
-        
-        /* DOESNT WORK
-        this.load('scene1', 0, () => {
-            //console.log(this.renderer);
-            this.renderer.startLoop(this.renderer.renderer.render.bind(this));
-        });
-        */
+        this.loadGLTFs(filterUI);
 
         console.log('✅ SceneLoader ready');
     }
@@ -132,7 +120,7 @@ export class SceneLoader{
         console.log('✅ Containers created');
     }
 
-    generateTagButtons(){
+    generateTagButtons(filterUI){
         // Crée les boutons
         const tagContainer = document.getElementById('tag-filters');
         tagContainer.innerHTML = '';
@@ -144,7 +132,8 @@ export class SceneLoader{
             button.dataset.tag = tag;
             
             button.addEventListener('click', () => {
-                this.toggleTagFilter(tag, button);
+                //AppContext.filterUI.toggleTagFilter(tag, button);
+                filterUI.toggleTagFilter(tag, button);
             });
             
             tagContainer.appendChild(button);
@@ -156,12 +145,87 @@ export class SceneLoader{
     /*************************************
      ************** LOAD 
     **************************************/
+    // Load multiple GLTF scenes and projects
+    async loadGLTFs(filterUI){
+        // Scenes
+        for(let i = 0; i<4; i++){
+            const nameScene = 'scene' + (i+1);
+            this.loadScene(nameScene, i);
+        }
+        
+        //Projects
+        await this.loadProjectsData();
 
-    load(name, index, onLoaded) {
+        projectsData.forEach((projectData, index) => {
+            this.loadProject(projectData, index);
+        });
+
+        await this.sortProjects(filterUI);
+    }
+
+    async loadProjectsData(){
+        try {
+            // Charge la liste des projets
+            const response = await fetch('../../assets/projects/index.json');
+            const data = await response.json();
+            
+            // Charge les infos de chaque projet
+            for(const project of data.projects){
+                const folder = `${project.id}`.slice(0, 2)
+                
+                projectsData.push({
+                    ...project,
+                    logoPath: '../../assets/projects/'+ folder +"/"+ project.name + '/icon.png',
+                    videoPath: '../../assets/projects/'+ folder +"/"+ project.name + '/preview.mp4'
+                });
+
+                if(project.tags){
+                    project.tags.forEach(tag => allTags.add(tag));
+                }
+            }
+            
+            console.log('✅ Projets chargés:', projectsData);
+            
+        } catch(error){
+            console.error('❌ Erreur chargement:', error);
+        }
+    }
+
+    async sortProjects(filterUI){
+        setTimeout(() => {
+            //Sort the map
+            const sortedMap = new Map(
+                [...AppContext.projectMap.entries()].sort((a, b) => a[0] - b[0])
+            );
+            AppContext.projectMap = sortedMap;
+            //this.applyFilters(false); //TODO
+
+            // Génère les boutons de tags
+            this.generateTagButtons(filterUI);
+        }, 200);
+    }
+
+    /*************************************
+     ************** Loaders
+    **************************************/
+    loadScene(name, index, onLoaded) {
+        this._progress[name] = 0;
+
         this.loader.load(
             (name ? name : 'scene1_blank') + '.glb',
-            (gltf) => this._onLoaded(gltf, name, index, onLoaded),
-            (xhr)  => this._onProgress(xhr),
+            (gltf) => this._onLoadedScene(gltf, name, index, onLoaded),
+            (xhr)  => this._onProgress(xhr, name),
+            (err)  => this._onError(err)
+        );
+    }
+
+    loadProject(projectData, index, onLoaded) {
+        this._progress[projectData.name] = 0;
+
+        this.loader.load(
+            'instanceProject.glb',
+            (gltf) => this._onLoadedProject(gltf, index, projectData, onLoaded),
+            (xhr)  => this._onProgress(xhr, projectData.name),
             (err)  => this._onError(err)
         );
     }
@@ -169,16 +233,26 @@ export class SceneLoader{
     /*************************************
      ************** CALLBACKS
     **************************************/
+     _onProgress(xhr, name) {
+        this._progress[name] = xhr.loaded / xhr.total;
 
-    _onLoaded(gltf, name, index, onLoaded) {
+        // Calcule la moyenne globale de tous les GLB
+        const values    = Object.values(this._progress);
+        const total     = values.reduce((sum, v) => sum + v, 0);
+        const globalProgress = total / values.length;
+
+        // Met à jour la loading bar
+        AppContext.loadingBar.progress = globalProgress;
+
+        //console.log(`📦 ${name} : ${Math.round(globalProgress * 100)}%`);
+    }
+
+    _onLoadedScene(gltf, name, index, onLoaded) {
         const root = gltf.scene;
-
         this.sceneObj = gltf.scene;
         this.sceneObj.rotation.set(0, 0, 0);
         this.sceneObj.position.set(6 * index,0,0);
-        //this.scene.add( gltf.scene );
         this.sceneContainer.add(gltf.scene); //sceneContainer = parent
-        this.loadingBar.visible = false;
 
         //Make material transparent
         gltf.scene.traverse((child) => {
@@ -224,308 +298,81 @@ export class SceneLoader{
 
         //Add to array
         AppContext.scenesMeshes.push(gltf.scene);
-        //console.log(`Scene ${name} loaded`);
 
-        console.log(`✅ Scene "${name}" loaded`);
+        this._progress[name] = 1;
+        this.isAllLoaded();
+
+        //console.log(`✅ Scene "${name}" loaded`);
 
         // Callback appelé dans App (ex: démarrer le render loop)
         if (onLoaded) onLoaded(gltf);
     }
 
-    _onProgress(xhr) {
-        const progress = xhr.loaded / xhr.total;
-        //if (onProgress) onProgress(progress);
+    _onLoadedProject(gltf, index, projectData, onLoaded) {
+        this.sceneObj = gltf.scene;
+        this.sceneObj.rotation.set(0, 0, 0);
+        this.sceneObj.position.set(
+            0,
+            INITIAL_OFFSET_Y_PROJECTS + index * INTERVALLE_Y_PROJECTS,
+            AppContext.offsetZProjects - index * INTERVALLE_Z_PROJECTS
+        );
+        this.sceneObj.scale.set(0.6,0.6,0.6);
+        AppContext.scene.add( gltf.scene );
+
+        //Get objs
+        let frameObj = this.sceneObj.children[0].children[0];
+        let placeholderObj = this.sceneObj.children[0].children[1];
+
+        //To check multiple material 
+        const materialToChange = placeholderObj.material;
+
+        //Get logo texture
+        const srcLlogo = projectData.logoPath;
+        const textureLoader = new THREE.TextureLoader();
+
+        textureLoader.loadAsync(srcLlogo)
+        .then(texture => { // Use the texture
+            materialToChange.map = texture;
+        })
+        .catch(error => { // Path is invalid or image is inaccessible
+            console.error('Failed to load texture of ' + projectData.name + ' : ', error);
+        });
+        
+        //Make material transparent
+        gltf.scene.traverse((child) => {
+            if (child.isMesh) {
+                //Need to have to fade in/out
+                child.material.transparent = true;
+
+                //Store infos in 3D obj
+                child.userData.project = projectData
+            }
+        });
+
+        //Add to arrays
+        AppContext.projectsMeshes.push(gltf.scene);
+        AppContext.projectMap.set(index, gltf.scene);
+
+        this._progress[projectData.name] = 1;
+        this.isAllLoaded();
+
+        // Callback appelé dans App (ex: démarrer le render loop)
+        if (onLoaded) onLoaded(gltf);
     }
 
     _onError(err) {
         console.error('❌ SceneLoader error :', err.message);
     }
 
-    /*************************************
-     ************** LOAD 
-    **************************************/
-
-    // Load multiple GLTF scenes
-    async loadGLTFs(){
-        // Scenes
-       this.loadGLTFScene('scene1', 0);
-       this.loadGLTFScene('scene2', 1);
-       this.loadGLTFScene('scene3', 2);
-       this.loadGLTFScene('scene4', 3);
-       
-        //Projects
-        //await this.loadProjects();
-    }
-
-    loadGLTFScene(name, index){
-		// Load a glTF resource
-		loader.load(
-			// resource URL
-			(name ? name : 'scene1_blank') + '.glb',
-			// called when the resource is loaded
-			gltf => {
-                this.sceneObj = gltf.scene;
-                this.sceneObj.rotation.set(0, 0, 0);
-                this.sceneObj.position.set(6 * index,0,0);
-				//this.scene.add( gltf.scene );
-                this.sceneContainer.add(gltf.scene); //sceneContainer = parent
-                this.loadingBar.visible = false;
-                //this.renderer.setAnimationLoop(this.render.bind(this)); //TODO
-
-                //Make material transparent
-                gltf.scene.traverse((child) => {
-                    if (child.isMesh) {
-                        //Need to have to fade in/out
-                        child.material.transparent = true;
-
-                        //To have the good ouline
-                        switch(child.name){
-                            case AppContext.INTERACTIVES_NAMES[0]:
-                                AppContext.frameAR = child;
-                                break;
-                            case AppContext.INTERACTIVES_NAMES[2]:
-                                AppContext.frameVR = child;
-                                break;
-                            case AppContext.INTERACTIVES_NAMES[4]:
-                                AppContext.frameMR = child;
-                                break;
-                            case AppContext.INTERACTIVES_NAMES[6]:
-                                AppContext.frameGame = child;
-                                break;
-                            case AppContext.INTERACTIVES_NAMES[8]:
-                                AppContext.frameCV = child;
-                                break;
-                            case AppContext.INTERACTIVES_NAMES[10]:
-                                AppContext.frameLinkedin = child;
-                                break;
-                            default:
-                                break;
-                        }
-
-                        //Add Shadows casters on some objects
-                        if(SHADOW_CASTER_OBJS.includes(child.name)){
-                            child.castShadow = true;
-                        }
-
-                        //Add Shadows receivers on some objects
-                        if(SHADOW_RECEIVER_OBJS.includes(child.name)){
-                            child.receiveShadow = true;
-                        }
-                    }
-                });
-
-                //Add to array
-                AppContext.scenesMeshes.push(gltf.scene);
-                //console.log(`Scene ${name} loaded`);
-			},
-			// called while loading is progressing
-			xhr => {
-				this.loadingBar.progress = (xhr.loaded / xhr.total);
-			},
-			// called when loading has errors
-			err => {
-				console.error( err.message );
-			}  
-        );
-    }
-
-    /*************************************
-     ************** PROJECTS 
-    **************************************/
-
-    async loadProjects(){
-        try {
-            // Charge la liste des projets
-            const response = await fetch('../../assets/projects/index.json');
-            const data = await response.json();
-            
-            // Charge les infos de chaque projet
-            for(const project of data.projects){
-                const folder = `${project.id}`.slice(0, 2)
-                
-                projectsData.push({
-                    ...project,
-                    logoPath: '../../assets/projects/'+ folder +"/"+ project.name + '/icon.png',
-                    videoPath: '../../assets/projects/'+ folder +"/"+ project.name + '/preview.mp4'
-                });
-
-                if(project.tags){
-                    project.tags.forEach(tag => allTags.add(tag));
-                }
-            }
-            
-            console.log('✅ Projets chargés:', projectsData);
-            this.displayProjects();
-            
-        } catch(error){
-            console.error('❌ Erreur chargement:', error);
+    isAllLoaded(){
+        console.log()
+        const allLoaded = Object.values(this._progress).every(v => v === 1);
+        if (allLoaded) {
+            AppContext.loadingBar.visible = false;
+            AppContext.areProjectsLoaded = true;
+            AppContext.renderer.startLoop(AppContext.render);
+            console.log('✅ Tous les GLB chargés');
         }
-    }
-
-    displayProjects(){
-        // Crée les cubes/objets 3D pour chaque projet
-        projectsData.forEach((project, index) => {
-            this.loadProjectGLTF(project, index);
-        });
-
-        
-        // Tri du plus petit Z au plus grand Z
-        setTimeout(() => {
-            //Sort the map
-            const sortedMap = new Map(
-                [...AppContext.projectMap.entries()].sort((a, b) => a[0] - b[0])
-            );
-            AppContext.projectMap = sortedMap;
-            isProjectInstancied = true;
-            //this.applyFilters(false); //TODO
-
-            // Génère les boutons de tags
-            this.generateTagButtons();
-        }, 200);
-        
-        
-    }
-    
-    loadProjectGLTF(project, index){
-
-		// Load a glTF resource
-		loader.load(
-			// resource URL
-			'instanceProject.glb',
-			// called when the resource is loaded
-			gltf => {
-                this.sceneObj = gltf.scene;
-                this.sceneObj.rotation.set(0, 0, 0);
-                this.sceneObj.position.set(
-                    0,
-                    INITIAL_OFFSET_Y_PROJECTS + index * INTERVALLE_Y_PROJECTS,
-                    offsetZProjects - index * INTERVALLE_Z_PROJECTS
-                );
-                this.sceneObj.scale.set(0.6,0.6,0.6);
-				this.scene.add( gltf.scene );
-
-                this.loadingBar.visible = false;
-                //this.renderer.setAnimationLoop(this.render.bind(this)); //TODO
-
-                //Get objs
-                let frameObj = this.sceneObj.children[0].children[0];
-                let placeholderObj = this.sceneObj.children[0].children[1];
-
-                //To check multiple material 
-                const materialToChange = placeholderObj.material;
-
-                //Get logo texture
-                const srcLlogo = project.logoPath;
-                const textureLoader = new THREE.TextureLoader();
-
-                textureLoader.loadAsync(srcLlogo)
-                .then(texture => { // Use the texture
-                    materialToChange.map = texture;
-                })
-                .catch(error => { // Path is invalid or image is inaccessible
-                    console.error('Failed to load texture of ' + project.name + ' : ', error);
-                });
-                
-
-                //Make material transparent
-                gltf.scene.traverse((child) => {
-                    if (child.isMesh) {
-                        //Need to have to fade in/out
-                        child.material.transparent = true;
-
-                        //Store infos in 3D obj
-                        child.userData.project = project
-                    }
-                });
-
-                //Add to array
-                AppContext.projectsMeshes.push(gltf.scene);
-                AppContext.projectsMeshes_Childrens.push(placeholderObj);
-                AppContext.projectsMeshes_Childrens.push(frameObj);
-                AppContext.projectMap.set(index, gltf.scene);
-			},
-			// called while loading is progressing
-			xhr => {
-				this.loadingBar.progress = (xhr.loaded / xhr.total);
-			},
-			// called when loading has errors
-			err => {
-				console.error( err.message );
-			}  
-        );
-    }
-
-    showProjectModal(project){
-        isModalProjectVisible = true;
-        this.currentProjectID = project.id;
-
-        let tagHTML = '';
-        project.tags.forEach(newTag => {
-            tagHTML += `<p class="tag">${newTag}</p>`
-        });
-
-        // Crée une modal HTML avec la vidéo et description
-        const modal = document.createElement('div');
-        modal.id = 'project-modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>${project.name}</h2>
-                <div class="tags">
-                    ${tagHTML}
-                </div>
-                <video controls autoplay>
-                    <source src="${project.videoPath}" type="video/mp4">
-                </video>
-                <p class="description">${project.description}</p>
-                <div class="links">
-                    ${project.links.github ? `<a href="${project.links.github}" target="_blank">GitHub</a>` : ''}
-                    ${project.links.demo ? `<a href="${project.links.demo}" target="_blank">Demo</a>` : ''}
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-
-        this.bgMusic.volume = 0.0;
-        
-        // Fermeture
-        modal.querySelector('.close').onclick = () => {
-            document.body.removeChild(modal);
-            isModalProjectVisible = false;
-            this.currentProjectID = -1;
-
-            //Sound
-            this.bgMusic.volume = BACKGROUND_VOLUME;
-
-
-            //URL
-            this.updateURL();
-        };
-
-        //URL
-        this.updateURL();
-    }
-
-    findClosestProject(){
-        if(AppContext.projectsVisible.size === 0) return "";
-        
-        let closestProjectName = "";
-        let minDistance = Infinity;
-        
-        AppContext.projectsVisible.forEach((projectParent, key) => {
-            const projectInfos = projectParent.children[0].children[0].userData.project;
-            
-            // Calcule la distance par rapport à INITIAL_OFFSET_Z_PROJECTS
-            const distance = Math.abs(projectParent.position.z - offsetZProjects);
-
-            if(distance < minDistance){
-                minDistance = distance;
-                closestProjectName = projectInfos.name;
-            }
-        });
-        
-        return closestProjectName;
     }
 
     /*************************************

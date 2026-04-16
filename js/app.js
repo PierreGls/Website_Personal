@@ -33,7 +33,7 @@ const COLOR_BG = 0xaaaaaa;
 class App{
 	constructor(){
         AppContext.isMobile     = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        AppContext.isLoaded     = false;
+        AppContext.areScenesLoaded     = false;
         AppContext.currentState = 0;
         AppContext.raycaster    = new THREE.Raycaster();
         AppContext.mouse        = new THREE.Vector2();
@@ -45,36 +45,21 @@ class App{
         this.camera             = new Camera();
         AppContext.camera       = this.camera;
         this.renderer           = new Renderer(this.scene, this.camera.instance);
+        AppContext.render       = this.render.bind(this);;
         AppContext.renderer     = this.renderer;
         this.outlinePass        = this.renderer.outline;
-        this.scenesLoader       = new SceneLoader(this.scene, this.renderer);
         this.header             = new Header();
         AppContext.filterUI     = this.header;
+        this.scenesLoader       = new SceneLoader(this.scene, this.header);
         this.scroller           = new Scroller();
         this.particles          = new Particles();
         this.audio              = new Audio();
+        AppContext.audio        = this.audio;
         this.outline            = new Outline();
-        this.clickController    = new ClickController();
+        this.clickController    = new ClickController(); //NeedUI
         this.currentProjectName = new CurrentProjectName();
-        this.loadFromURL        = new LoadFromURL(); //TODO, once is done
-
-        this.scenesLoader.load('scene1', 0, () => {
-            //console.log(this.renderer);
-            this.renderer.startLoop(this.render.bind(this));
-        });
-        this.scenesLoader.load('scene2', 1, () => {
-            //console.log(this.renderer);
-            this.renderer.startLoop(this.render.bind(this));
-        });
-        this.scenesLoader.load('scene3', 2, () => {
-            //console.log(this.renderer);
-            this.renderer.startLoop(this.render.bind(this));
-        });
-        this.scenesLoader.load('scene4', 3, () => {
-            //console.log(this.renderer);
-            AppContext.isLoaded = true; //TODO MOVE
-            this.renderer.startLoop(this.render.bind(this));
-        });
+        this.loadFromURL        = new LoadFromURL(); //At the end
+        AppContext.urlManager   = this.loadFromURL;
     }
 
     /*************************************
@@ -91,6 +76,7 @@ class App{
         this.scroller.update();
         this.currentProjectName.update();
         this.outline.update();
+        this.header.update();
     }
 
     debugSceneHierarchy(){

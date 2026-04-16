@@ -3,17 +3,13 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 import { AppContext } from './AppContext.js';
 
 //UI
-const TAG_CSS_SCENES = 'menu-scenes';
-const TAG_CSS_PROJECTS = 'menu-projects';
 const DELAY_APPEARANCE_BUTTONS = 1000;//milliseconds
+const OFFSET_Z_PROJECTS_STATE_VISIBLE = 0;
+const OFFSET_Z_PROJECTS_STATE_INVISIBLE = -10;
 
 export class Header{
 	constructor(){
         //Filters
-        this.activeFilters = {
-            searchText: '',
-            tags: new Set()
-        };
         this.setupFilters();
 
         //Header
@@ -48,12 +44,12 @@ export class Header{
         //Anim current menu with delay
         setTimeout(() => {
             if(AppContext.currentState === 0){{
-                this.fadeInMenu(TAG_CSS_SCENES);
-                this.fadeOutMenu(TAG_CSS_PROJECTS);
+                this.fadeInMenu(AppContext.TAG_CSS_SCENES);
+                this.fadeOutMenu(AppContext.TAG_CSS_PROJECTS);
             }}
             else{
-                this.fadeOutMenu(TAG_CSS_SCENES);
-                this.fadeInMenu(TAG_CSS_PROJECTS);
+                this.fadeOutMenu(AppContext.TAG_CSS_SCENES);
+                this.fadeInMenu(AppContext.TAG_CSS_PROJECTS);
             }
         }, DELAY_APPEARANCE_BUTTONS);
         
@@ -66,7 +62,8 @@ export class Header{
         searchInput.addEventListener('input', (e) => {
             const rawValue = e.target.value;
             const sanitizedValue = this.sanitizeInput(rawValue);
-            this.activeFilters.searchText = sanitizedValue.toLowerCase();
+            
+            AppContext.activeFilters.searchText = sanitizedValue.toLowerCase();
             this.applyFilters(true);
         });
         
@@ -83,6 +80,7 @@ export class Header{
         
         console.log('✅ Filtres activés');
     }
+
 
     setupFilterToggle(){
         this.filtersCollapsed = false;
@@ -182,18 +180,18 @@ export class Header{
      ************** MENU PROJECTS FILTERS
     **************************************/
     toggleTagFilter(tag, button){
-        if(this.activeFilters.tags.has(tag)){
+        if(AppContext.activeFilters.tags.has(tag)){
             // Désactive le tag
-            this.activeFilters.tags.delete(tag);
+            AppContext.activeFilters.tags.delete(tag);
             button.classList.remove('active');
         } else {
             // Active le tag
-            this.activeFilters.tags.add(tag);
+            AppContext.activeFilters.tags.add(tag);
             button.classList.add('active');
         }
         
         this.applyFilters(true);
-        console.log('🏷️ Filtres actifs:', [...this.activeFilters.tags]);
+        console.log('🏷️ Filtres actifs:', [...AppContext.activeFilters.tags]);
     }
 
     applyFilters(mustReloadURL){
@@ -207,15 +205,15 @@ export class Header{
             let visible = true;
 
             // Filtre par nom
-            if(this.activeFilters.searchText){
-                const nameMatch = projectInfos.name.toLowerCase().includes(this.activeFilters.searchText);
+            if(AppContext.activeFilters.searchText){
+                const nameMatch = projectInfos.name.toLowerCase().includes(AppContext.activeFilters.searchText);
                 if(!nameMatch) visible = false;
             }
             
             // Filtre par tags
-            if(this.activeFilters.tags.size > 0){
+            if(AppContext.activeFilters.tags.size > 0){
                 const hasMatchingTag = projectInfos.tags?.some(tag => 
-                    this.activeFilters.tags.has(tag)
+                    AppContext.activeFilters.tags.has(tag)
                 );
                 if(!hasMatchingTag) visible = false;
             }
@@ -240,10 +238,10 @@ export class Header{
     resetFilters(){
         // Reset recherche
         document.getElementById('search-input').value = '';
-        this.activeFilters.searchText = '';
+        AppContext.activeFilters.searchText = '';
         
         // Reset tags
-        this.activeFilters.tags.clear();
+        AppContext.activeFilters.tags.clear();
         document.querySelectorAll('.tag-filter').forEach(btn => {
             btn.classList.remove('active');
         });
@@ -265,10 +263,6 @@ export class Header{
 
     getButtonFilterByTag(tagValue){
         const button = document.querySelector(`[data-tag="${tagValue}"]`);
-
-        console.log('Tag:', tagValue);
-        console.log(document);
-
         return button;
     }
 
@@ -282,9 +276,105 @@ export class Header{
     }
 
     /*************************************
+     ************** MODAL 
+    **************************************/
+
+    showProjectModal(project){
+        AppContext.isModalProjectVisible = true;
+        this.currentProjectID = project.id;
+
+        let tagHTML = '';
+        project.tags.forEach(newTag => {
+            tagHTML += `<p class="tag">${newTag}</p>`
+        });
+
+        // Crée une modal HTML avec la vidéo et description
+        const modal = document.createElement('div');
+        modal.id = 'project-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>${project.name}</h2>
+                <div class="tags">
+                    ${tagHTML}
+                </div>
+                <video controls autoplay>
+                    <source src="${project.videoPath}" type="video/mp4">
+                </video>
+                <p class="description">${project.description}</p>
+                <div class="links">
+                    ${project.links.github ? `<a href="${project.links.github}" target="_blank">GitHub</a>` : ''}
+                    ${project.links.demo ? `<a href="${project.links.demo}" target="_blank">Demo</a>` : ''}
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+
+        AppContext.audio.setVolumeBGMusic(0.0);
+        
+        // Fermeture
+        modal.querySelector('.close').onclick = () => {
+            document.body.removeChild(modal);
+            AppContext.isModalProjectVisible = false;
+            this.currentProjectID = -1;
+
+            //Sound
+            AppContext.audio.setVolumeBGMusic(AppContext.BACKGROUND_VOLUME);
+
+            //URL
+            AppContext.urlManager.updateURL();
+        };
+
+        //URL
+        AppContext.urlManager.updateURL();
+    }
+
+    /*************************************
+     ************** Change state 
+    **************************************/
+
+    onChangeState(newState, fromLoadURL){
+        console.log('Change state : ' + newState);
+        AppContext.currentState = newState;
+
+        if(newState === 0){
+            this.targetScenesZ = 0;
+            AppContext.offsetZProjects = OFFSET_Z_PROJECTS_STATE_INVISIBLE;
+            AppContext.scrollProjectAmount = 0;
+            this.fadeOutFilters();
+            this.switchMenus(AppContext.TAG_CSS_PROJECTS, AppContext.TAG_CSS_SCENES);
+            this.resetFilters();
+        }
+        else{
+            this.targetScenesZ = 10;
+            AppContext.offsetZProjects = OFFSET_Z_PROJECTS_STATE_VISIBLE;
+            this.fadeInFilters();
+            this.switchMenus(AppContext.TAG_CSS_SCENES, AppContext.TAG_CSS_PROJECTS);
+        }
+        this.triggerFlash();
+    }
+
+    // Fonction pour déclencher le flash
+    triggerFlash(){
+        const flashOverlay = document.getElementById('flash-overlay');
+        
+        // Ajoute la classe
+        flashOverlay.classList.add('flash');
+        
+        // Retire la classe après l'animation
+        setTimeout(() => {
+            flashOverlay.classList.remove('flash');
+        }, 1100); // Durée de l'animation
+
+        AppContext.audio.playSFXFlash();
+        
+        console.log('⚡ Flash!');
+    }
+
+    /*************************************
      ************** UPDATE 
     **************************************/
 	update() {   
-
     }
 }

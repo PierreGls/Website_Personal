@@ -21,17 +21,17 @@ export class LoadFromURL{
         const params = new URLSearchParams();
         
         // Ajoute la recherche
-        if(this.activeFilters.searchText){
-            params.set('search', this.activeFilters.searchText);
+        if(AppContext.activeFilters.searchText){
+            params.set('search', AppContext.activeFilters.searchText);
         }
         
         // Ajoute les tags
-        if(this.activeFilters.tags.size > 0){
-            params.set('tags', [...this.activeFilters.tags].join(','));
+        if(AppContext.activeFilters.tags.size > 0){
+            params.set('tags', [...AppContext.activeFilters.tags].join(','));
         }
         
         // Ajoute le projet ouvert
-        if(isModalProjectVisible && this.currentProjectID != -1){
+        if(AppContext.isModalProjectVisible && this.currentProjectID != -1){
             params.set('project', this.currentProjectID);
         }
         
@@ -54,7 +54,7 @@ export class LoadFromURL{
         const search = params.get('search');
         if(search){
             document.getElementById('search-input').value = search;
-            this.activeFilters.searchText = search.toLowerCase();
+            AppContext.activeFilters.searchText = search.toLowerCase();
         }
         
         // Charge les tags
@@ -65,10 +65,10 @@ export class LoadFromURL{
             console.log('📋 Tags depuis URL:', tagArray);
 
             tagArray.forEach(tag => {
-                this.activeFilters.tags.add(tag);
+                AppContext.activeFilters.tags.add(tag);
                 
                 // Active visuellement le bouton
-                const button = this.getButtonFilterByTag(tag);
+                const button = AppContext.filterUI.getButtonFilterByTag(tag);
                 if(button) button.classList.add('active');
             });
         }
@@ -81,16 +81,16 @@ export class LoadFromURL{
         // Charge le projet si spécifié
         const projectId = params.get('project');
         if(projectId){
-            const project = projectsData.find(p => p.id === projectId);
+            const project = AppContext.projectsData.find(p => p.id === projectId);
             if(project){
                 setTimeout(() => {
-                    this.showProjectModal(project);
+                    AppContext.filterUI.showProjectModal(project);
                 }, 500); // Petit délai pour laisser charger
             }
         }
 
         if(projectId || search || tags){
-            this.onChangeState(1, true);
+            AppContext.filterUI.onChangeState(1, true);
         }
         
         //To test

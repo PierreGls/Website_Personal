@@ -1,16 +1,21 @@
 export const AppContext = {
     //Core elements
+    render:     null,
     renderer:   null,
     outlinePass:null,
     scene:      null,
     camera:     null,
+    audio:      null,
     raycaster:  null,
     mouse:      null,
     filterUI:   null,
+    loadingBar: null,
+    urlManager: null,
     
     //General
-    isLoaded:   false,
-    isMobile:   false,
+    areScenesLoaded  : false,
+    areProjectsLoaded: false,
+    isMobile         : false,
 
     //Containers
     sceneContainer  : null,
@@ -22,6 +27,7 @@ export const AppContext = {
     //Scroll
     scrollSceneAmount  : 0,
     scrollProjectAmount: 0,
+    offsetZProjects    : 0,
 
     //Meshs
     scenesMeshes   : [],
@@ -35,6 +41,14 @@ export const AppContext = {
     frameCV        : null,
     frameLinkedin  : null,
 
+    //Filters
+    isModalProjectVisible : false,
+    activeFilters: {
+            searchText: '',
+            tags: new Set()
+        },
+
+
 
     //CONST 
     CAMERA_POS_Z : 3.0,
@@ -46,4 +60,8 @@ export const AppContext = {
         'Cube016', 'Cube016_1',
         'Click_Linkedin', 'Click_Linkedin001'
     ],
+    TAG_CSS_SCENES: 'menu-scenes',
+    TAG_CSS_PROJECTS: 'menu-projects',
+
+    BACKGROUND_VOLUME: 0.05, // Volume (0 à 1)
 };

@@ -70,7 +70,7 @@ export class Outline{
         const intersects = AppContext.raycaster.intersectObjects(AppContext.projectsMeshes);
         
         let foundInteractive = false;
-        this.outlinePass.selectedObjects = [];
+        AppContext.outlinePass.selectedObjects = [];
         if(intersects.length > 0){
             const hoveredObject = intersects[0].object;
             document.body.style.cursor = 'pointer';

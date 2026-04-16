@@ -9,6 +9,30 @@ export class CurrentProjectName{
     }
 
     /*************************************
+     ************** METHODS 
+    **************************************/
+    findClosestProject(){
+        if(AppContext.projectsVisible.size === 0) return "";
+        
+        let closestProjectName = "";
+        let minDistance = Infinity;
+        
+        AppContext.projectsVisible.forEach((projectParent, key) => {
+            const projectInfos = projectParent.children[0].children[0].userData.project;
+            
+            // Calcule la distance par rapport à INITIAL_OFFSET_Z_PROJECTS
+            const distance = Math.abs(projectParent.position.z - AppContext.offsetZProjects);
+
+            if(distance < minDistance){
+                minDistance = distance;
+                closestProjectName = projectInfos.name;
+            }
+        });
+        
+        return closestProjectName;
+    }
+
+    /*************************************
      ************** UPDATE 
     **************************************/
 	update() {   
