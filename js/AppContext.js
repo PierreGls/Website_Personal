@@ -13,35 +13,22 @@ export const AppContext = {
     urlManager: null,
     
     //General
-    areScenesLoaded  : false,
     areProjectsLoaded: false,
     isMobile         : false,
 
     //Containers
-    sceneContainer  : null,
     projectContainer: null,
 
-    //State
-    currentState: 0,
-
     //Scroll
-    scrollSceneAmount  : 0,
     scrollProjectAmount: 0,
-    offsetZProjects    : -10, // by default OFFSET_Z_PROJECTS_STATE_INVISIBLE
+    offsetZProjects    : 0,
     targetScenesZ      : 0,
 
     //Meshs
-    scenesMeshes   : [],
     projectsData : [],
     projectsMeshes : [],
     projectsVisible: new Map(),
     projectMap     : new Map(),
-    frameAR        : null,
-    frameVR        : null,
-    frameMR        : null,
-    frameGame      : null,
-    frameCV        : null,
-    frameLinkedin  : null,
 
     //Filters
     isModalProjectVisible : false,
@@ -51,7 +38,6 @@ export const AppContext = {
         },
     currentProjectID: -1,
     currentProjectName: "",
-
 
 
     //CONST 
@@ -68,9 +54,6 @@ export const AppContext = {
     TAG_CSS_PROJECTS: 'menu-projects',
 
     BACKGROUND_VOLUME: 0.05, // Volume (0 à 1)
-
-    OFFSET_Z_PROJECTS_STATE_VISIBLE: 0,
-    OFFSET_Z_PROJECTS_STATE_INVISIBLE: -10,
 
     INTERVALLE_Y_PROJECTS: 0.3,
     INTERVALLE_Z_PROJECTS: 1,

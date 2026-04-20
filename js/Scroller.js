@@ -2,9 +2,6 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
 import { AppContext } from './AppContext.js';
 
-//MVT SCENES
-const SCENES_MIN_X = -1;
-const SCENES_MAX_X = 18;
 const SCROLL_SPEED = 0.0005;
 const ANIMATION_SCENES_LERP_RATIO = 0.05;
 
@@ -18,11 +15,6 @@ const ANIMATION_PROJECT_Z_ROT_MULTIPLIER = -0.5;
 
 export class Scroller{
 	constructor(){
-        //Scene mvts
-        this.targetScenesX = 0;
-        AppContext.scrollSceneAmount = 0;
-        this.targetScroll = 0;
-
         if(AppContext.isMobile){
             this.setupTouchControls();
         } else {
@@ -56,18 +48,11 @@ export class Scroller{
             const deltaY = touchStartY - touchY;
             const deltaX = touchStartX - touchX;
             
-            
-            if(AppContext.currentState === 0){
-                this.handleScrollByValue(deltaX);
-            }
-            else if(AppContext.currentState === 1){
-                this.handleScrollByValue(-deltaY);
-            }
+            this.handleScrollByValue(-deltaY);
 
             touchStartY = touchY;
             touchStartX = touchX;
             
-            //console.log('👆 Touch scroll:', this.targetScroll.toFixed(2));
         }, { passive: true });
 
         console.log('✅ Controls setup for Mobile');
@@ -82,43 +67,16 @@ export class Scroller{
     }
 
     handleScrollByValue(scrollValue){
-        if(AppContext.currentState === 0){
-            AppContext.scrollSceneAmount += scrollValue * SCROLL_SPEED;
-            AppContext.scrollSceneAmount = Math.max(0, Math.min(1, AppContext.scrollSceneAmount));
-            this.setScenesTargetX();
-        }
-        else if(AppContext.currentState === 1){
-            AppContext.scrollProjectAmount += scrollValue * SCROLL_SPEED;
-            AppContext.scrollProjectAmount = Math.max(AppContext.scrollProjectAmount, 0); //min value = 0
-            AppContext.scrollProjectAmount = Math.min(AppContext.scrollProjectAmount, SCROLL_PROJECT_MAX_MULTIPLIER * (AppContext.projectsVisible.size - 1)); //max value = scrollMultiplier * nbr de projets
-        }
-    }
-
-    setScenesTargetX(){
-        this.targetScenesX = AppContext.scrollSceneAmount * (SCENES_MAX_X - SCENES_MIN_X) + SCENES_MIN_X;  // minX to maxX
+        AppContext.scrollProjectAmount += scrollValue * SCROLL_SPEED;
+        AppContext.scrollProjectAmount = Math.max(AppContext.scrollProjectAmount, 0); //min value = 0
+        AppContext.scrollProjectAmount = Math.min(AppContext.scrollProjectAmount, SCROLL_PROJECT_MAX_MULTIPLIER * (AppContext.projectsVisible.size - 1)); //max value = scrollMultiplier * nbr de projets
     }
 
     /*************************************
      ************** UPDATE 
     **************************************/
     update() {   
-        this.updateMovements();
-        this.setScenesTargetX();
-    }
-
-    updateMovements(){
-        //MOVE ROOMS
-        this.updateSceneMovements();
-        //MOVE PROJECTS
         this.updateProjectMovements();
-    }
-
-    updateSceneMovements(){
-        if(AppContext.sceneContainer){
-            let currentPos = AppContext.sceneContainer.position;
-            let targetPos = new THREE.Vector3(-this.targetScenesX ,0, AppContext.targetScenesZ);
-            let lerpedPos = currentPos.lerp(targetPos, ANIMATION_SCENES_LERP_RATIO);
-        }
     }
 
     updateProjectMovements(){

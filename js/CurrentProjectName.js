@@ -41,9 +41,7 @@ export class CurrentProjectName{
     updateCurrentProjectName(){
         const projectNameElement = document.getElementById('project-name');
         let closestProjectName = "";
-        if(AppContext.currentState === 1){
-            closestProjectName = this.findClosestProject(); 
-        }
+        closestProjectName = this.findClosestProject(); 
         
         if(closestProjectName !== ""){
             // Update seulement si le nom a changé

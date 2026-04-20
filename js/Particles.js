@@ -92,7 +92,7 @@ export class Particles{
     updateMvtParticles(){
         if(this.particles){
             additionalRotY += PARTICLES_ROTATION_SPEED;
-            this.particles.rotation.y = scrollProjectAmount * 0.5 + additionalRotY;
+            this.particles.rotation.y = AppContext.scrollProjectAmount * 0.5 + additionalRotY;
             
             // Mouvement flottant
             const positions = this.particles.geometry.attributes.position.array;

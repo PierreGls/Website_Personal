@@ -7,51 +7,6 @@ import { AppContext } from './AppContext.js';
 //Filters
 const allTags = new Set();
 
-const SHADOW_CASTER_OBJS = [
-    'Desk',
-    'DeskSmall',
-    'Pot',
-    'Plant1',
-    'Plant1001',
-    'Pot001',
-    'Plant',
-    'Plane',
-    'Pilllow001',
-    'Pilllow',
-    'Pilllow2',
-    'Table',
-    'Tasse002',
-    'Tasse003',
-    'Cactus',
-    'Cube060',
-    'Cube060_1',
-    'ShelfRoom',
-    'Pillow',
-    'Pot003',
-    'Cube058',
-    'Book005',
-    'Circle001',
-    'Circle001_1',
-    'Circle001_2',
-    'Cube019',
-    'Cube019_1',
-];
-const SHADOW_RECEIVER_OBJS = [
-    'Walls001',
-    'Walls',
-    'Walls3',
-    'Cube034',
-    'Desk',
-    'Sofa',
-    'Sofa2',
-    'Table',
-    'ShelfRoom',
-    'Cube039_1',
-    'Cube039_2',
-    'Cube039_3',
-    'Cube058',
-];
-
 export class SceneLoader{
 	constructor(scene, filterUI){
         this.scene    = scene;
@@ -59,7 +14,6 @@ export class SceneLoader{
         AppContext.loadingBar = new LoadingBar();
 
         //Create container for scenes and projects
-        this.sceneContainer = null;
         this.projectContainer = null;
         this.createContainers();
 
@@ -82,17 +36,11 @@ export class SceneLoader{
     **************************************/
     createContainers(){
         // Crée un Object3D vide comme parent
-        this.sceneContainer = new THREE.Object3D();
-        this.sceneContainer.position.set(0, 0, 0);
-        this.sceneContainer.name = 'SceneContainer';
-        this.scene.add(this.sceneContainer);
-
         this.projectContainer = new THREE.Object3D();
         this.projectContainer.position.set(0, 0, 0);
         this.projectContainer.name = 'ProjectContainer';
         this.scene.add(this.projectContainer);
 
-        AppContext.sceneContainer = this.sceneContainer;
         AppContext.projectContainer = this.projectContainer;
         
         console.log('✅ Containers created');
@@ -123,14 +71,8 @@ export class SceneLoader{
     /*************************************
      ************** LOAD 
     **************************************/
-    // Load multiple GLTF scenes and projects
+    // Load multiple GLTF projects
     async loadGLTFs(filterUI){
-        // Scenes
-        for(let i = 0; i<4; i++){
-            const nameScene = 'scene' + (i+1);
-            this.loadScene(nameScene, i);
-        }
-        
         //Projects
         await this.loadProjectsData();
 
@@ -139,8 +81,6 @@ export class SceneLoader{
         });
 
         await this.sortProjects(filterUI);
-
-        ///AppContext.projectContainer.visible = false;
     }
 
     async loadProjectsData(){
@@ -189,17 +129,6 @@ export class SceneLoader{
     /*************************************
      ************** Loaders
     **************************************/
-    loadScene(name, index, onLoaded) {
-        this._progress[name] = 0;
-
-        this.loader.load(
-            (name ? name : 'scene1_blank') + '.glb',
-            (gltf) => this._onLoadedScene(gltf, name, index, onLoaded),
-            (xhr)  => this._onProgress(xhr, name),
-            (err)  => this._onError(err)
-        );
-    }
-
     loadProject(projectData, index, onLoaded) {
         this._progress[projectData.name] = 0;
 

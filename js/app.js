@@ -23,9 +23,7 @@ import { Scroller } from './Scroller.js';
 import { Particles } from './Particles.js';
 import { Audio } from './Audio.js';
 import { CurrentProjectName } from './CurrentProjectName.js';
-import { Outline } from './Outline.js';
 import { ClickController } from './ClickController.js';
-import { SceneOpacity } from './SceneOpacity.js';
 import { LoadFromURL } from './LoadFromURL.js';
 
 
@@ -58,10 +56,8 @@ class App{
         this.particles          = new Particles();
         this.audio              = new Audio();
         AppContext.audio        = this.audio;
-        this.outline            = new Outline();
-        this.clickController    = new ClickController(); //NeedUI
+        this.clickController    = new ClickController();
         this.currentProjectName = new CurrentProjectName();
-        this.sceneOpacity       = new SceneOpacity();
 
         //At the end : should be at the end of the meshes loading
         //AppContext.filterUI.onChangeState(0,false);
@@ -84,9 +80,8 @@ class App{
         this.scenesLoader.update();
         this.scroller.update();
         this.currentProjectName.update();
-        this.outline.update();
         this.header.update();
-        this.sceneOpacity.update();
+        this.particles.update();
     }
 
     /*************************************

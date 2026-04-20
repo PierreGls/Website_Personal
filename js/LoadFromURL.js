@@ -87,10 +87,6 @@ export class LoadFromURL{
                 }, 500); // Petit délai pour laisser charger
             }
         }
-
-        if(projectId || search || tags){
-            AppContext.filterUI.onChangeState(1, true);
-        }
         
         //To test
         //http://127.0.0.1:5501/complete/SitePerso/index.html?tags=MR%2CVR&project=VR_1

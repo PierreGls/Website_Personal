@@ -19,38 +19,21 @@ export class Header{
     **************************************/
 
     setupUI(){
-        const buttons = document.querySelectorAll('#menu-scenes button');
-        buttons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const id = e.target.dataset.id;
-                console.log('🔘 Bouton cliqué, ID:', id);
-                
-                // Ton code ici selon le bouton
-                this.onButtonMenuClick(id);
-            });
-        });
 
         const buttonsProjects = document.querySelectorAll('#menu-projects button');
         buttonsProjects.forEach(button => {
             button.addEventListener('click', (e) => {
                 const id = e.target.dataset.id;
-                this.onButtonBackToSceneClick(id);
+                console.log("Button click")
             });
         });
 
-
         //Anim current menu with delay
         setTimeout(() => {
-            if(AppContext.currentState === 0){{
-                this.fadeInMenu(AppContext.TAG_CSS_SCENES);
-                this.fadeOutMenu(AppContext.TAG_CSS_PROJECTS);
-            }}
-            else{
-                this.fadeOutMenu(AppContext.TAG_CSS_SCENES);
-                this.fadeInMenu(AppContext.TAG_CSS_PROJECTS);
-            }
+            this.fadeInMenu(AppContext.TAG_CSS_PROJECTS);
+            this.fadeInFilters();
         }, DELAY_APPEARANCE_BUTTONS);
-        
+
         console.log('✅ UI setup complete');
     }
 
@@ -111,7 +94,7 @@ export class Header{
     /*************************************
      ************** ANIM UI 
     **************************************/
-    // Fade out un menu
+   // Fade out un menu
     fadeOutMenu(menuId){
         const menu = document.getElementById(menuId);
         if(menu){
@@ -129,16 +112,6 @@ export class Header{
             menu.classList.add('fade-in');
             console.log('👋 Fade in:', menuId);
         }
-    }
-
-    // Switch entre deux menus
-    switchMenus(hideMenuId, showMenuId){
-        this.fadeOutMenu(hideMenuId);
-        
-        // Attend la fin du fade out avant de fade in
-        setTimeout(() => {
-            this.fadeInMenu(showMenuId);
-        }, 500); // Durée du fade out
     }
 
     // Fade out la barre de filtres
@@ -159,19 +132,6 @@ export class Header{
             filterBar.classList.add('fade-in');
             console.log('👋 Filtres affichés');
         }
-    }
-
-    /*************************************
-     ************** MENU SCENE 
-    **************************************/
-
-    onButtonMenuClick(id){
-        if(AppContext.currentState === 1) { 
-            console.log("Can't click on these buttons if we are on the projects");
-            return;
-        }
-        console.log('Action bouton ' + id);
-        AppContext.scrollSceneAmount = (id - 1)/3;
     }
 
     /*************************************
