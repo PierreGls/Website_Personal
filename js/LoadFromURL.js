@@ -1,17 +1,16 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-
 import { AppContext } from './AppContext.js';
-
-
 
 export class LoadFromURL{
 	constructor(){
         // Charge les paramètres depuis l'URL
         //It would be bettter to use async to call it once everything is loaded
+        /*
         setTimeout(() => {
             console.log("LoadFromURL: TO CHECK");
             this.loadFromURL();
-        }, 700);
+        }, 800);
+        */
     }
 
     /*************************************
@@ -31,8 +30,8 @@ export class LoadFromURL{
         }
         
         // Ajoute le projet ouvert
-        if(AppContext.isModalProjectVisible && this.currentProjectID != -1){
-            params.set('project', this.currentProjectID);
+        if(AppContext.isModalProjectVisible && AppContext.currentProjectID != -1){
+            params.set('project', AppContext.currentProjectID);
         }
         
         // Construit la nouvelle URL
@@ -75,7 +74,7 @@ export class LoadFromURL{
         
         // Applique les filtres
         if(search || tags){
-            this.applyFilters(false);
+            AppContext.filterUI.applyFilters(false);
         }
         
         // Charge le projet si spécifié

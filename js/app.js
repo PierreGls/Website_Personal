@@ -25,6 +25,7 @@ import { Audio } from './Audio.js';
 import { CurrentProjectName } from './CurrentProjectName.js';
 import { Outline } from './Outline.js';
 import { ClickController } from './ClickController.js';
+import { SceneOpacity } from './SceneOpacity.js';
 import { LoadFromURL } from './LoadFromURL.js';
 
 
@@ -48,6 +49,8 @@ class App{
         AppContext.render       = this.render.bind(this);;
         AppContext.renderer     = this.renderer;
         this.outlinePass        = this.renderer.outline;
+        this.loadFromURL        = new LoadFromURL(); 
+        AppContext.urlManager   = this.loadFromURL;
         this.header             = new Header();
         AppContext.filterUI     = this.header;
         this.scenesLoader       = new SceneLoader(this.scene, this.header);
@@ -58,8 +61,14 @@ class App{
         this.outline            = new Outline();
         this.clickController    = new ClickController(); //NeedUI
         this.currentProjectName = new CurrentProjectName();
-        this.loadFromURL        = new LoadFromURL(); //At the end
-        AppContext.urlManager   = this.loadFromURL;
+        this.sceneOpacity       = new SceneOpacity();
+
+        //At the end : should be at the end of the meshes loading
+        //AppContext.filterUI.onChangeState(0,false);
+        setTimeout(() => {
+            AppContext.urlManager.loadFromURL();
+        }, 800);
+        
     }
 
     /*************************************
@@ -77,13 +86,18 @@ class App{
         this.currentProjectName.update();
         this.outline.update();
         this.header.update();
+        this.sceneOpacity.update();
     }
+
+    /*************************************
+     ************** HELPER 
+    **************************************/
 
     debugSceneHierarchy(){
         console.log('🌳 Hiérarchie:');
         console.log('Scene principale');
-        console.log('└── SceneContainer', this.sceneContainer.position);
-        this.sceneContainer.children.forEach((child, i) => {
+        console.log('└── SceneContainer', AppContext.sceneContainer.position);
+        AppContext.sceneContainer.children.forEach((child, i) => {
             console.log('    └── Scène', i, child.position);
         });
     }

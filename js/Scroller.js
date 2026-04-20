@@ -9,33 +9,17 @@ const SCROLL_SPEED = 0.0005;
 const ANIMATION_SCENES_LERP_RATIO = 0.05;
 
 //PROJECT
-//let scrollProjectAmount = 0;
-const INITIAL_OFFSET_Y_PROJECTS = 1.5; 
-const INTERVALLE_Y_PROJECTS = 0.3;
-const OFFSET_Z_PROJECTS_STATE_VISIBLE = 0;
-const OFFSET_Z_PROJECTS_STATE_INVISIBLE = -10;
-let offsetZProjects = OFFSET_Z_PROJECTS_STATE_INVISIBLE;
-const INTERVALLE_Z_PROJECTS = 1;
 const SCROLL_PROJECT_MULTIPLIER = 10;
 const SCROLL_PROJECT_MAX_MULTIPLIER = 0.1;
 
-let scenesMeshes = [];
-let projectsMeshes = [];
-let projectsMeshes_Childrens = [];
-let projectMap = new Map();
-let projectsVisible = new Map();
-let projectsData = [];
- 
-//0 = scenes
-//1 = projects
-let isModalProjectVisible = false;
-let isProjectInstancied = false;
+const ANIMATION_PROJECT_LERP_RATIO = 0.08;
+const ANIMATION_PROJECT_X_POS_MULTIPLIER = 1.5;
+const ANIMATION_PROJECT_Z_ROT_MULTIPLIER = -0.5;
 
 export class Scroller{
 	constructor(){
         //Scene mvts
         this.targetScenesX = 0;
-        this.targetScenesZ = 0;
         AppContext.scrollSceneAmount = 0;
         this.targetScroll = 0;
 
@@ -101,12 +85,12 @@ export class Scroller{
         if(AppContext.currentState === 0){
             AppContext.scrollSceneAmount += scrollValue * SCROLL_SPEED;
             AppContext.scrollSceneAmount = Math.max(0, Math.min(1, AppContext.scrollSceneAmount));
-            //this.setScenesTargetX();
+            this.setScenesTargetX();
         }
         else if(AppContext.currentState === 1){
             AppContext.scrollProjectAmount += scrollValue * SCROLL_SPEED;
             AppContext.scrollProjectAmount = Math.max(AppContext.scrollProjectAmount, 0); //min value = 0
-            AppContext.scrollProjectAmount = Math.min(AppContext.scrollProjectAmount, SCROLL_PROJECT_MAX_MULTIPLIER * (projectsVisible.size - 1)); //max value = scrollMultiplier * nbr de projets
+            AppContext.scrollProjectAmount = Math.min(AppContext.scrollProjectAmount, SCROLL_PROJECT_MAX_MULTIPLIER * (AppContext.projectsVisible.size - 1)); //max value = scrollMultiplier * nbr de projets
         }
     }
 
@@ -118,9 +102,7 @@ export class Scroller{
      ************** UPDATE 
     **************************************/
     update() {   
-        //Mvt
         this.updateMovements();
-
         this.setScenesTargetX();
     }
 
@@ -134,27 +116,26 @@ export class Scroller{
     updateSceneMovements(){
         if(AppContext.sceneContainer){
             let currentPos = AppContext.sceneContainer.position;
-            let targetPos = new THREE.Vector3(-this.targetScenesX ,0, this.targetScenesZ);
+            let targetPos = new THREE.Vector3(-this.targetScenesX ,0, AppContext.targetScenesZ);
             let lerpedPos = currentPos.lerp(targetPos, ANIMATION_SCENES_LERP_RATIO);
         }
     }
 
     updateProjectMovements(){
-        if(!isProjectInstancied) {return;}
-        
-        projectsVisible.forEach((projectParent, key, map) => {
-        //projectMeshesSorted.forEach((mesh, index) => {
-            let defaultY = INITIAL_OFFSET_Y_PROJECTS + INTERVALLE_Y_PROJECTS * key;
-            let defaultZ = offsetZProjects + INTERVALLE_Z_PROJECTS * (- key);
+        if(!AppContext.areProjectsLoaded) {return;}
+
+        AppContext.projectsVisible.forEach((projectParent, key, map) => {
+            let defaultY = AppContext.INITIAL_OFFSET_Y_PROJECTS + AppContext.INTERVALLE_Y_PROJECTS * key;
+            let defaultZ = AppContext.offsetZProjects + AppContext.INTERVALLE_Z_PROJECTS * (- key);
             
-            let newPosY = defaultY - INTERVALLE_Y_PROJECTS * AppContext.scrollProjectAmount * SCROLL_PROJECT_MULTIPLIER;
-            let newPosZ = defaultZ + INTERVALLE_Z_PROJECTS * AppContext.scrollProjectAmount * SCROLL_PROJECT_MULTIPLIER;
+            let newPosY = defaultY - AppContext.INTERVALLE_Y_PROJECTS * AppContext.scrollProjectAmount * SCROLL_PROJECT_MULTIPLIER;
+            let newPosZ = defaultZ + AppContext.INTERVALLE_Z_PROJECTS * AppContext.scrollProjectAmount * SCROLL_PROJECT_MULTIPLIER;
             
             let newPosX = 0;
             let newRotZ = 0;
-            if(newPosZ > offsetZProjects){
-                newPosX = (offsetZProjects - newPosZ) * ANIMATION_PROJECT_X_POS_MULTIPLIER;
-                newRotZ = (offsetZProjects - newPosZ) * ANIMATION_PROJECT_Z_ROT_MULTIPLIER;
+            if(newPosZ > AppContext.offsetZProjects){
+                newPosX = (AppContext.offsetZProjects - newPosZ) * ANIMATION_PROJECT_X_POS_MULTIPLIER;
+                newRotZ = (AppContext.offsetZProjects - newPosZ) * ANIMATION_PROJECT_Z_ROT_MULTIPLIER;
                 if(key%2===0){
                     newPosX *= -1;
                     newRotZ *= -1;

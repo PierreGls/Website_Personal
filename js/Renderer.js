@@ -163,7 +163,7 @@ export class Renderer{
     **************************************/
     // Set resize event
     resize(){
-        this.renderer.setSize( window.innerWidth, window.innerHeight );
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.composer.setSize(window.innerWidth, window.innerHeight);  
     }
 

@@ -27,10 +27,12 @@ export const AppContext = {
     //Scroll
     scrollSceneAmount  : 0,
     scrollProjectAmount: 0,
-    offsetZProjects    : 0,
+    offsetZProjects    : -10, // by default OFFSET_Z_PROJECTS_STATE_INVISIBLE
+    targetScenesZ      : 0,
 
     //Meshs
     scenesMeshes   : [],
+    projectsData : [],
     projectsMeshes : [],
     projectsVisible: new Map(),
     projectMap     : new Map(),
@@ -47,6 +49,8 @@ export const AppContext = {
             searchText: '',
             tags: new Set()
         },
+    currentProjectID: -1,
+    currentProjectName: "",
 
 
 
@@ -64,4 +68,12 @@ export const AppContext = {
     TAG_CSS_PROJECTS: 'menu-projects',
 
     BACKGROUND_VOLUME: 0.05, // Volume (0 à 1)
+
+    OFFSET_Z_PROJECTS_STATE_VISIBLE: 0,
+    OFFSET_Z_PROJECTS_STATE_INVISIBLE: -10,
+
+    INTERVALLE_Y_PROJECTS: 0.3,
+    INTERVALLE_Z_PROJECTS: 1,
+    INITIAL_OFFSET_Y_PROJECTS: 1.5,
+    
 };

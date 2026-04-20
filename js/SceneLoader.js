@@ -4,28 +4,6 @@ import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { AppContext } from './AppContext.js';
 
-//MVT SCENES
-const SCENES_MIN_X = -1;
-const SCENES_MAX_X = 18;
-const SCROLL_SPEED = 0.0005;
-const ANIMATION_SCENES_LERP_RATIO = 0.05;
-
-//PROJECT
-let scrollProjectAmount = 0;
-const INITIAL_OFFSET_Y_PROJECTS = 1.5; 
-const INTERVALLE_Y_PROJECTS = 0.3;
-
-
-const INTERVALLE_Z_PROJECTS = 1;
-const SCROLL_PROJECT_MULTIPLIER = 10;
-const SCROLL_PROJECT_MAX_MULTIPLIER = 0.1;
-
-const ANIMATION_PROJECT_X_POS_MULTIPLIER = 1.5;
-const ANIMATION_PROJECT_Z_ROT_MULTIPLIER = -0.5;
-const ANIMATION_PROJECT_LERP_RATIO = 0.08;
-
-let projectsData = [];
-
 //Filters
 const allTags = new Set();
 
@@ -114,8 +92,8 @@ export class SceneLoader{
         this.projectContainer.name = 'ProjectContainer';
         this.scene.add(this.projectContainer);
 
-        AppContext.sceneContainer =  this.sceneContainer;
-        AppContext.projectContainer =  this.projectContainer;
+        AppContext.sceneContainer = this.sceneContainer;
+        AppContext.projectContainer = this.projectContainer;
         
         console.log('✅ Containers created');
     }
@@ -156,11 +134,13 @@ export class SceneLoader{
         //Projects
         await this.loadProjectsData();
 
-        projectsData.forEach((projectData, index) => {
+        AppContext.projectsData.forEach((projectData, index) => {
             this.loadProject(projectData, index);
         });
 
         await this.sortProjects(filterUI);
+
+        ///AppContext.projectContainer.visible = false;
     }
 
     async loadProjectsData(){
@@ -173,7 +153,7 @@ export class SceneLoader{
             for(const project of data.projects){
                 const folder = `${project.id}`.slice(0, 2)
                 
-                projectsData.push({
+                AppContext.projectsData.push({
                     ...project,
                     logoPath: '../../assets/projects/'+ folder +"/"+ project.name + '/icon.png',
                     videoPath: '../../assets/projects/'+ folder +"/"+ project.name + '/preview.mp4'
@@ -184,7 +164,7 @@ export class SceneLoader{
                 }
             }
             
-            console.log('✅ Projets chargés:', projectsData);
+            console.log('✅ Projets chargés:', AppContext.projectsData);
             
         } catch(error){
             console.error('❌ Erreur chargement:', error);
@@ -199,10 +179,11 @@ export class SceneLoader{
             );
             AppContext.projectMap = sortedMap;
             //this.applyFilters(false); //TODO
+            AppContext.filterUI.applyFilters(false);
 
             // Génère les boutons de tags
             this.generateTagButtons(filterUI);
-        }, 200);
+        }, 500);
     }
 
     /*************************************
@@ -313,8 +294,8 @@ export class SceneLoader{
         this.sceneObj.rotation.set(0, 0, 0);
         this.sceneObj.position.set(
             0,
-            INITIAL_OFFSET_Y_PROJECTS + index * INTERVALLE_Y_PROJECTS,
-            AppContext.offsetZProjects - index * INTERVALLE_Z_PROJECTS
+            AppContext.INITIAL_OFFSET_Y_PROJECTS + index * AppContext.INTERVALLE_Y_PROJECTS,
+            AppContext.offsetZProjects - index * AppContext.INTERVALLE_Z_PROJECTS
         );
         this.sceneObj.scale.set(0.6,0.6,0.6);
         AppContext.scene.add( gltf.scene );
@@ -365,7 +346,8 @@ export class SceneLoader{
     }
 
     isAllLoaded(){
-        console.log()
+        if(AppContext.areProjectsLoaded) return true;
+
         const allLoaded = Object.values(this._progress).every(v => v === 1);
         if (allLoaded) {
             AppContext.loadingBar.visible = false;

@@ -4,8 +4,6 @@ import { AppContext } from './AppContext.js';
 
 export class CurrentProjectName{
 	constructor(){
-        this.currentProjectName = '';
-        this.currentProjectID = -1;
     }
 
     /*************************************
@@ -49,15 +47,15 @@ export class CurrentProjectName{
         
         if(closestProjectName !== ""){
             // Update seulement si le nom a changé
-            if(this.currentProjectName !== closestProjectName){
-                this.currentProjectName = closestProjectName;
+            if(AppContext.currentProjectName !== closestProjectName){
+                AppContext.currentProjectName = closestProjectName;
                 projectNameElement.textContent = closestProjectName;
                 projectNameElement.classList.add('visible');
             }
         } else {
             // Aucun projet visible
-            if(this.currentProjectName !== ''){
-                this.currentProjectName = '';
+            if(AppContext.currentProjectName !== ''){
+                AppContext.currentProjectName = '';
                 projectNameElement.classList.remove('visible');
             }
         }

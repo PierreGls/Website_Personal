@@ -4,8 +4,6 @@ import { AppContext } from './AppContext.js';
 
 //UI
 const DELAY_APPEARANCE_BUTTONS = 1000;//milliseconds
-const OFFSET_Z_PROJECTS_STATE_VISIBLE = 0;
-const OFFSET_Z_PROJECTS_STATE_INVISIBLE = -10;
 
 export class Header{
 	constructor(){
@@ -197,9 +195,8 @@ export class Header{
     applyFilters(mustReloadURL){
         AppContext.projectsVisible.clear();
         let currentKeyVisible = 0;
-
         AppContext.scrollProjectAmount = 0;
-        
+
         AppContext.projectMap.forEach((projectParent, key) => {
             const projectInfos = projectParent.children[0].children[0].userData.project;
             let visible = true;
@@ -209,7 +206,7 @@ export class Header{
                 const nameMatch = projectInfos.name.toLowerCase().includes(AppContext.activeFilters.searchText);
                 if(!nameMatch) visible = false;
             }
-            
+
             // Filtre par tags
             if(AppContext.activeFilters.tags.size > 0){
                 const hasMatchingTag = projectInfos.tags?.some(tag => 
@@ -228,8 +225,7 @@ export class Header{
 
         //URL
         if(mustReloadURL){
-            console.log("TODO updateURL");
-            //this.updateURL();
+            AppContext.urlManager.updateURL();
         }
         
         console.log('🔍 Filtres appliqués : ' + (currentKeyVisible) + ' projects visibles ');
@@ -281,7 +277,7 @@ export class Header{
 
     showProjectModal(project){
         AppContext.isModalProjectVisible = true;
-        this.currentProjectID = project.id;
+        AppContext.currentProjectID = project.id;
 
         let tagHTML = '';
         project.tags.forEach(newTag => {
@@ -317,7 +313,7 @@ export class Header{
         modal.querySelector('.close').onclick = () => {
             document.body.removeChild(modal);
             AppContext.isModalProjectVisible = false;
-            this.currentProjectID = -1;
+            AppContext.currentProjectID = -1;
 
             //Sound
             AppContext.audio.setVolumeBGMusic(AppContext.BACKGROUND_VOLUME);
@@ -339,16 +335,16 @@ export class Header{
         AppContext.currentState = newState;
 
         if(newState === 0){
-            this.targetScenesZ = 0;
-            AppContext.offsetZProjects = OFFSET_Z_PROJECTS_STATE_INVISIBLE;
+            AppContext.targetScenesZ = 0;
+            AppContext.offsetZProjects = AppContext.OFFSET_Z_PROJECTS_STATE_INVISIBLE;
             AppContext.scrollProjectAmount = 0;
             this.fadeOutFilters();
             this.switchMenus(AppContext.TAG_CSS_PROJECTS, AppContext.TAG_CSS_SCENES);
             this.resetFilters();
         }
         else{
-            this.targetScenesZ = 10;
-            AppContext.offsetZProjects = OFFSET_Z_PROJECTS_STATE_VISIBLE;
+            AppContext.targetScenesZ = 10;
+            AppContext.offsetZProjects = AppContext.OFFSET_Z_PROJECTS_STATE_VISIBLE;
             this.fadeInFilters();
             this.switchMenus(AppContext.TAG_CSS_SCENES, AppContext.TAG_CSS_PROJECTS);
         }

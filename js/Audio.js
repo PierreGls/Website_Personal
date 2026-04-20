@@ -35,6 +35,14 @@ export class Audio{
         this.sfx.volume = AppContext.BACKGROUND_VOLUME;
         this.sfx.currentTime = 0;
         this.sfx.play();
+
+        this.sfx.play()
+            .then(() => {
+                ///console.log('🎵 SFX lancée');
+            })
+            .catch(err => {
+                console.warn('⚠️ Autoplay bloqué flash:', err);
+            });
     }
 
     setVolumeBGMusic(newVolume){
