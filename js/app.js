@@ -77,11 +77,11 @@ class App{
     
     //Update
 	render() {   
-        const dt = this.clock.getDelta();
+        //const dt = this.clock.getDelta();
 
         this.camera.update();
         this.renderer.update();
-        this.scenesLoader.update();
+        //this.scenesLoader.update();
         this.scroller.update();
         this.currentProjectName.update();
         this.outline.update();

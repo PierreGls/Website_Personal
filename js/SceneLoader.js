@@ -98,27 +98,7 @@ export class SceneLoader{
         console.log('✅ Containers created');
     }
 
-    generateTagButtons(filterUI){
-        // Crée les boutons
-        const tagContainer = document.getElementById('tag-filters');
-        tagContainer.innerHTML = '';
-        
-        allTags.forEach(tag => {
-            const button = document.createElement('button');
-            button.className = 'tag-filter';
-            button.textContent = tag;
-            button.dataset.tag = tag;
-            
-            button.addEventListener('click', () => {
-                //AppContext.filterUI.toggleTagFilter(tag, button);
-                filterUI.toggleTagFilter(tag, button);
-            });
-            
-            tagContainer.appendChild(button);
-        });
-        
-        console.log('✅ Tags générés:', allTags.size);
-    }
+
 
     /*************************************
      ************** LOAD 
@@ -178,11 +158,10 @@ export class SceneLoader{
                 [...AppContext.projectMap.entries()].sort((a, b) => a[0] - b[0])
             );
             AppContext.projectMap = sortedMap;
-            //this.applyFilters(false); //TODO
             AppContext.filterUI.applyFilters(false);
 
             // Génère les boutons de tags
-            this.generateTagButtons(filterUI);
+            AppContext.filterUI.generateTagButtons(allTags);
         }, 500);
     }
 

@@ -108,6 +108,28 @@ export class Header{
         console.log('✅ Toggle filtres activé');
     }
 
+    generateTagButtons(allTags){
+        // Crée les boutons
+        const tagContainer = document.getElementById('tag-filters');
+        tagContainer.innerHTML = '';
+        
+        allTags.forEach(tag => {
+            const button = document.createElement('button');
+            button.className = 'tag-filter';
+            button.textContent = tag;
+            button.dataset.tag = tag;
+            
+            button.addEventListener('click', () => {
+                //AppContext.filterUI.toggleTagFilter(tag, button);
+                this.toggleTagFilter(tag, button);
+            });
+            
+            tagContainer.appendChild(button);
+        });
+        
+        console.log('✅ Tags générés:', allTags.size);
+    }
+
     /*************************************
      ************** ANIM UI 
     **************************************/
