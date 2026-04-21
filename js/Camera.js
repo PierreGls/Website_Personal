@@ -1,5 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { AppContext } from './AppContext.js';
+
 //CAMERA
 const CAMERA_POS_Y = 1.5;
 const CAMERA_POS_Z = 3.0;
@@ -11,12 +12,9 @@ export class Camera{
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 100 );
 		this.camera.position.set( 0, CAMERA_POS_Y, CAMERA_POS_Z );
 
-        
-
         //Click detection
         window.addEventListener('click', this.handleClickDetection.bind(this));
         
-
         //Camera mvts
         this.targetCameraRotation = new THREE.Vector2();
         if(AppContext.isMobile){

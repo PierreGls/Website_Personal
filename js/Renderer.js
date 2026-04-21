@@ -10,9 +10,9 @@ import { RGBELoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
 import { AppContext } from './AppContext.js';
 
 export class Renderer{
-	constructor(scene, camera){
-        this.scene = scene;
-        this.camera = camera;
+	constructor(){
+        this.scene = AppContext.scene;
+        this.camera = AppContext.camera.instance;
 
 		this.renderer = new THREE.WebGLRenderer({ 
             antialias: true, 
@@ -23,8 +23,8 @@ export class Renderer{
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.renderer.physicallyCorrectLights = true;
 
-        this.renderer.shadowMap.enabled = true; // 👈 Active les ombres
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Ombres douces
+        //this.renderer.shadowMap.enabled = true; // 👈 Active les ombres
+        //this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Ombres douces
         
         const container = document.createElement( 'div' );
         document.body.appendChild( container );
@@ -66,6 +66,7 @@ export class Renderer{
         );
         light.position.setFromSphericalCoords(10, euler.x, euler.y);
 
+        /*
         //Active shadows
         light.castShadow = true; // 👈 La lumière projette des ombres
         // Qualité des ombres
@@ -77,6 +78,7 @@ export class Renderer{
         light.shadow.camera.right = 20;
         light.shadow.camera.top = 20;
         light.shadow.camera.bottom = -20;
+        */
 
         this.scene.add(light);
 
@@ -174,7 +176,7 @@ export class Renderer{
     //Update
 	update() {   
         //this.renderer.render( this.scene, this.camera );
-        this.renderer.shadowMap.needsUpdate = true;
+        //this.renderer.shadowMap.needsUpdate = true;
         this.composer.render();
     }
 }

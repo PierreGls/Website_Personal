@@ -55,9 +55,6 @@ export class Header{
 
         // Setup toggle
         this.setupFilterToggle();
-
-        // Cache les filtres au départ
-        this.fadeOutFilters();
         
         console.log('✅ Filtres activés');
     }
@@ -207,16 +204,6 @@ export class Header{
         console.log('🔄 Filtres réinitialisés');
     }
 
-    onButtonBackToSceneClick(id){
-        if(AppContext.currentState === 0) { 
-            console.log("Can't click on these buttons if we are on the projects");
-            return;
-        }
-
-        console.log('🔘 Bouton cliqué BACK TO HOME, ID:', id);
-        this.onChangeState(0, false);
-    }
-
     getButtonFilterByTag(tagValue){
         const button = document.querySelector(`[data-tag="${tagValue}"]`);
         return button;
@@ -284,48 +271,6 @@ export class Header{
 
         //URL
         AppContext.urlManager.updateURL();
-    }
-
-    /*************************************
-     ************** Change state 
-    **************************************/
-
-    onChangeState(newState, fromLoadURL){
-        console.log('Change state : ' + newState);
-        AppContext.currentState = newState;
-
-        if(newState === 0){
-            AppContext.targetScenesZ = 0;
-            AppContext.offsetZProjects = AppContext.OFFSET_Z_PROJECTS_STATE_INVISIBLE;
-            AppContext.scrollProjectAmount = 0;
-            this.fadeOutFilters();
-            this.switchMenus(AppContext.TAG_CSS_PROJECTS, AppContext.TAG_CSS_SCENES);
-            this.resetFilters();
-        }
-        else{
-            AppContext.targetScenesZ = 10;
-            AppContext.offsetZProjects = AppContext.OFFSET_Z_PROJECTS_STATE_VISIBLE;
-            this.fadeInFilters();
-            this.switchMenus(AppContext.TAG_CSS_SCENES, AppContext.TAG_CSS_PROJECTS);
-        }
-        this.triggerFlash();
-    }
-
-    // Fonction pour déclencher le flash
-    triggerFlash(){
-        const flashOverlay = document.getElementById('flash-overlay');
-        
-        // Ajoute la classe
-        flashOverlay.classList.add('flash');
-        
-        // Retire la classe après l'animation
-        setTimeout(() => {
-            flashOverlay.classList.remove('flash');
-        }, 1100); // Durée de l'animation
-
-        AppContext.audio.playSFXFlash();
-        
-        console.log('⚡ Flash!');
     }
 
     /*************************************

@@ -43,7 +43,7 @@ class App{
         AppContext.scene        = this.scene;
         this.camera             = new Camera();
         AppContext.camera       = this.camera;
-        this.renderer           = new Renderer(this.scene, this.camera.instance);
+        this.renderer           = new Renderer();
         AppContext.render       = this.render.bind(this);;
         AppContext.renderer     = this.renderer;
         this.outlinePass        = this.renderer.outline;
@@ -51,7 +51,7 @@ class App{
         AppContext.urlManager   = this.loadFromURL;
         this.header             = new Header();
         AppContext.filterUI     = this.header;
-        this.scenesLoader       = new SceneLoader(this.scene, this.header);
+        this.scenesLoader       = new SceneLoader();
         this.scroller           = new Scroller();
         this.particles          = new Particles();
         this.audio              = new Audio();

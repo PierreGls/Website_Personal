@@ -8,8 +8,8 @@ import { AppContext } from './AppContext.js';
 const allTags = new Set();
 
 export class SceneLoader{
-	constructor(scene, filterUI){
-        this.scene    = scene;
+	constructor(){
+        this.scene    = AppContext.scene;
 
         AppContext.loadingBar = new LoadingBar();
 
@@ -26,7 +26,7 @@ export class SceneLoader{
         // Un objet pour stocker la progression de chaque GLB
         this._progress = {};
 
-        this.loadGLTFs(filterUI);
+        this.loadGLTFs(AppContext.filterUI);
 
         console.log('✅ SceneLoader ready');
     }
@@ -118,7 +118,6 @@ export class SceneLoader{
                 [...AppContext.projectMap.entries()].sort((a, b) => a[0] - b[0])
             );
             AppContext.projectMap = sortedMap;
-            //this.applyFilters(false); //TODO
             AppContext.filterUI.applyFilters(false);
 
             // Génère les boutons de tags
@@ -170,39 +169,7 @@ export class SceneLoader{
                 //Need to have to fade in/out
                 child.material.transparent = true;
 
-                //To have the good ouline
-                switch(child.name){
-                    case AppContext.INTERACTIVES_NAMES[0]:
-                        AppContext.frameAR = child;
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[2]:
-                        AppContext.frameVR = child;
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[4]:
-                        AppContext.frameMR = child;
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[6]:
-                        AppContext.frameGame = child;
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[8]:
-                        AppContext.frameCV = child;
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[10]:
-                        AppContext.frameLinkedin = child;
-                        break;
-                    default:
-                        break;
-                }
-
-                //Add Shadows casters on some objects
-                if(SHADOW_CASTER_OBJS.includes(child.name)){
-                    child.castShadow = true;
-                }
-
-                //Add Shadows receivers on some objects
-                if(SHADOW_RECEIVER_OBJS.includes(child.name)){
-                    child.receiveShadow = true;
-                }
+                //Work on material here
             }
         });
 
