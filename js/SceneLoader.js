@@ -4,9 +4,6 @@ import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples
 import { LoadingBar } from '../libs/LoadingBar.js';
 import { AppContext } from './AppContext.js';
 
-//Filters
-const allTags = new Set();
-
 export class SceneLoader{
 	constructor(){
         this.scene    = AppContext.scene;
@@ -46,28 +43,6 @@ export class SceneLoader{
         console.log('✅ Containers created');
     }
 
-    generateTagButtons(filterUI){
-        // Crée les boutons
-        const tagContainer = document.getElementById('tag-filters');
-        tagContainer.innerHTML = '';
-        
-        allTags.forEach(tag => {
-            const button = document.createElement('button');
-            button.className = 'tag-filter';
-            button.textContent = tag;
-            button.dataset.tag = tag;
-            
-            button.addEventListener('click', () => {
-                //AppContext.filterUI.toggleTagFilter(tag, button);
-                filterUI.toggleTagFilter(tag, button);
-            });
-            
-            tagContainer.appendChild(button);
-        });
-        
-        console.log('✅ Tags générés:', allTags.size);
-    }
-
     /*************************************
      ************** LOAD 
     **************************************/
@@ -76,6 +51,9 @@ export class SceneLoader{
         //Projects
         await this.loadProjectsData();
 
+        AppContext.projectsData.forEach((projectData, index) => {
+            this._progress[projectData.name] = 0;
+        });
         AppContext.projectsData.forEach((projectData, index) => {
             this.loadProject(projectData, index);
         });
@@ -100,7 +78,7 @@ export class SceneLoader{
                 });
 
                 if(project.tags){
-                    project.tags.forEach(tag => allTags.add(tag));
+                    project.tags.forEach(tag => AppContext.allTags.add(tag));
                 }
             }
             
@@ -111,17 +89,16 @@ export class SceneLoader{
         }
     }
 
-    async sortProjects(filterUI){
+    async sortProjects(){
         setTimeout(() => {
             //Sort the map
             const sortedMap = new Map(
                 [...AppContext.projectMap.entries()].sort((a, b) => a[0] - b[0])
             );
             AppContext.projectMap = sortedMap;
-            AppContext.filterUI.applyFilters(false);
 
-            // Génère les boutons de tags
-            this.generateTagButtons(filterUI);
+            AppContext.filterUI.applyFilters(false);
+            AppContext.filterUI.generateTagButtons();
         }, 500);
     }
 
@@ -129,7 +106,6 @@ export class SceneLoader{
      ************** Loaders
     **************************************/
     loadProject(projectData, index, onLoaded) {
-        this._progress[projectData.name] = 0;
 
         this.loader.load(
             'instanceProject.glb',
@@ -143,8 +119,7 @@ export class SceneLoader{
      ************** CALLBACKS
     **************************************/
      _onProgress(xhr, name) {
-        this._progress[name] = xhr.loaded / xhr.total;
-
+        //this._progress[name] = xhr.loaded / xhr.total;
         // Calcule la moyenne globale de tous les GLB
         const values    = Object.values(this._progress);
         const total     = values.reduce((sum, v) => sum + v, 0);
@@ -177,6 +152,7 @@ export class SceneLoader{
         AppContext.scenesMeshes.push(gltf.scene);
 
         this._progress[name] = 1;
+        console.log(`✅ Scene "${name}" loaded`);
         this.isAllLoaded();
 
         //console.log(`✅ Scene "${name}" loaded`);
@@ -187,13 +163,10 @@ export class SceneLoader{
 
     _onLoadedProject(gltf, index, projectData, onLoaded) {
         this.sceneObj = gltf.scene;
+
         this.sceneObj.rotation.set(0, 0, 0);
-        this.sceneObj.position.set(
-            0,
-            AppContext.INITIAL_OFFSET_Y_PROJECTS + index * AppContext.INTERVALLE_Y_PROJECTS,
-            AppContext.offsetZProjects - index * AppContext.INTERVALLE_Z_PROJECTS
-        );
-        this.sceneObj.scale.set(0.6,0.6,0.6);
+        this.sceneObj.position.set(0, 0, 0);
+        this.sceneObj.scale.set(0.6, 0.6, 0.6);
         AppContext.scene.add( gltf.scene );
 
         //Get objs

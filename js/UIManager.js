@@ -2,30 +2,32 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
 import { AppContext } from './AppContext.js';
 
-//UI
 const DELAY_APPEARANCE_BUTTONS = 1000;//milliseconds
 
-export class Header{
-	constructor(){
-        //Filters
-        this.setupFilters();
+var buttonSet = new Set();
 
-        //Header
+export class UIManager
+{
+	constructor()
+    {
+        this.setupFilters();
         this.setupUI();
     }
 
-    /*************************************
-     ************** INIT  
-    **************************************/
+    //#region Initialization
 
-    setupUI(){
-
+    setupUI()
+    {
         const buttonsProjects = document.querySelectorAll('#menu-projects button');
         buttonsProjects.forEach(button => {
             button.addEventListener('click', (e) => {
                 const id = e.target.dataset.id;
                 console.log("Button click")
             });
+        });
+
+        document.getElementById('btn-contact').addEventListener('click', () => {
+            this.showContactModal();
         });
 
         //Anim current menu with delay
@@ -37,30 +39,25 @@ export class Header{
         console.log('✅ UI setup complete');
     }
 
-    setupFilters(){
+    setupFilters()
+    {
         // Input de recherche
         const searchInput = document.getElementById('search-input');
         searchInput.addEventListener('input', (e) => {
-            const rawValue = e.target.value;
-            const sanitizedValue = this.sanitizeInput(rawValue);
-            
-            AppContext.activeFilters.searchText = sanitizedValue.toLowerCase();
-            this.applyFilters(true);
+            this.modifySearchInput(e);
         });
-        
+    
         // Bouton reset
         document.getElementById('reset-filters').addEventListener('click', () => {
             this.resetFilters();
         });
-
         // Setup toggle
-        this.setupFilterToggle();
-        
-        console.log('✅ Filtres activés');
+        this.setupFilterToggle();        
+        console.log('✅ Filters setup complete');
     }
 
-
-    setupFilterToggle(){
+    setupFilterToggle()
+    {
         this.filtersCollapsed = false;
         
         const toggleBtn = document.getElementById('toggle-filters');
@@ -68,31 +65,40 @@ export class Header{
         const filterBar = document.getElementById('filter-bar');
         
         toggleBtn.addEventListener('click', () => {
-            this.filtersCollapsed = !this.filtersCollapsed;
-            
-            if(this.filtersCollapsed){
-                // Replie
-                filterContent.classList.add('collapsed');
-                toggleBtn.classList.add('collapsed');
-                filterBar.classList.add('collapsed');
-                console.log('📁 Filtres repliés');
-            } else {
-                // Déplie
-                filterContent.classList.remove('collapsed');
-                toggleBtn.classList.remove('collapsed');
-                filterBar.classList.remove('collapsed');
-                console.log('📂 Filtres dépliés');
-            }
+            this.toggleFilterCollapse(filterContent, toggleBtn, filterBar);
         });
-
-        console.log('✅ Toggle filtres activé');
+        console.log('✅ Toggle filters setup complete');
     }
 
-    /*************************************
-     ************** ANIM UI 
-    **************************************/
+    generateTagButtons()
+    {
+        const tagContainer = document.getElementById('tag-filters');
+
+        tagContainer.innerHTML = '';
+        
+        AppContext.allTags.forEach(tag => {
+            const button = document.createElement('button');
+            button.className = 'tag-filter';
+            button.textContent = tag;
+            button.dataset.tag = tag;
+            
+            button.addEventListener('click', () => {
+                this.toggleTagFilter(tag, button);
+            });            
+            tagContainer.appendChild(button);
+            buttonSet.add(button);
+        }); 
+        this.applyFilters(false);
+        console.log('✅ Tags buttons generated:', AppContext.allTags.size);
+    }
+
+    //#endregion
+
+    //#region Animations
+
    // Fade out un menu
-    fadeOutMenu(menuId){
+    fadeOutMenu(menuId)
+    {
         const menu = document.getElementById(menuId);
         if(menu){
             menu.classList.remove('fade-in');
@@ -102,7 +108,8 @@ export class Header{
     }
 
     // Fade in un menu
-    fadeInMenu(menuId){
+    fadeInMenu(menuId)
+    {
         const menu = document.getElementById(menuId);
         if(menu){
             menu.classList.remove('fade-out');
@@ -112,7 +119,8 @@ export class Header{
     }
 
     // Fade out la barre de filtres
-    fadeOutFilters(){
+    fadeOutFilters()
+    {
         const filterBar = document.getElementById('filter-bar');
         if(filterBar){
             filterBar.classList.remove('fade-in');
@@ -122,7 +130,8 @@ export class Header{
     }
 
     // Fade in la barre de filtres
-    fadeInFilters(){
+    fadeInFilters()
+    {
         const filterBar = document.getElementById('filter-bar');
         if(filterBar){
             filterBar.classList.remove('fade-out');
@@ -131,10 +140,44 @@ export class Header{
         }
     }
 
-    /*************************************
-     ************** MENU PROJECTS FILTERS
-    **************************************/
-    toggleTagFilter(tag, button){
+    //#endregion
+
+    //#region Filters
+
+    modifySearchInput(e)
+    {
+        const rawValue = e.target.value;
+        const sanitizedValue = this.sanitizeInput(rawValue);        
+        AppContext.activeFilters.searchText = sanitizedValue.toLowerCase();
+        this.applyFilters(true);
+    }
+
+    toggleFilterCollapse(filterContent, toggleBtn, filterBar)
+    {
+        this.filtersCollapsed = !this.filtersCollapsed;
+        
+        if(this.filtersCollapsed){
+            filterContent.classList.add('collapsed');
+            toggleBtn.classList.add('collapsed');
+            filterBar.classList.add('collapsed');
+            console.log('📁 Filters collapsed');
+        } else {
+            filterContent.classList.remove('collapsed');
+            toggleBtn.classList.remove('collapsed');
+            filterBar.classList.remove('collapsed');
+            console.log('📂 Filters open');
+        }
+    }
+
+    toggleTagFilter(tag, button)
+    {
+        if(AppContext.activeFilters.tags.size <= 0)
+        {
+            buttonSet.forEach(btn => {
+                btn.classList.remove('active');
+            });
+        }
+
         if(AppContext.activeFilters.tags.has(tag)){
             // Désactive le tag
             AppContext.activeFilters.tags.delete(tag);
@@ -146,10 +189,12 @@ export class Header{
         }
         
         this.applyFilters(true);
-        console.log('🏷️ Filtres actifs:', [...AppContext.activeFilters.tags]);
+        console.log('🏷️ Active filters:', [...AppContext.activeFilters.tags]);
     }
 
-    applyFilters(mustReloadURL){
+    applyFilters(mustReloadURL)
+    {
+        const previousVisibleCount = AppContext.projectsVisible.size;
         AppContext.projectsVisible.clear();
         let currentKeyVisible = 0;
         AppContext.scrollProjectAmount = 0;
@@ -157,38 +202,46 @@ export class Header{
         AppContext.projectMap.forEach((projectParent, key) => {
             const projectInfos = projectParent.children[0].children[0].userData.project;
             let visible = true;
-
             // Filtre par nom
             if(AppContext.activeFilters.searchText){
                 const nameMatch = projectInfos.name.toLowerCase().includes(AppContext.activeFilters.searchText);
                 if(!nameMatch) visible = false;
             }
-
             // Filtre par tags
-            if(AppContext.activeFilters.tags.size > 0){
+            if(AppContext.activeFilters.tags.size > 0)
+            {
                 const hasMatchingTag = projectInfos.tags?.some(tag => 
                     AppContext.activeFilters.tags.has(tag)
                 );
                 if(!hasMatchingTag) visible = false;
             }
-            
-            projectParent.visible = visible;
-            
+            else
+            {
+                buttonSet.forEach(btn => {
+                    btn.classList.add('active');
+                });
+            }
+            projectParent.visible = visible;            
             if(visible){
                 AppContext.projectsVisible.set(currentKeyVisible, projectParent);
                 currentKeyVisible++;
             }
         });
 
+        //Camera reset
+        if(mustReloadURL && AppContext.camera && currentKeyVisible < previousVisibleCount){
+            AppContext.camera.resetToInitial();
+        }
+
         //URL
         if(mustReloadURL){
             AppContext.urlManager.updateURL();
         }
-        
-        console.log('🔍 Filtres appliqués : ' + (currentKeyVisible) + ' projects visibles ');
+        console.log('🔍 Filters applied : ' + (currentKeyVisible) + ' visible projects');
     }
 
-    resetFilters(){
+    resetFilters()
+    {
         // Reset recherche
         document.getElementById('search-input').value = '';
         AppContext.activeFilters.searchText = '';
@@ -199,28 +252,63 @@ export class Header{
             btn.classList.remove('active');
         });
 
-        this.applyFilters(true);
-        
+        this.applyFilters(true);        
         console.log('🔄 Filtres réinitialisés');
     }
 
-    getButtonFilterByTag(tagValue){
+    getButtonFilterByTag(tagValue)
+    {
         const button = document.querySelector(`[data-tag="${tagValue}"]`);
         return button;
     }
 
     //Increase security against code injection
-    sanitizeInput(input){
+    sanitizeInput(input)
+    {
         // Retire les caractères dangereux
         return input
-            .replace(/[<>\"']/g, '') // Retire < > " '
+            .replace(/[<>\"']/g, '') 
             .trim()
-            .substring(0, 100); // Limite la longueur
+            .substring(0, 100); 
     }
 
-    /*************************************
-     ************** MODAL 
-    **************************************/
+    //#endregion
+
+    //#region Modal
+
+    showContactModal(){
+        AppContext.isModalProjectVisible = true;
+
+        const modal = document.createElement('div');
+        modal.id = 'contact-modal';
+        modal.innerHTML = `
+            <div class="modal-content contact-modal-content">
+                <span class="close">&times;</span>
+                <h2>Contact</h2>
+                <p class="contact-name">Guillaume Bertrand</p>
+                <div class="contact-links">
+                    <a class="contact-link" href="mailto:guillaumebertrand33@gmail.com">
+                        ✉ guillaumebertrand33@gmail.com
+                    </a>
+                    <a class="contact-link" href="https://www.linkedin.com/in/guillaumebertrand33/" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="16" height="16">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        const close = () => {
+            document.body.removeChild(modal);
+            AppContext.isModalProjectVisible = false;
+        };
+
+        modal.querySelector('.close').onclick = close;
+        modal.addEventListener('click', (e) => { if(e.target === modal) close(); });
+    }
 
     showProjectModal(project){
         AppContext.isModalProjectVisible = true;
@@ -273,9 +361,9 @@ export class Header{
         AppContext.urlManager.updateURL();
     }
 
-    /*************************************
-     ************** UPDATE 
-    **************************************/
-	update() {   
+    //#endregion
+
+	update() 
+    {   
     }
 }

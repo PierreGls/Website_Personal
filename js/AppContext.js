@@ -1,20 +1,27 @@
 export const AppContext = {
-    //Core elements
+    //Scene Render
+    scene:      null,
+    camera:     null,
     render:     null,
     renderer:   null,
     outlinePass:null,
-    scene:      null,
-    camera:     null,
     audio:      null,
+
+    //Interactions
     raycaster:  null,
+    raycasterCenter : null,
     mouse:      null,
+
+    //UI
     filterUI:   null,
     loadingBar: null,
     urlManager: null,
     
-    //General
-    areProjectsLoaded: false,
+    //Current state
     isMobile         : false,
+    areScenesLoaded   : false,
+    currentState     : 0, //0: menu, 1: project, 2: scene
+    areProjectsLoaded: false,
 
     //Containers
     projectContainer: null,
@@ -31,6 +38,7 @@ export const AppContext = {
     projectMap     : new Map(),
 
     //Filters
+    allTags: new Set(),
     isModalProjectVisible : false,
     activeFilters: {
             searchText: '',

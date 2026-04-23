@@ -18,81 +18,95 @@ import { AppContext } from './AppContext.js';
 import { Camera } from './Camera.js';
 import { Renderer } from './Renderer.js';
 import { SceneLoader } from './SceneLoader.js';
-import { Header } from './Header.js';
+import { UIManager } from './UIManager.js';
 import { Scroller } from './Scroller.js';
 import { Particles } from './Particles.js';
 import { Audio } from './Audio.js';
 import { CurrentProjectName } from './CurrentProjectName.js';
 import { ClickController } from './ClickController.js';
 import { LoadFromURL } from './LoadFromURL.js';
+import { GalaxySphere } from './GalaxySphere.js';
 
 
-const COLOR_BG = 0xaaaaaa;
+const COLOR_BG = 0x000000;
 
-class App{
-	constructor(){
+class App
+{
+	constructor()
+    {
         AppContext.isMobile     = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         AppContext.areScenesLoaded     = false;
+        AppContext.areProjectsLoaded   = false;
         AppContext.currentState = 0;
+
         AppContext.raycaster    = new THREE.Raycaster();
         AppContext.mouse        = new THREE.Vector2();
 
         this.clock              = new THREE.Clock();
+
         this.scene              = new THREE.Scene();
         this.scene.background   = new THREE.Color(COLOR_BG);
         AppContext.scene        = this.scene;
+
         this.camera             = new Camera();
         AppContext.camera       = this.camera;
+
         this.renderer           = new Renderer();
-        AppContext.render       = this.render.bind(this);;
+        AppContext.render       = this.render.bind(this);
         AppContext.renderer     = this.renderer;
+
         this.outlinePass        = this.renderer.outline;
+        AppContext.outlinePass  = this.outlinePass;
+
         this.loadFromURL        = new LoadFromURL(); 
         AppContext.urlManager   = this.loadFromURL;
-        this.header             = new Header();
-        AppContext.filterUI     = this.header;
+
+        this.uiManager             = new UIManager();
+        AppContext.filterUI     = this.uiManager;
+
         this.scenesLoader       = new SceneLoader();
         this.scroller           = new Scroller();
         this.particles          = new Particles();
+
         this.audio              = new Audio();
         AppContext.audio        = this.audio;
+
+        this.galaxySphere       = new GalaxySphere();
         this.clickController    = new ClickController();
         this.currentProjectName = new CurrentProjectName();
 
+        this.debugSceneHierarchy();
+        
         //At the end : should be at the end of the meshes loading
         //AppContext.filterUI.onChangeState(0,false);
         setTimeout(() => {
             AppContext.urlManager.loadFromURL();
+
         }, 800);
         
     }
-
-    /*************************************
-     ************** UPDATE 
-    **************************************/
     
     //Update
-	render() {   
-        const dt = this.clock.getDelta();
+	render()
+    {   
+        const deltaTime = this.clock.getDelta();
 
         this.camera.update();
+        this.galaxySphere.update();
         this.renderer.update();
         this.scenesLoader.update();
         this.scroller.update();
         this.currentProjectName.update();
-        this.header.update();
+        this.uiManager.update();
         this.particles.update();
     }
 
-    /*************************************
-     ************** HELPER 
-    **************************************/
-
-    debugSceneHierarchy(){
+    debugSceneHierarchy()
+    {
         console.log('🌳 Hiérarchie:');
         console.log('Scene principale');
-        console.log('└── SceneContainer', AppContext.sceneContainer.position);
-        AppContext.sceneContainer.children.forEach((child, i) => {
+        console.log('└── SceneContainer', AppContext.scene.position);
+        AppContext.scene.children.forEach((child, i) => {
             console.log('    └── Scène', i, child.position);
         });
     }
