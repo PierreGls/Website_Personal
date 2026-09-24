@@ -4,14 +4,26 @@ import { AppContext } from './AppContext.js';
 
 //UI
 const DELAY_APPEARANCE_BUTTONS = 1000;//milliseconds
+const HINT_APPEAR_DELAY = 1500; // ms before hint fades in
 
-export class Header{
+const FILTER_CATEGORIES = {
+    technology: ['AR', 'VR', 'MR', 'Others'],
+    software: ['Unity', 'Unreal', 'HorizonWorlds', 'Snapchat', 'Tiktok'],
+    type: ['Social Media', 'Games', 'Simulation']
+};
+
+export class UIController{
 	constructor(){
         //Filters
         this.setupFilters();
 
         //Header
         this.setupUI();
+
+        //Scroll
+        this.setupScrollHint();
+
+        this.isFirstTimeInProjects = true;
     }
 
     /*************************************
@@ -90,44 +102,58 @@ export class Header{
         toggleBtn.addEventListener('click', () => {
             this.filtersCollapsed = !this.filtersCollapsed;
             
-            if(this.filtersCollapsed){
-                // Replie
-                filterContent.classList.add('collapsed');
-                toggleBtn.classList.add('collapsed');
-                filterBar.classList.add('collapsed');
-                console.log('📁 Filtres repliés');
-            } else {
-                // Déplie
-                filterContent.classList.remove('collapsed');
-                toggleBtn.classList.remove('collapsed');
-                filterBar.classList.remove('collapsed');
-                console.log('📂 Filtres dépliés');
-            }
+            filterContent.classList.toggle('collapsed', this.filtersCollapsed);
+            toggleBtn.classList.toggle('collapsed', this.filtersCollapsed);
+            filterBar.classList.toggle('collapsed', this.filtersCollapsed);
         });
 
         console.log('✅ Toggle filtres activé');
     }
 
     generateTagButtons(allTags){
-        // Crée les boutons
-        const tagContainer = document.getElementById('tag-filters');
-        tagContainer.innerHTML = '';
-        
-        allTags.forEach(tag => {
-            const button = document.createElement('button');
-            button.className = 'tag-filter';
-            button.textContent = tag;
-            button.dataset.tag = tag;
-            
-            button.addEventListener('click', () => {
-                //AppContext.filterUI.toggleTagFilter(tag, button);
-                this.toggleTagFilter(tag, button);
+        Object.entries(FILTER_CATEGORIES).forEach(([category, tags]) => {
+            const container = document.getElementById(`tags-${category}`);
+            if(!container) return;
+
+            container.innerHTML = '';
+
+            tags.forEach(tag => {
+                const button = document.createElement('button');
+                button.className = 'tag-filter';
+                button.textContent = tag;
+                button.dataset.tag = tag;
+                button.dataset.category = category;
+
+                button.addEventListener('click', () => {
+                    this.toggleTagFilter(tag, button);
+                });
+
+                container.appendChild(button);
             });
-            
-            tagContainer.appendChild(button);
         });
         
-        console.log('✅ Tags générés:', allTags.size);
+        this.setupCategoryToggles();
+
+        console.log('✅ Tags générés par catégorie');
+    }
+
+    setupCategoryToggles(){
+        const headers = document.querySelectorAll('.filter-category-header');
+
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const category = header.dataset.category;
+                const group = document.getElementById(`tags-${category}`);
+                if(!group) return;
+
+                header.classList.toggle('collapsed');
+                group.classList.toggle('collapsed');
+
+                console.log(`📁 Catégorie "${category}" : ${group.classList.contains('collapsed') ? 'repliée' : 'dépliée'}`);
+            });
+        });
+
+        console.log('✅ Toggle catégories activé');
     }
 
     /*************************************
@@ -365,6 +391,10 @@ export class Header{
             this.resetFilters();
         }
         else{
+            if(this.isFirstTimeInProjects){
+                this.setupScrollHint();
+            }
+            this.isFirstTimeInProjects = false;
             AppContext.targetScenesZ = 10;
             AppContext.offsetZProjects = AppContext.OFFSET_Z_PROJECTS_STATE_VISIBLE;
             this.fadeInFilters();
@@ -388,6 +418,59 @@ export class Header{
         AppContext.audio.playSFXFlash();
         
         console.log('⚡ Flash!');
+    }
+
+    /*************************************
+     ************** scroll hint 
+    **************************************/
+
+   setupScrollHint(){
+        this.hintEl = document.getElementById('scroll-hint');
+        this.hintShown = false;
+        this.hintDismissed = false;
+
+        // N'affiche le hint que si l'utilisateur n'a pas encore interagi cette session
+        /*
+        if(sessionStorage.getItem('hintDismissed') === 'true'){
+            this.hintDismissed = true;
+            return;
+        }*/
+
+            console.log("HINT SETUP");
+
+        setTimeout(() => {
+            console.log("HINT 1");
+
+            if(!this.hintDismissed){
+                console.log("HINT 2");
+
+                this.showScrollHint();
+            }
+        }, HINT_APPEAR_DELAY);
+
+        // Cache le hint dès la première interaction (scroll ou touch)
+        const dismiss = () => this.dismissScrollHint();
+        window.addEventListener('wheel', dismiss, { once: true, passive: true });
+        window.addEventListener('touchmove', dismiss, { once: true, passive: true });
+    }
+
+    showScrollHint(){
+        this.hintEl.classList.add('visible');
+        this.hintEl.classList.remove('hidden');
+        this.hintShown = true;
+    }
+
+    dismissScrollHint(){
+        if(this.hintDismissed) return;
+        this.hintDismissed = true;
+
+        if(this.hintEl){
+            this.hintEl.classList.remove('visible');
+            this.hintEl.classList.add('hidden');
+        }
+
+        sessionStorage.setItem('hintDismissed', 'true');
+        console.log('👋 Hint scroll masqué');
     }
 
     /*************************************

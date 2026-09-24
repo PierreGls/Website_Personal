@@ -13,6 +13,9 @@
 
         <title>Pierre Galus - Portfolio</title>
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/styleFilter.css">
+        <link rel="stylesheet" href="css/styleHintScroll.css">
+
 	</head>
 	<body>
         <!--
@@ -44,6 +47,19 @@
 
         <canvas id="webgl"></canvas>
 
+        <div id="scroll-hint" class="scroll-hint">
+            <div class="scroll-hint-icon scroll-hint-desktop">
+                <div class="mouse">
+                    <div class="mouse-wheel"></div>
+                </div>
+            </div>
+            <div class="scroll-hint-icon scroll-hint-mobile">
+                <div class="swipe-arrow">→</div>
+            </div>
+            <p class="scroll-hint-text scroll-hint-desktop">Scroll to explore</p>
+            <p class="scroll-hint-text scroll-hint-mobile">Swipe to explore</p>
+        </div>
+
         <!-- Flash -->
         <div id="flash-overlay"></div>
     
@@ -69,16 +85,42 @@
                     <input 
                         type="text" 
                         id="search-input" 
-                        placeholder="Rechercher par nom..."
+                        placeholder="Search by name..."
                     >
-                    <button id="reset-filters">Reset</button>
                 </div>
-                
-                <div id="tag-filters">
-                    <!-- Les tags seront générés dynamiquement -->
+
+                <!-- Filtres par catégorie -->
+                <div id="context-filters">
+                    <div class="filter-category" data-category="technology">
+                        <button class="filter-category-header" data-category="technology">
+                            <span class="filter-category-label">Technology</span>
+                            <span class="filter-category-arrow">▾</span>
+                        </button>
+                        <div class="tag-filter-group" id="tags-technology"></div>
+                    </div>
+
+                    <div class="filter-category" data-category="software">
+                        <button class="filter-category-header" data-category="software">
+                            <span class="filter-category-label">Software</span>
+                            <span class="filter-category-arrow">▾</span>
+                        </button>
+                        <div class="tag-filter-group" id="tags-software"></div>
+                    </div>
+
+                    <div class="filter-category" data-category="type">
+                        <button class="filter-category-header" data-category="type">
+                            <span class="filter-category-label">Type</span>
+                            <span class="filter-category-arrow">▾</span>
+                        </button>
+                        <div class="tag-filter-group" id="tags-type"></div>
+                    </div>
                 </div>
+
+                <button id="reset-filters">Reset</button>
             </div>
         </div>
+
+        
         
 
         <!-- Texte du projet actif -->

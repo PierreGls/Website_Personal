@@ -38,6 +38,7 @@ export class Scroller{
         console.log('✅ Controls setup for PC');
     }
 
+    //Mobile
     setupTouchControls(){
         let touchStartY = 0;
         let touchStartX = 0;

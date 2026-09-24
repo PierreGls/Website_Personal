@@ -56,7 +56,7 @@ export class Camera{
 
     handleTouchRotation(){
         window.addEventListener('touchmove', (event) => {
-            if(currentState === 1){ 
+            if(AppContext.currentState === 1){ 
                 this.targetCameraRotation.x = 0;
                 this.targetCameraRotation.y = 0;
                 return;

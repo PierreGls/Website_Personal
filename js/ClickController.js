@@ -11,8 +11,11 @@ export class ClickController{
     /*************************************
      ************** CLICK 
     **************************************/
-    //click detection
     handleClickDetection(event){
+        if(this.isClickOnUI(event)){
+            return;
+        }
+
         // Lance le rayon 
         AppContext.raycaster.setFromCamera(AppContext.mouse, AppContext.camera.camera);
         //AppContext.raycaster.setFromCamera(this.mouse, this.camera.instance);
@@ -23,6 +26,11 @@ export class ClickController{
         else if(AppContext.currentState === 1){ //CLICK ON PROJECT
             this.handleClickDetectionsProjects(event);
         } 
+    }
+
+    // Vérifie si le clic provient d'un élément d'interface plutôt que du canvas
+    isClickOnUI(event){
+        return !!event.target.closest('#filter-bar, .menu, #project-modal, #current-project');
     }
 
     handleClickDetectionsScenes(event){
@@ -36,7 +44,7 @@ export class ClickController{
                 case 'Cube016':
                     console.log('Ouverture du PDF');
                     //Le '_blank' ouvre dans un nouvel onglet. Si tu veux ouvrir dans la même fenêtre, utilise '_self'.
-                    window.open('../../assets/PierreGalus_CV_XRDeveloper.pdf', '_blank');
+                    window.open('../../assets/PierreGalus_CV_Developer.pdf', '_blank');
                     break;
                 case "Click_AR_1":
                 case "Click_AR_2":
@@ -77,7 +85,10 @@ export class ClickController{
 
     handleClickDetectionsProjects(event){
         if(AppContext.isModalProjectVisible){ return; }
-        const intersectsProjects = AppContext.raycaster.intersectObjects(AppContext.projectsMeshes);
+        //because raycast hits invisible objects as well
+        const visibleProjectMeshes = AppContext.projectsMeshes.filter(mesh => mesh.visible);
+        const intersectsProjects = AppContext.raycaster.intersectObjects(visibleProjectMeshes);
+
         if(intersectsProjects.length > 0){
             const clickedObj = intersectsProjects[0].object;
             console.log('🎯 Project clicked2:', clickedObj.userData.project);

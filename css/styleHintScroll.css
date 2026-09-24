@@ -1,0 +1,97 @@
+/* ============================================
+   Scroll / swipe hint
+   ============================================ */
+.scroll-hint {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 900;
+    pointer-events: none;
+
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.scroll-hint.visible {
+    opacity: 1;
+}
+
+.scroll-hint.hidden {
+    opacity: 0;
+}
+
+.scroll-hint-text {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.6);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    z-index: 900;
+}
+
+/* --- Desktop: animated mouse icon --- */
+.mouse {
+    width: 26px;
+    height: 42px;
+    border: 2px solid rgba(0, 0, 0, 0.473);
+    border-radius: 14px;
+    position: relative;
+}
+
+.mouse-wheel {
+    width: 4px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollWheel 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+    0%   { opacity: 1; top: 6px; }
+    60%  { opacity: 0; top: 18px; }
+    100% { opacity: 0; top: 6px; }
+}
+
+/* --- Mobile: swipe arrow icon --- */
+.swipe-arrow {
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.7);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    animation: swipeRight 1.6s ease-in-out infinite;
+}
+
+@keyframes swipeUp {
+    0%   { transform: translateY(6px); opacity: 0.3; }
+    50%  { transform: translateY(-6px); opacity: 1; }
+    100% { transform: translateY(6px); opacity: 0.3; }
+}
+
+@keyframes swipeRight {
+    0%   { transform: translateX(6px); opacity: 0.3; }
+    50%  { transform: translateX(-6px); opacity: 1; }
+    100% { transform: translateX(6px); opacity: 0.3; }
+}
+
+/* --- Toggle desktop/mobile variants --- */
+.scroll-hint-desktop { display: flex; }
+.scroll-hint-mobile  { 
+    display: none;
+    margin-bottom: 10px; 
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .scroll-hint-desktop { display: none; }
+    .scroll-hint-mobile  { display: flex; }
+}

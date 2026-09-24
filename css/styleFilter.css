@@ -1,0 +1,346 @@
+/* ============================================
+   Filter panel — left side
+   ============================================ */
+
+#filter-bar {
+    position: fixed;
+    top: 50%;
+    left: 0px;
+    transform: translateY(-50%) translateX(-20px);
+    display: flex;
+    /*flex-direction: column;*/
+    align-items: stretch;
+    background: rgba(15, 15, 15, 0.55);
+    padding: 28px 26px;
+    border-radius: 0px 0px 4px 0px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 100;
+    max-width: 85vw;
+    overflow: visible;
+
+    /* Animation */
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    pointer-events: none;
+}
+
+/* État visible */
+#filter-bar.fade-in {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+    pointer-events: auto;
+}
+
+/* État caché */
+#filter-bar.fade-out {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-20px);
+    pointer-events: none;
+}
+
+/* Barre repliée : garde juste le bouton visible */
+#filter-bar.collapsed {
+    /*padding: 18px 20px;*/
+    padding: 0px;
+    width: auto;
+}
+
+/* ---------- Header row : title + toggle ---------- */
+#filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+#filter-title {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    white-space: nowrap;
+}
+
+/* Bouton toggle — top right of the filter section */
+#toggle-filters {
+    position: absolute;
+    top: -1px;
+    right: -28px;
+    padding: 0;
+    background: rgb(15, 15, 15, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50% 50% 0% 0%;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 11px;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease, right 0.4s ease;
+    z-index: 2;
+    transform: rotate(90deg);
+}
+
+#toggle-filters:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: white;
+}
+
+/* Rotation de la flèche quand replié */
+#toggle-filters.collapsed {
+    right: -28px;
+    transform: rotate(-90deg);
+    border-radius: 0% 0% 50% 50%;
+}
+
+/* ---------- Content container ---------- */
+#filter-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    padding-right: 6px; /* avoid content hugging the scrollbar */
+    max-height: 60vh;
+    width: 208px;
+
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.4s ease;
+    opacity: 1;
+
+    /*scroll*/
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /*Firefox*/
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+/* État replié */
+#filter-content.collapsed {
+    width: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    padding: 0px;
+    transition: width 0.4s ease, opacity 0.15s ease, margin 0.4s ease, padding 0.4s ease;
+}
+
+/* ---------- Search ---------- */
+#search-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#search-input {
+    padding: 10px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    color: white;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+#search-input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 300;
+}
+
+#search-input:focus {
+    border-bottom-color: rgba(255, 255, 255, 0.75);
+}
+
+/* Bouton reset — subtle text link, not a boxed button */
+#reset-filters {
+    align-self: center;
+    padding: 0;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#reset-filters:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ---------- Tags ---------- */
+#tag-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Bouton tag filtre — flat list rows instead of pills */
+.tag-filter {
+    padding: 8px 2px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.25s ease, padding-left 0.25s ease;
+    display: block;
+}
+
+.tag-filter:last-child {
+    border-bottom: none;
+}
+
+.tag-filter:hover {
+    color: rgba(255, 255, 255, 0.9);
+    padding-left: 6px;
+}
+
+.tag-filter.active {
+    color: white;
+    padding-left: 6px;
+    position: relative;
+}
+
+.tag-filter.active::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: white;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    #filter-bar {
+        padding: 22px 4px 22px 20px;
+    }
+
+    #search-input {
+        font-size: 16px; /* Évite le zoom automatique sur iOS */
+    }
+}
+
+
+/* ---------- Context filter categories ---------- */
+#context-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.filter-category-label {
+    margin: 0 0 8px 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.tag-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+
+
+
+/* ---------- Scroll inside the filter panel ---------- */
+
+/* Minimalist scrollbar */
+#filter-content::-webkit-scrollbar {
+    width: 4px;
+}
+#filter-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+#filter-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+#filter-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- Category header (clickable) ---------- */
+.filter-category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 0 8px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.filter-category-label {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    transition: color 0.25s ease;
+}
+
+.filter-category-header:hover .filter-category-label {
+    color: rgba(255, 255, 255, 0.89);
+}
+
+.filter-category-arrow {
+    font-size: 19px;
+    color: rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.filter-category-header.collapsed .filter-category-arrow {
+    transform: rotate(-90deg);
+}
+
+/* ---------- Collapsible tag group ---------- */
+.tag-filter-group {
+    max-height: 300px;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
+    opacity: 1;
+}
+
+.tag-filter-group.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+}

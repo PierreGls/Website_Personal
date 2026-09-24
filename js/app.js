@@ -18,7 +18,7 @@ import { AppContext } from './AppContext.js';
 import { Camera } from './Camera.js';
 import { Renderer } from './Renderer.js';
 import { SceneLoader } from './SceneLoader.js';
-import { Header } from './Header.js';
+import { UIController } from './UIController.js';
 import { Scroller } from './Scroller.js';
 import { Particles } from './Particles.js';
 import { Audio } from './Audio.js';
@@ -51,8 +51,8 @@ class App{
         this.outlinePass        = this.renderer.outline;
         this.loadFromURL        = new LoadFromURL(); 
         AppContext.urlManager   = this.loadFromURL;
-        this.header             = new Header();
-        AppContext.filterUI     = this.header;
+        this.uiController       = new UIController();
+        AppContext.filterUI     = this.uiController;
         this.scenesLoader       = new SceneLoader(this.scene, this.header);
         this.scroller           = new Scroller();
         this.particles          = new Particles();
@@ -85,7 +85,7 @@ class App{
         this.scroller.update();
         this.currentProjectName.update();
         this.outline.update();
-        this.header.update();
+        this.uiController.update();
         this.sceneOpacity.update();
     }
 
