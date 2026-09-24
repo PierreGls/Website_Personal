@@ -4,574 +4,926 @@
       "id": "VR_1",
       "name": "Journey Through Time",
       "description": "Journey Through Time invites you to embark on an extraordinary mixed reality adventure where history comes alive in your own space. Using the power of Meta Quest 3, your real-world environment blends seamlessly with stunning virtual worlds, immersing you in pivotal moments from our planet's past.",
-      "tags": ["MR", "Unity", "Games","VR"],
+      "tags": [
+        "MR",
+        "Unity",
+        "Games",
+        "VR"
+      ],
       "links": {
         "demo": "https://www.meta.com/it-it/experiences/journey-through-time/8893681454081682/."
-        }
+      },
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Journey%20Through%20Time/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Journey%20Through%20Time/icon.png"
     },
     {
       "id": "VR_2",
       "name": "Frosty Rush",
       "description": "☀️ In this sun-scorched, pastel-colored universe, you’re a humble ice cream courier🍦trying to meet the absurdly high standards of feline gods 😸. Your goal? Get the goods to their paws before the heat gets to them 🫠 🐾.",
-      "tags": ["VR", "HorizonWorlds", "Games"],
+      "tags": [
+        "VR",
+        "HorizonWorlds",
+        "Games"
+      ],
       "links": {
         "demo": "https://horizon.meta.com/world/509720518825457/?locale=en_US"
-        }
+      },
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Frosty%20Rush/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Frosty%20Rush/icon.png"
     },
     {
       "id": "VR_3",
       "name": "Stone Mason",
       "description": "",
-      "tags": ["MR", "Unreal","VR", "Simulation"],
-      "links": {
-        }
+      "tags": [
+        "MR",
+        "Unreal",
+        "VR",
+        "Simulation"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Stone%20Mason/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Stone%20Mason/icon.png"
     },
     {
       "id": "VR_4",
       "name": "YSL",
       "description": "",
-      "tags": ["MR", "Unity","VR", "Games"],
-      "links": {
-        }
+      "tags": [
+        "MR",
+        "Unity",
+        "VR",
+        "Games"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/YSL/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/YSL/icon.png"
     },
     {
       "id": "VR_5",
       "name": "VRAI Simulations",
       "description": "",
-      "tags": ["VR", "Unity", "Simulation"],
-      "links": {
-        }
+      "tags": [
+        "VR",
+        "Unity",
+        "Simulation"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/VRAI%20Simulations/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/VRAI%20Simulations/icon.png"
     },
-
     {
       "id": "OT_1",
       "name": "CodeDelta",
       "description": "Code Delta is a false name for a TV show that could appear in France in the future years. The technologies used for this project : the Mediapipe and Zed camera for the tracking, OBS for the link to the professional control room and OSC for the local communication between the different computers",
-      "tags": ["Others", "Unity", "Games"],
-      "links": {
-        }
+      "tags": [
+        "Others",
+        "Unity",
+        "Games"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/CodeDelta/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/CodeDelta/icon.png"
     },
-
     {
       "id": "GA_1",
       "name": "Voodoo",
       "description": "Playable ads on Mob Control, the biggest game of Voodoo",
-      "tags": ["Others", "Unity", "Games"],
-      "links": {
-        }
+      "tags": [
+        "Others",
+        "Unity",
+        "Games"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Voodoo/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Voodoo/icon.png"
     },
-
-
-
     {
       "id": "AR_1",
       "name": "Amazon LOTR",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Amazon%20LOTR/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Amazon%20LOTR/icon.png"
     },
     {
       "id": "AR_2",
       "name": "Guinness",
       "description": "The project has just been awarded the Best AR or VR Implementation at the prestigious DIGITAL MEDIA AWARDS IRELAND.",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Guinness/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Guinness/icon.png"
     },
     {
       "id": "AR_3",
       "name": "JO2024",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/JO2024/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/JO2024/icon.png"
     },
     {
       "id": "AR_4",
       "name": "JO2024 Refugee Team",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/JO2024%20Refugee%20Team/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/JO2024%20Refugee%20Team/icon.png"
     },
     {
       "id": "AR_5",
       "name": "Telekom EuroCup2024",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Telekom%20EuroCup2024/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Telekom%20EuroCup2024/icon.png"
     },
     {
       "id": "AR_000",
       "name": "Snap Games Lensathon",
       "description": "Award winning top 10 out 1000 submissions",
-      "tags": ["AR", "Snapchat", "Games", "Social Media"],
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Games",
+        "Social Media"
+      ],
       "links": {
         "demo": "https://devpost.com/software/dontblink-filter"
-        }
+      },
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Snap%20Games%20Lensathon/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Snap%20Games%20Lensathon/icon.png"
     },
-
     {
       "id": "AR_6",
       "name": "Chivas",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Chivas/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Chivas/icon.png"
     },
     {
       "id": "AR_7",
       "name": "Cadbury",
       "description": "",
-      "tags": ["AR", "Tiktok", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Tiktok",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Cadbury/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Cadbury/icon.png"
     },
     {
       "id": "AR_8",
       "name": "Listerine",
       "description": "",
-      "tags": ["AR", "Tiktok", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Tiktok",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Listerine/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Listerine/icon.png"
     },
     {
       "id": "AR_9",
       "name": "Adidas WorldCup",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Adidas%20WorldCup/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Adidas%20WorldCup/icon.png"
     },
     {
       "id": "AR_10",
       "name": "Amazon The Boys",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Amazon%20The%20Boys/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Amazon%20The%20Boys/icon.png"
     },
     {
       "id": "AR_11",
       "name": "Amazon The Summer I Turned Pretty",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Amazon%20The%20Summer%20I%20Turned%20Pretty/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Amazon%20The%20Summer%20I%20Turned%20Pretty/icon.png"
     },
     {
       "id": "AR_12",
       "name": "Breitling",
       "description": "Audemars Piguet",
-      "tags": ["AR", "Snapchat", "Social Media"],
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
       "links": {
-        "demo" : "https://www.facebook.com/business/success/2-breitling"
-        }
+        "demo": "https://www.facebook.com/business/success/2-breitling"
+      },
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Breitling/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Breitling/icon.png"
     },
     {
       "id": "AR_13",
       "name": "Cartier Panthère",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Cartier%20Panth%C3%A8re/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Cartier%20Panth%C3%A8re/icon.png"
     },
     {
       "id": "AR_14",
       "name": "Cartier Icon Refresh",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Cartier%20Icon%20Refresh/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Cartier%20Icon%20Refresh/icon.png"
     },
     {
       "id": "AR_15",
       "name": "Cloudsurfer",
       "description": "",
-      "tags": ["AR", "Snapchat", "Games", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Games",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Cloudsurfer/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Cloudsurfer/icon.png"
     },
     {
       "id": "AR_16",
       "name": "Deezer",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Deezer/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Deezer/icon.png"
     },
     {
       "id": "AR_17",
       "name": "Dior Riviera",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Dior%20Riviera/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Dior%20Riviera/icon.png"
     },
     {
       "id": "AR_18",
       "name": "Disney Marvels",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Disney%20Marvels/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Disney%20Marvels/icon.png"
     },
     {
       "id": "AR_19",
       "name": "Givenchy",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Givenchy/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Givenchy/icon.png"
     },
     {
       "id": "AR_20",
       "name": "Givenchy Tk360",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Givenchy%20Tk360/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Givenchy%20Tk360/icon.png"
     },
     {
       "id": "AR_21",
       "name": "Guerlain",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Guerlain/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Guerlain/icon.png"
     },
     {
       "id": "AR_22",
       "name": "HBO",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/HBO/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/HBO/icon.png"
     },
     {
       "id": "AR_23",
       "name": "Hornitos",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Hornitos/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Hornitos/icon.png"
     },
     {
       "id": "AR_24",
       "name": "Hulu Cruel Summer",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Hulu%20Cruel%20Summer/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Hulu%20Cruel%20Summer/icon.png"
     },
     {
       "id": "AR_25",
       "name": "Kenzo",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Kenzo/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Kenzo/icon.png"
     },
     {
       "id": "AR_26",
       "name": "Longchamps",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Longchamps/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Longchamps/icon.png"
     },
     {
       "id": "AR_27",
       "name": "Luxottica",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Luxottica/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Luxottica/icon.png"
     },
     {
       "id": "AR_28",
       "name": "Maybelline",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Maybelline/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Maybelline/icon.png"
     },
     {
       "id": "AR_29",
       "name": "Moncler",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Moncler/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Moncler/icon.png"
     },
     {
       "id": "AR_30",
       "name": "Nars",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nars/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nars/icon.png"
     },
     {
       "id": "AR_31",
       "name": "NewYear2023",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/NewYear2023/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/NewYear2023/icon.png"
     },
     {
       "id": "AR_32",
       "name": "Nike",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nike/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nike/icon.png"
     },
     {
       "id": "AR_33",
       "name": "Nyx Epic Smoke Liner",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Epic%20Smoke%20Liner/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Epic%20Smoke%20Liner/icon.png"
     },
     {
       "id": "AR_34",
       "name": "Nyx Falalaland",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Falalaland/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Falalaland/icon.png"
     },
     {
       "id": "AR_35",
       "name": "Nyx Jumbo",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Jumbo/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Jumbo/icon.png"
     },
     {
       "id": "AR_36",
       "name": "Nyx Pride",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Pride/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Pride/icon.png"
     },
     {
       "id": "AR_37",
       "name": "Nyx Smooth",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Smooth/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Nyx%20Smooth/icon.png"
     },
     {
       "id": "AR_38",
       "name": "OnRunning Cloud Monster",
       "description": "",
-      "tags": ["AR", "Snapchat", "Games", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Games",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/OnRunning%20Cloud%20Monster/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/OnRunning%20Cloud%20Monster/icon.png"
     },
     {
       "id": "AR_39",
       "name": "Orange World Cup Rugby",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Orange%20World%20Cup%20Rugby/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Orange%20World%20Cup%20Rugby/icon.png"
     },
     {
       "id": "AR_40",
       "name": "Oreo",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Oreo/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Oreo/icon.png"
     },
     {
       "id": "AR_41",
       "name": "Paco Rabanne Invictus",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Paco%20Rabanne%20Invictus/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Paco%20Rabanne%20Invictus/icon.png"
     },
     {
       "id": "AR_42",
       "name": "Paco Rabanne Makeup",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Paco%20Rabanne%20Makeup/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Paco%20Rabanne%20Makeup/icon.png"
     },
     {
       "id": "AR_43",
       "name": "Pampers",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Pampers/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Pampers/icon.png"
     },
     {
       "id": "AR_44",
       "name": "Powerade",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Powerade/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Powerade/icon.png"
     },
     {
       "id": "AR_45",
       "name": "Prada",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Prada/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Prada/icon.png"
     },
     {
       "id": "AR_46",
       "name": "Pride 2023",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Pride%202023/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Pride%202023/icon.png"
     },
     {
       "id": "AR_47",
       "name": "Pride 2024",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Pride%202024/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Pride%202024/icon.png"
     },
     {
       "id": "AR_49",
       "name": "Redbull",
       "description": "",
-      "tags": ["AR", "Tiktok", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Tiktok",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Redbull/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Redbull/icon.png"
     },
     {
       "id": "AR_50",
       "name": "RSAC",
       "description": "",
-      "tags": ["AR", "Snapchat", "Games", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Games",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/RSAC/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/RSAC/icon.png"
     },
     {
       "id": "AR_51",
       "name": "Samsung Diamond",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Samsung%20Diamond/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Samsung%20Diamond/icon.png"
     },
     {
       "id": "AR_52",
       "name": "Samsung FlipBook",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Samsung%20FlipBook/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Samsung%20FlipBook/icon.png"
     },
     {
       "id": "AR_53",
       "name": "Samsung Rainbow",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Samsung%20Rainbow/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Samsung%20Rainbow/icon.png"
     },
     {
       "id": "AR_54",
       "name": "Samsung WatchSleep",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Samsung%20WatchSleep/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Samsung%20WatchSleep/icon.png"
     },
     {
       "id": "AR_55",
       "name": "Sony Borderlands",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Sony%20Borderlands/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Sony%20Borderlands/icon.png"
     },
     {
       "id": "AR_57",
       "name": "SVGE",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/SVGE/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/SVGE/icon.png"
     },
     {
       "id": "AR_58",
       "name": "Telekom EuroCup2024",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Telekom%20EuroCup2024/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Telekom%20EuroCup2024/icon.png"
     },
     {
       "id": "AR_59",
       "name": "The Archies",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/The%20Archies/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/The%20Archies/icon.png"
     },
     {
       "id": "AR_60",
       "name": "Valentino",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Valentino/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Valentino/icon.png"
     },
     {
       "id": "AR_61",
       "name": "Vogue Kenneth",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Vogue%20Kenneth/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Vogue%20Kenneth/icon.png"
     },
     {
       "id": "AR_62",
       "name": "Vogue Stella",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Vogue%20Stella/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Vogue%20Stella/icon.png"
     },
     {
       "id": "AR_63",
       "name": "YSL Libre",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/YSL%20Libre/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/YSL%20Libre/icon.png"
     },
     {
       "id": "AR_64",
       "name": "Zalando",
       "description": "",
-      "tags": ["AR", "Snapchat", "Social Media"],
-      "links": {
-        }
+      "tags": [
+        "AR",
+        "Snapchat",
+        "Social Media"
+      ],
+      "links": {},
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Zalando/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Zalando/icon.png"
     }
-
-    
-    
   ]
 }
