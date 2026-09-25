@@ -40,42 +40,20 @@ export class ClickController{
             //console.log('🎯 Object clicked:', clickedObj.name);
             
             switch(clickedObj.name){
-                case 'Cube016_1':
-                case 'Cube016':
+                case AppContext.INTERACTIVES_NAMES[0]:
+                case AppContext.INTERACTIVES_NAMES[1]:
+                    AppContext.filterUI.resetFilters();
+                    AppContext.filterUI.onChangeState(1, false);
+                    console.log('Click_On Projects');
+                    break;
+                case AppContext.INTERACTIVES_NAMES[2]:
+                case AppContext.INTERACTIVES_NAMES[3]:
                     console.log('Ouverture du PDF');
                     //Le '_blank' ouvre dans un nouvel onglet. Si tu veux ouvrir dans la même fenêtre, utilise '_self'.
                     window.open('../../assets/PierreGalus_CV_Developer.pdf', '_blank');
                     break;
-                case "Click_AR_1":
-                case "Click_AR_2":
-                    //this.resetFilters();
-                    AppContext.filterUI.resetFilters();
-                    AppContext.filterUI.toggleTagFilter('AR', AppContext.filterUI.getButtonFilterByTag("AR"));
-                    AppContext.filterUI.onChangeState(1, false);
-                    console.log('Click_AR');
-                    break;
-                case "Click_VR_1":
-                case "Click_VR_2":
-                    AppContext.filterUI.resetFilters();
-                    AppContext.filterUI.toggleTagFilter('VR', AppContext.filterUI.getButtonFilterByTag("VR"));
-                    AppContext.filterUI.onChangeState(1, false);
-                    console.log('Click_VR');
-                    break;
-                case "Click_MR_1":
-                case "Click_MR_2":
-                    AppContext.filterUI.resetFilters();
-                    AppContext.filterUI.onChangeState(1, false);
-                    console.log('Click_MR');
-                    break;
-                case "Click_Game_1":
-                case "Click_Game_2":
-                    AppContext.filterUI.resetFilters();
-                    AppContext.filterUI.toggleTagFilter('Games', AppContext.filterUI.getButtonFilterByTag("Games"));
-                    AppContext.filterUI.onChangeState(1, false);
-                    console.log('Click_Game');
-                    break;
-                case AppContext.INTERACTIVES_NAMES[10]: //Linkedin
-                case AppContext.INTERACTIVES_NAMES[11]:
+                case AppContext.INTERACTIVES_NAMES[4]: //Linkedin
+                case AppContext.INTERACTIVES_NAMES[5]:
                     console.log('Linkedin');
                     window.open('https://www.linkedin.com/in/pierregalus/', '_blank');
                     break;

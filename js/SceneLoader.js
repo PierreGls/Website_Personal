@@ -231,21 +231,12 @@ export class SceneLoader{
                 //To have the good ouline
                 switch(child.name){
                     case AppContext.INTERACTIVES_NAMES[0]:
-                        AppContext.frameAR = child;
+                        AppContext.frameProjects = child;
                         break;
                     case AppContext.INTERACTIVES_NAMES[2]:
-                        AppContext.frameVR = child;
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[4]:
-                        AppContext.frameMR = child;
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[6]:
-                        AppContext.frameGame = child;
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[8]:
                         AppContext.frameCV = child;
                         break;
-                    case AppContext.INTERACTIVES_NAMES[10]:
+                    case AppContext.INTERACTIVES_NAMES[4]:
                         AppContext.frameLinkedin = child;
                         break;
                     default:

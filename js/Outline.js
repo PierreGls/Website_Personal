@@ -35,21 +35,12 @@ export class Outline{
 
                 switch(hoveredObject.name){
                     case AppContext.INTERACTIVES_NAMES[1]:
-                        AppContext.outlinePass.selectedObjects = [AppContext.frameAR];
+                        AppContext.outlinePass.selectedObjects = [AppContext.frameProjects];
                         break;
                     case AppContext.INTERACTIVES_NAMES[3]:
-                        AppContext.outlinePass.selectedObjects = [AppContext.frameVR];
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[5]:
-                        AppContext.outlinePass.selectedObjects = [AppContext.frameMR];
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[7]:
-                        AppContext.outlinePass.selectedObjects = [AppContext.frameGame];
-                        break;
-                    case AppContext.INTERACTIVES_NAMES[9]:
                         AppContext.outlinePass.selectedObjects = [AppContext.frameCV];
                         break;
-                    case AppContext.INTERACTIVES_NAMES[11]:
+                    case AppContext.INTERACTIVES_NAMES[5]:
                         AppContext.outlinePass.selectedObjects = [AppContext.frameLinkedin];
                         break;
                     default:

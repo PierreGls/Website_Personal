@@ -36,10 +36,7 @@ export const AppContext = {
     projectsMeshes : [],
     projectsVisible: new Map(),
     projectMap     : new Map(),
-    frameAR        : null,
-    frameVR        : null,
-    frameMR        : null,
-    frameGame      : null,
+    frameProjects  : null,
     frameCV        : null,
     frameLinkedin  : null,
 
@@ -57,10 +54,7 @@ export const AppContext = {
     //CONST 
     CAMERA_POS_Z : 3.0,
     INTERACTIVES_NAMES: [
-        'Click_AR_1', 'Click_AR_2',
-        'Click_VR_1', 'Click_VR_2',
-        'Click_MR', 'Click_MR_1',
-        'Click_Game_1', 'Click_Game_2',
+        'Click_Others002', 'Click_Others002_1',
         'Cube016', 'Cube016_1',
         'Click_Linkedin', 'Click_Linkedin001'
     ],

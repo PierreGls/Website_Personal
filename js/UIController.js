@@ -436,14 +436,9 @@ export class UIController{
             return;
         }*/
 
-            console.log("HINT SETUP");
 
         setTimeout(() => {
-            console.log("HINT 1");
-
             if(!this.hintDismissed){
-                console.log("HINT 2");
-
                 this.showScrollHint();
             }
         }, HINT_APPEAR_DELAY);
