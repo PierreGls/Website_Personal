@@ -47,8 +47,13 @@ export class Outline{
                         AppContext.outlinePass.selectedObjects = [hoveredObject];
                         break;
                 }
+
+                //Manage the small preview projects in scene 2
+                if(hoveredObject.name.includes("PreviewProjects")){
+                    AppContext.outlinePass.selectedObjects = [AppContext.frameProjects];
+                }
                 
-                //console.log('🖱️ Hover:', hoveredObject.name);
+                //console.log('🖱️ Hover Selectable:', hoveredObject.name);
             }
         } 
 

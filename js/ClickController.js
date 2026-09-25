@@ -42,9 +42,7 @@ export class ClickController{
             switch(clickedObj.name){
                 case AppContext.INTERACTIVES_NAMES[0]:
                 case AppContext.INTERACTIVES_NAMES[1]:
-                    AppContext.filterUI.resetFilters();
-                    AppContext.filterUI.onChangeState(1, false);
-                    console.log('Click_On Projects');
+                    this.onClickOnProject();
                     break;
                 case AppContext.INTERACTIVES_NAMES[2]:
                 case AppContext.INTERACTIVES_NAMES[3]:
@@ -58,7 +56,18 @@ export class ClickController{
                     window.open('https://www.linkedin.com/in/pierregalus/', '_blank');
                     break;
             }
+
+            //Manage the small preview projects in scene 2
+            if(clickedObj.name.includes("PreviewProjects")){
+                this.onClickOnProject();
+            }
         } 
+    }
+
+    onClickOnProject(){
+        AppContext.filterUI.resetFilters();
+        AppContext.filterUI.onChangeState(1, false);
+        console.log('Click_On Projects');
     }
 
     handleClickDetectionsProjects(event){

@@ -56,7 +56,8 @@ export const AppContext = {
     INTERACTIVES_NAMES: [
         'Click_Others002', 'Click_Others002_1',
         'Cube016', 'Cube016_1',
-        'Click_Linkedin', 'Click_Linkedin001'
+        'Click_Linkedin', 'Click_Linkedin001',
+        'PreviewProjects_2', 'PreviewProjects_3', 'PreviewProjects_4', 'PreviewProjects_5', 'PreviewProjects_6', 'PreviewProjects_7', 'PreviewProjects_8', 'PreviewProjects_9', 'PreviewProjects_10'
     ],
     TAG_CSS_SCENES: 'menu-scenes',
     TAG_CSS_PROJECTS: 'menu-projects',
