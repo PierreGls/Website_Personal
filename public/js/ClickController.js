@@ -48,7 +48,7 @@ export class ClickController{
                 case AppContext.INTERACTIVES_NAMES[3]:
                     console.log('Ouverture du PDF');
                     //Le '_blank' ouvre dans un nouvel onglet. Si tu veux ouvrir dans la même fenêtre, utilise '_self'.
-                    window.open('../../assets/PierreGalus_CV_Developer.pdf', '_blank');
+                    window.open('../../public/assets/PierreGalus_CV_Developer.pdf', '_blank');
                     break;
                 case AppContext.INTERACTIVES_NAMES[4]: //Linkedin
                 case AppContext.INTERACTIVES_NAMES[5]:
