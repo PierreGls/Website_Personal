@@ -93,7 +93,7 @@ export class Renderer{
         
         const self = this;
         
-        loader.load( '../../public/assets/hdr/venice_sunset_1k.hdr', ( texture ) => {
+        loader.load( 'assets/hdr/venice_sunset_1k.hdr', ( texture ) => {
           const envMap = pmremGenerator.fromEquirectangular( texture ).texture;
           pmremGenerator.dispose();
 
