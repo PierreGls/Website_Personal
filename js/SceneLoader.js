@@ -143,8 +143,8 @@ export class SceneLoader{
                 //For blob videos
                 AppContext.projectsData.push({
                     ...project,
-                    logoPath: project.logoUrl || ('../../assets/projects/'+ folder +"/"+ project.name + '/icon.png'),
-                    videoPath: project.videoUrl || ('../../assets/projects/'+ folder +"/"+ project.name + '/preview.mp4')
+                    logoPath: project.logoUrl,
+                    videoPath: project.videoUrl
                 });
 
                 if(project.tags){
