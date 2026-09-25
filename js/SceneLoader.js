@@ -133,10 +133,18 @@ export class SceneLoader{
             for(const project of data.projects){
                 const folder = `${project.id}`.slice(0, 2)
                 
+                /* For static videos"
                 AppContext.projectsData.push({
                     ...project,
                     logoPath: '../../assets/projects/'+ folder +"/"+ project.name + '/icon.png',
                     videoPath: '../../assets/projects/'+ folder +"/"+ project.name + '/preview.mp4'
+                });*/
+
+                //For blob videos
+                AppContext.projectsData.push({
+                    ...project,
+                    logoPath: project.logoUrl || ('../../assets/projects/'+ folder +"/"+ project.name + '/icon.png'),
+                    videoPath: project.videoUrl || ('../../assets/projects/'+ folder +"/"+ project.name + '/preview.mp4')
                 });
 
                 if(project.tags){
