@@ -1,7 +1,7 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/DRACOLoader.js';
-import { LoadingBar } from '../../public/libs/LoadingBar.js';
+import { LoadingBar } from '../libs/LoadingBar.js';
 import { AppContext } from './AppContext.js';
 
 //Filters
@@ -64,9 +64,9 @@ export class SceneLoader{
         this.createContainers();
 
         // Initialisation du loader
-        this.loader = new GLTFLoader().setPath('../../public/assets/');
+        this.loader = new GLTFLoader().setPath('assets/');
         const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath('../../public/libs/three/examples/jsm/libs/draco/');
+        dracoLoader.setDecoderPath('libs/three/examples/jsm/libs/draco/');
         this.loader.setDRACOLoader(dracoLoader);
 
         // Un objet pour stocker la progression de chaque GLB
@@ -126,7 +126,7 @@ export class SceneLoader{
     async loadProjectsData(){
         try {
             // Charge la liste des projets
-            const response = await fetch('../../public/assets/projects/index.json');
+            const response = await fetch('assets/projects/index.json');
             const data = await response.json();
             
             // Charge les infos de chaque projet
