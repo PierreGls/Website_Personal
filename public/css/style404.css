@@ -1,0 +1,251 @@
+/* 404 page — builds on the tokens, nav, hero layout, buttons and footer defined in styles.css */
+
+.not-found-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.not-found-page main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow-x: clip; /* the blurred glows extend past the viewport edge */
+}
+
+.not-found-page main > .hero {
+  width: 100%;
+}
+
+/* Nav: logo on the left, a single button on the right */
+.nav__inner--simple {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 0.3em;
+  transition: transform 0.25s ease;
+}
+
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* The hero entrance in styles.css targets the first four children of .hero__text; here it has four too */
+.lost-hero .hero__inner {
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.lost-hero .hero__title {
+  margin-top: 28px;
+  font-size: clamp(40px, 5vw, 68px);
+}
+
+/* ---------- Viewfinder visual ---------- */
+.lost {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1;
+  justify-self: end;
+  container-type: inline-size;
+  animation: pop-in 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+}
+
+.lost > * {
+  position: absolute;
+}
+
+.lost__glow {
+  border-radius: 50%;
+  filter: blur(70px);
+  animation: drift 14s ease-in-out infinite alternate;
+}
+
+.lost__glow--violet {
+  left: 12%;
+  top: 4%;
+  width: 70%;
+  aspect-ratio: 1;
+  background: rgba(139, 92, 246, 0.6);
+}
+
+.lost__glow--pink {
+  left: 48%;
+  top: 52%;
+  width: 52%;
+  aspect-ratio: 1;
+  background: rgba(255, 79, 163, 0.45);
+  animation-duration: 17s;
+  animation-delay: -5s;
+}
+
+.lost__glow--cyan {
+  left: -4%;
+  top: 50%;
+  width: 42%;
+  aspect-ratio: 1;
+  background: rgba(34, 224, 255, 0.3);
+  animation-duration: 12s;
+  animation-delay: -8s;
+}
+
+.lost__ring {
+  left: 50%;
+  top: 50%;
+  border: 1.5px dashed rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  translate: -50% -50%;
+}
+
+.lost__ring--lg {
+  width: 92%;
+  aspect-ratio: 1;
+  animation: lost-spin 70s linear infinite;
+}
+
+.lost__ring--sm {
+  width: 62%;
+  aspect-ratio: 1;
+  border-color: rgba(34, 224, 255, 0.4);
+  animation: lost-spin 45s linear infinite reverse;
+}
+
+@keyframes lost-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Camera focus frame with a scan line */
+.lost__frame {
+  inset: 14%;
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.lost__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 22%;
+  background: linear-gradient(to bottom, transparent, rgba(34, 224, 255, 0.16));
+  border-bottom: 1px solid rgba(34, 224, 255, 0.45);
+  animation: scan 5s ease-in-out infinite;
+}
+
+.lost__corner {
+  position: absolute;
+  width: 14%;
+  aspect-ratio: 1;
+  border: 3px solid #fff;
+  animation: lost-focus 3.2s ease-in-out infinite;
+}
+
+.lost__corner--tl { left: 0; top: 0; border-right: 0; border-bottom: 0; border-top-left-radius: 28px; }
+.lost__corner--tr { right: 0; top: 0; border-left: 0; border-bottom: 0; border-top-right-radius: 28px; }
+.lost__corner--bl { left: 0; bottom: 0; border-right: 0; border-top: 0; border-bottom-left-radius: 28px; }
+.lost__corner--br { right: 0; bottom: 0; border-left: 0; border-top: 0; border-bottom-right-radius: 28px; }
+
+@keyframes lost-focus {
+  50% { opacity: 0.45; scale: 0.94; }
+}
+
+.lost__code {
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  font-family: var(--font-display);
+  font-size: 34cqw;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background-image: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink), var(--cyan));
+  background-size: 200% 100%;
+  animation: flow 8s linear infinite, lost-glitch 6s steps(1) infinite;
+}
+
+/* A brief horizontal jitter every few seconds, like a tracking glitch */
+@keyframes lost-glitch {
+  0%, 92%, 100% { transform: none; }
+  93% { transform: translateX(-1.2cqw); }
+  95% { transform: translateX(1.4cqw) skewX(-4deg); }
+  97% { transform: translateX(-0.6cqw); }
+}
+
+.lost__pt {
+  left: var(--x);
+  top: var(--y);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: blink 2.4s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+.lost__spark {
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle 3s ease-in-out infinite;
+}
+.lost__spark--cyan { background: var(--cyan); animation-delay: 0.8s; }
+.lost__spark--pink { background: var(--pink); animation-delay: 1.6s; }
+
+.lost__chip {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  animation: float 6s ease-in-out infinite;
+}
+
+.lost__chip--lost { left: 0; top: 8%; }
+.lost__chip--error { right: 0; bottom: 10%; animation-delay: -3s; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .lost {
+    justify-self: center;
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 720px) {
+  .lost-hero .hero__inner {
+    padding-top: 12px;
+    padding-bottom: 56px;
+  }
+
+  .lost-hero .hero__title {
+    margin-top: 22px;
+    font-size: clamp(36px, 11vw, 44px);
+  }
+
+  .lost__frame { border-radius: 20px; }
+  .lost__corner--tl { border-top-left-radius: 20px; }
+  .lost__corner--tr { border-top-right-radius: 20px; }
+  .lost__corner--bl { border-bottom-left-radius: 20px; }
+  .lost__corner--br { border-bottom-right-radius: 20px; }
+
+  .lost__chip {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .nav__inner--simple {
+    height: 80px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lost,
+  .lost *,
+  .lost-hero .hero__text > * {
+    animation: none !important;
+  }
+}

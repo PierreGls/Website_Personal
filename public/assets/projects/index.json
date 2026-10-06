@@ -7,11 +7,10 @@
       "tags": [
         "MR",
         "Unity",
-        "Games",
-        "VR"
+        "Games"
       ],
       "links": {
-        "demo": "https://www.meta.com/it-it/experiences/journey-through-time/8893681454081682/."
+        "demo": "https://www.meta.com/it-it/experiences/journey-through-time/8893681454081682/"
       },
       "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Journey%20Through%20Time/preview.mp4",
       "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Journey%20Through%20Time/icon.png"
@@ -38,7 +37,6 @@
       "tags": [
         "MR",
         "Unreal",
-        "VR",
         "Simulation"
       ],
       "links": {},
@@ -52,7 +50,6 @@
       "tags": [
         "MR",
         "Unity",
-        "VR",
         "Games"
       ],
       "links": {},
@@ -77,7 +74,6 @@
       "name": "CodeDelta",
       "description": "Code Delta is a false name for a TV show that could appear in France in the future years. The technologies used for this project : the Mediapipe and Zed camera for the tracking, OBS for the link to the professional control room and OSC for the local communication between the different computers",
       "tags": [
-        "Others",
         "Unity",
         "Games"
       ],
@@ -90,7 +86,6 @@
       "name": "Voodoo",
       "description": "Playable ads on Mob Control, the biggest game of Voodoo",
       "tags": [
-        "Others",
         "Unity",
         "Games"
       ],
@@ -605,7 +600,6 @@
       "tags": [
         "AR",
         "Snapchat",
-        "Games",
         "Social Media"
       ],
       "links": {},

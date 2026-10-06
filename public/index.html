@@ -1,143 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!--favicon -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
-        <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
-        <link rel="manifest" href="site.webmanifest">
-        <meta name="theme-color" content="#ffffff">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pierre Galus — Interactive Experiences Developer</title>
+  <meta name="description" content="Freelance developer crafting AR filters for Snapchat & TikTok, immersive Unity VR experiences and games.">
+  <link rel="icon" href="assets/images/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="assets/images/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="assets/images/favicon/site.webmanifest">
+  <meta name="theme-color" content="#0b0c10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body id="top">
 
-        <title>Pierre Galus - Portfolio</title>
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/styleFilter.css">
-        <link rel="stylesheet" href="css/styleHintScroll.css">
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="logo" href="#top" aria-label="Pierre Galus — home">
+        <span class="logo__mark">PG</span>
+        <span class="logo__name">Pierre Galus</span>
+      </a>
 
-	</head>
-	<body>
-        <!--
-        <script type="importmap">
-            {
-              "imports": {
-                "three": "../../libs/three/build/three.module.js"
-              }
-            }
-        </script>-->
-        <script type="importmap">
-            {
-                "imports": {
-                    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-                }
-            }
-        </script>
-        <script type="module">
-            import { App } from './js/app.js';
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
-            document.addEventListener("DOMContentLoaded", function(){
-                const app = new App();
-                window.app = app;
-            });
-        </script>
+      <a class="btn btn--light btn--sm nav__cta" href="#contact">Let's work together</a>
 
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
 
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn--light" href="#contact">Let's work together</a>
+    </div>
+  </header>
 
-        <canvas id="webgl"></canvas>
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <h1 class="hero__title">Interactive experiences that <span class="grad-text blur-word">blur</span><span class="grad-text blur-word__rest"> reality</span><span class="hero__period">.</span></h1>
+          <p class="hero__sub">Freelance developer crafting AR filters for Snapchat &amp; TikTok, immersive Unity VR experiences and games. From wild idea to shipped, polished product.</p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="#portfolio">View my work <span class="arrow">→</span></a>
+            <a class="btn btn--outline" href="#contact">Get in touch</a>
+          </div>
+        </div>
 
-        <div id="scroll-hint" class="scroll-hint">
-            <div class="scroll-hint-icon scroll-hint-desktop">
-                <div class="mouse">
-                    <div class="mouse-wheel"></div>
-                </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="stage">
+            <span class="glow glow--violet"></span>
+            <span class="glow glow--pink"></span>
+            <span class="glow glow--cyan"></span>
+
+            <span class="phone-body"></span>
+            <span class="phone-screen"></span>
+            <span class="notch"></span>
+
+            <span class="face"></span>
+            <span class="lens" style="--x:233"></span>
+            <span class="lens" style="--x:285"></span>
+            <span class="pt" style="--x:245.5;--y:280.5"></span>
+            <span class="pt" style="--x:305.5;--y:280.5"></span>
+            <span class="pt" style="--x:275.5;--y:315.5"></span>
+            <span class="pt" style="--x:275.5;--y:355.5"></span>
+            <span class="pt" style="--x:253.5;--y:367.5"></span>
+            <span class="pt" style="--x:297.5;--y:367.5"></span>
+            <span class="pt" style="--x:275.5;--y:243.5"></span>
+            <span class="pt" style="--x:217.5;--y:295.5"></span>
+            <span class="pt" style="--x:333.5;--y:295.5"></span>
+            <span class="pt" style="--x:275.5;--y:390.5"></span>
+
+            <span class="sparkle" style="--x:202;--y:177;--d:6"></span>
+            <span class="sparkle sparkle--cyan" style="--x:355;--y:195;--d:10"></span>
+            <span class="sparkle sparkle--pink" style="--x:186;--y:426;--d:8"></span>
+            <span class="sparkle" style="--x:367;--y:437;--d:6"></span>
+
+            <span class="shutter-ring"></span>
+            <span class="shutter"></span>
+            <span class="thumb thumb--left"></span>
+            <span class="thumb thumb--right"></span>
+          </div>
+
+          <span class="chip chip--snap"><span class="dot dot--yellow"></span>Snapchat Lens</span>
+          <span class="chip chip--tiktok"><span class="dot dot--cyan"></span>TikTok Effect</span>
+          <span class="chip chip--unity"><span class="dot dot--violet"></span>Unity VR</span>
+          <span class="chip chip--3d"><span class="dot dot--pink"></span>Real-time 3D</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools strip -->
+    <section class="tools" aria-label="Tools">
+      <div class="container tools__inner">
+        <p class="tools__label">Works with</p>
+        <ul class="tools__list">
+          <li>Lens Studio</li>
+          <li>Effect House</li>
+          <li>Unity</li>
+          <li>Unreal</li>
+          <li>Blender</li>
+          <li>Meta Quest</li>
+          <li>Spectacles</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">01 — Services</p>
+            <h2 class="section-title">What I build</h2>
+          </div>
+          <p class="section-head__aside">From viral social effects to full immersive worlds</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card__top">
+              <span class="tile tile--ar">AR</span>
+              <span class="card__arrow">↗</span>
             </div>
-            <div class="scroll-hint-icon scroll-hint-mobile">
-                <div class="swipe-arrow">→</div>
+            <h3 class="card__title">Snapchat Lenses</h3>
+            <p class="card__desc">Branded AR campaigns built with Lens Studio.</p>
+          </article>
+          <article class="card">
+            <div class="card__top">
+              <span class="tile tile--fx">FX</span>
+              <span class="card__arrow">↗</span>
             </div>
-            <p class="scroll-hint-text scroll-hint-desktop">Scroll to explore</p>
-            <p class="scroll-hint-text scroll-hint-mobile">Swipe to explore</p>
-        </div>
-
-        <!-- Flash -->
-        <div id="flash-overlay"></div>
-    
-        <!-- Menu UI -->
-        <div class="menu" id="menu-scenes">
-            <button data-id="1">Home</button>
-            <button data-id="2">Projects</button>
-            <button data-id="3">Resume</button>
-            <button data-id="4">Contact</button>
-        </div>
-
-        <div class="menu" id="menu-projects">
-            <button data-id="5">Back</button>
-        </div>
-
-        <!-- Barre de filtres -->
-        <div id="filter-bar">
-            <button id="toggle-filters" class="toggle-btn">▼</button>
-            
-            <div id="filter-content">
-                <!-- Groupe search + reset ensemble -->
-                <div id="search-group">
-                    <input 
-                        type="text" 
-                        id="search-input" 
-                        placeholder="Search by name..."
-                    >
-                </div>
-
-                <!-- Filtres par catégorie -->
-                <div id="context-filters">
-                    <div class="filter-category" data-category="technology">
-                        <button class="filter-category-header" data-category="technology">
-                            <span class="filter-category-label">Technology</span>
-                            <span class="filter-category-arrow">▾</span>
-                        </button>
-                        <div class="tag-filter-group" id="tags-technology"></div>
-                    </div>
-
-                    <div class="filter-category" data-category="software">
-                        <button class="filter-category-header" data-category="software">
-                            <span class="filter-category-label">Software</span>
-                            <span class="filter-category-arrow">▾</span>
-                        </button>
-                        <div class="tag-filter-group" id="tags-software"></div>
-                    </div>
-
-                    <div class="filter-category" data-category="type">
-                        <button class="filter-category-header" data-category="type">
-                            <span class="filter-category-label">Type</span>
-                            <span class="filter-category-arrow">▾</span>
-                        </button>
-                        <div class="tag-filter-group" id="tags-type"></div>
-                    </div>
-                </div>
-
-                <button id="reset-filters">Reset</button>
+            <h3 class="card__title">TikTok Effects</h3>
+            <p class="card__desc">Branded AR campaigns built with Effect House.</p>
+          </article>
+          <article class="card">
+            <div class="card__top">
+              <span class="tile tile--vr">VR</span>
+              <span class="card__arrow">↗</span>
             </div>
+            <h3 class="card__title">VR Experiences</h3>
+            <p class="card__desc">Immersive, comfortable VR worlds with natural interactions for Meta Quest headsets.</p>
+          </article>
+          <article class="card">
+            <div class="card__top">
+              <span class="tile tile--gm">GM</span>
+              <span class="card__arrow">↗</span>
+            </div>
+            <h3 class="card__title">Games</h3>
+            <p class="card__desc">Fun, polished gameplay — from rapid prototypes to complete shipped games.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section class="work" id="portfolio">
+      <div class="container">
+        <div class="section-head section-head--work">
+          <div>
+            <p class="eyebrow">02 — Portfolio</p>
+            <h2 class="section-title">Featured projects</h2>
+          </div>
+          <a class="btn btn--outline btn--md" href="html/projects.html">See all projects <span class="arrow">→</span></a>
         </div>
 
-        
-        
+        <div class="projects">
+          <a class="project" href="html/projects.html?category=AR">
+            <div class="project__thumb">
+              <img src="assets/images/featured-snapchat.png" alt="Amazon Prime — Rings of Power Snapchat Lens" loading="lazy">
+              <span class="chip chip--sm"><span class="dot dot--yellow"></span>Snapchat Lens</span>
+              <span class="project__view">↗</span>
+            </div>
+            <h3 class="project__title">Amazon Prime - Ring of power</h3>
+            <p class="project__desc">Official Snapchat Lens for the Ring of power release</p>
+          </a>
+          <a class="project" href="html/projects.html?category=AR">
+            <div class="project__thumb">
+              <img src="assets/images/featured-tiktok.png" alt="Red Bull BC One TikTok effect" loading="lazy">
+              <span class="chip chip--sm"><span class="dot dot--cyan"></span>TikTok Effect</span>
+              <span class="project__view">↗</span>
+            </div>
+            <h3 class="project__title">RedBull BC One</h3>
+            <p class="project__desc">Trending TikTok effect with a famous breakdancer teaching its signature move</p>
+          </a>
+          <a class="project" href="html/projects.html?category=MR">
+            <div class="project__thumb">
+              <img src="assets/images/featured-vr.png" alt="Journey Through Time mixed reality game" loading="lazy">
+              <span class="chip chip--sm"><span class="dot dot--orange"></span>VR experience</span>
+              <span class="project__view">↗</span>
+            </div>
+            <h3 class="project__title">Journey Through Time</h3>
+            <p class="project__desc">An educative MR game built in Unity for Meta Quest 3.</p>
+          </a>
+          <a class="project" href="html/projects.html?category=Game">
+            <div class="project__thumb">
+              <img src="assets/images/featured-game.png" alt="Frosty Rush arcade platformer" loading="lazy">
+              <span class="chip chip--sm"><span class="dot dot--green"></span>Game</span>
+              <span class="project__view">↗</span>
+            </div>
+            <h3 class="project__title">Frosty Rush</h3>
+            <p class="project__desc">Fast-paced arcade platformer available on Quest</p>
+          </a>
+        </div>
+      </div>
+    </section>
 
-        <!-- Texte du projet actif -->
-        <div id="current-project">
-            <h3 id="project-name">-</h3>
+    <!-- About -->
+    <section class="about" id="about">
+      <div class="container about__inner">
+        <div class="portrait">
+          <span class="portrait__glow"></span>
+          <img src="assets/images/about-photo.png" alt="Portrait of Pierre Galus" loading="lazy">
+          <div class="portrait__badge">
+            <span>Open to</span>
+            <strong>Remote work worldwide</strong>
+          </div>
         </div>
 
-        <!-- Audio en arrière-plan -->
-        <audio id="background-music" loop>
-            <source src="assets/sounds/loop.mp3" type="audio/mpeg">
-        </audio>
-        <audio id="flashSFX">
-            <source src="assets/sounds/flash.mp3" type="audio/mpeg">
-        </audio>
+        <div class="about__text">
+          <p class="eyebrow">03 — About</p>
+          <h2 class="section-title">Hello World!</h2>
+          <p>I'm a freelance developer enjoying creating interactive experiences. I design and build AR filters for Snapchat and TikTok, immersive Unity VR worlds and games — always aiming for something that feels magical.</p>
+          <p>Working directly with brands, agencies and studios, I handle everything from concept and 3D assets to optimization and publishing.</p>
+          <ul class="stats">
+            <li class="stat"><strong class="grad-text">60+</strong><span>AR lenses &amp; effects</span></li>
+            <li class="stat"><strong class="grad-text">10</strong><span>VR &amp; game projects</span></li>
+            <li class="stat"><strong class="grad-text">6 yrs</strong><span>of experience</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-        <footer id="copyright">
-            Copyright © 2026, Pierre Galus. All other copyrighted materials are property of their respective copyright holders.
-        </footer>
-	</body>
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact__panel">
+          <span class="contact__glow contact__glow--cyan"></span>
+          <span class="contact__glow contact__glow--violet"></span>
+          <span class="orbit orbit--lg"></span>
+          <span class="orbit orbit--sm"></span>
+
+          <div class="contact__content">
+            <p class="eyebrow eyebrow--light">04 — Contact</p>
+            <h2 class="contact__title">Got an idea?<br>Let’s make it interactive.</h2>
+            <p class="contact__text">Available for new freelance projects — AR campaigns, VR experiences and games.</p>
+            <div class="contact__buttons">
+              <a class="btn btn--light" href="mailto:pierre.galus.pro@gmail.com">pierre.galus.pro@gmail.com</a>
+              <a class="btn btn--ghost" href="https://www.linkedin.com/in/pierregalus/" target="_blank" rel="noopener">My Linkedin</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© 2026 Pierre Galus — Freelance interactive developer</p>
+      <a href="#top">Back to top <span class="arrow arrow--up">↑</span></a>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
 </html>

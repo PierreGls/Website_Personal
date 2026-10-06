@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects — Pierre Galus</title>
+  <meta name="description" content="All the AR lenses, VR and MR experiences and games built by Pierre Galus.">
+  <link rel="icon" href="../assets/images/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="../assets/images/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="../assets/images/favicon/site.webmanifest">
+  <meta name="theme-color" content="#0b0c10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/styleProject.css">
+</head>
+<body id="top" class="projects-page">
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="logo" href="../index.html" aria-label="Pierre Galus — home">
+        <span class="logo__mark">PG</span>
+        <span class="logo__name">Pierre Galus</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="../index.html#services">Services</a>
+        <a href="../index.html#portfolio" class="is-active" aria-current="page">Portfolio</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+
+      <a class="btn btn--light btn--sm nav__cta" href="../index.html#contact">Let's work together</a>
+
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#portfolio">Portfolio</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a class="btn btn--light" href="../index.html#contact">Let's work together</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <span class="page-head__glow page-head__glow--violet" aria-hidden="true"></span>
+      <span class="page-head__glow page-head__glow--cyan" aria-hidden="true"></span>
+
+      <div class="container">
+        <a class="back-link" href="../index.html"><span class="arrow arrow--back">←</span>Back to home</a>
+        <p class="eyebrow">02 — Portfolio</p>
+        <h1 class="section-title page-head__title">All projects</h1>
+        <p class="page-head__lead">AR lenses, VR and MR experiences and games — everything I've shipped, in one place. Pick one to preview it and see the details.</p>
+      </div>
+    </section>
+
+    <section class="catalog" aria-label="Projects">
+      <div class="container">
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filter by category" id="filters"></div>
+
+          <label class="search">
+            <span class="visually-hidden">Search projects</span>
+            <svg class="search__icon" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="m14 14 4 4"/></svg>
+            <input id="search" type="search" placeholder="Search a project or a tool" autocomplete="off">
+          </label>
+        </div>
+
+        <p class="result-count" id="result-count" aria-live="polite"></p>
+
+        <div class="grid" id="grid">
+          <!-- Cards are rendered by projects.js from assets/projects/index.json -->
+        </div>
+
+        <p class="state" id="state" hidden></p>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="modal" id="modal" aria-labelledby="modal-title">
+    <div class="modal__panel">
+      <button class="modal__close" type="button" id="modal-close" aria-label="Close">
+        <span></span><span></span>
+      </button>
+
+      <div class="modal__media" id="modal-media"></div>
+
+      <div class="modal__body">
+        <div class="modal__tags" id="modal-tags"></div>
+        <h2 class="modal__title" id="modal-title"></h2>
+        <p class="modal__desc" id="modal-desc"></p>
+        <div class="modal__actions" id="modal-actions"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© 2026 Pierre Galus — Freelance interactive developer</p>
+      <a href="#top">Back to top <span class="arrow arrow--up">↑</span></a>
+    </div>
+  </footer>
+
+  <script src="../js/projects.js"></script>
+</body>
+</html>

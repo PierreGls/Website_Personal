@@ -1,57 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>404 - Page Not Found | Pierre Galus</title>
-
-    <!-- Favicon (browser tab) -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
-
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #111;
-            color: white;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            text-align: center;
-        }
-
-        /* Favicon top-left */
-        #corner-logo {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 64px;
-            height: 64px;
-        }
-
-        h1 { font-size: 80px; font-weight: 300; margin: 0; }
-        p { opacity: 0.7; margin: 10px 0 30px; }
-        a {
-            padding: 12px 28px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        a:hover { background: rgba(255,255,255,0.2); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found — Pierre Galus</title>
+  <meta name="description" content="This page could not be found.">
+  <meta name="robots" content="noindex">
+  <!-- Root-absolute URLs on purpose: a 404 page is served from whatever path was requested -->
+  <link rel="icon" href="/assets/images/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/assets/images/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/images/favicon/site.webmanifest">
+  <meta name="theme-color" content="#0b0c10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/style404.css">
 </head>
-<body>
-    <img id="corner-logo" src="/images/favicon/android-chrome-192x192.png" alt="Pierre Galus logo">
+<body id="top" class="not-found-page">
 
-    <h1>404</h1>
-    <p>This page doesn't exist.</p>
-    <a href="/">Back to Portfolio</a>
+  <header class="nav">
+    <div class="container nav__inner nav__inner--simple">
+      <a class="logo" href="/index.html" aria-label="Pierre Galus — home">
+        <span class="logo__mark">PG</span>
+        <span class="logo__name">Pierre Galus</span>
+      </a>
+
+      <a class="btn btn--light btn--sm" href="/index.html">Back to home</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero lost-hero">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="eyebrow">404 — Not found</p>
+          <h1 class="hero__title">This page <span class="grad-text blur-word">blurred</span> out of reality<span class="hero__period">.</span></h1>
+          <p class="hero__sub">The page you're looking for doesn't exist, or it has moved somewhere else. Let's get you back to something real.</p>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="/index.html">Back to home <span class="arrow">→</span></a>
+            <a class="btn btn--outline" href="/html/projects.html">See my projects</a>
+          </div>
+        </div>
+
+        <div class="lost" aria-hidden="true">
+          <span class="lost__glow lost__glow--violet"></span>
+          <span class="lost__glow lost__glow--pink"></span>
+          <span class="lost__glow lost__glow--cyan"></span>
+
+          <span class="lost__ring lost__ring--lg"></span>
+          <span class="lost__ring lost__ring--sm"></span>
+
+          <div class="lost__frame">
+            <span class="lost__corner lost__corner--tl"></span>
+            <span class="lost__corner lost__corner--tr"></span>
+            <span class="lost__corner lost__corner--bl"></span>
+            <span class="lost__corner lost__corner--br"></span>
+          </div>
+
+          <span class="lost__code grad-text">404</span>
+
+          <span class="lost__pt" style="--x:22%;--y:30%;--d:0s"></span>
+          <span class="lost__pt" style="--x:76%;--y:26%;--d:-0.6s"></span>
+          <span class="lost__pt" style="--x:14%;--y:58%;--d:-1.2s"></span>
+          <span class="lost__pt" style="--x:84%;--y:62%;--d:-1.8s"></span>
+          <span class="lost__pt" style="--x:34%;--y:78%;--d:-0.3s"></span>
+          <span class="lost__pt" style="--x:66%;--y:80%;--d:-0.9s"></span>
+
+          <span class="lost__spark" style="--x:30%;--y:20%;--s:8px"></span>
+          <span class="lost__spark lost__spark--cyan" style="--x:72%;--y:14%;--s:10px"></span>
+          <span class="lost__spark lost__spark--pink" style="--x:88%;--y:44%;--s:6px"></span>
+
+          <span class="chip lost__chip lost__chip--lost"><span class="dot dot--pink"></span>Tracking lost</span>
+          <span class="chip lost__chip lost__chip--error"><span class="dot dot--cyan"></span>Error 404</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© 2026 Pierre Galus — Freelance interactive developer</p>
+      <a href="/index.html">Back to home <span class="arrow arrow--up">→</span></a>
+    </div>
+  </footer>
 </body>
 </html>
