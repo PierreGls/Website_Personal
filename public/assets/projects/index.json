@@ -82,6 +82,19 @@
       "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/CodeDelta/icon.png"
     },
     {
+      "id": "OT_2",
+      "name": "Austerio's Website",
+      "description": "Website created for the artist Austerio",
+      "tags": [
+        "Web"
+      ],
+      "links": {
+        "demo": "https://austerio.pages.dev/"
+      },
+      "videoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Austerio's%20Website/preview.mp4",
+      "logoUrl": "https://uxl3qgedj26hf0x6.public.blob.vercel-storage.com/projects/Austerio's%20Website/icon.png"
+    },
+    {
       "id": "GA_1",
       "name": "Voodoo",
       "description": "Playable ads on Mob Control, the biggest game of Voodoo",
